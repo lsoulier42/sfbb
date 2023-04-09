@@ -1,0 +1,18 @@
+project:
+  name: Sfbb
+user:
+  login:
+    not_enabled: Utilisateur non activé
+  label:
+    username: Nom d'utilisateur
+    password: Mot de passe
+    remember_me: Se souvenir de moi
+    login: Connexion
+menu:
+  homepage: Accueil
+  login: Connexion
+  logout: Déconnexion
+login:
+  title: Connexion
+homepage:
+  title: Accueil

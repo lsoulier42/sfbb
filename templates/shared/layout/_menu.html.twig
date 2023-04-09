@@ -1,0 +1,26 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+    <a class="navbar-brand mx-2" href="#">{{ 'project.name'|trans }}</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">{{ 'menu.homepage'|trans }}</a>
+            </li>
+            {% if app.user is null %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('user_login') }}">{{ 'menu.login'|trans }}</a>
+                </li>
+{#                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('account_register') }}">{{ 'account.register.menu'|trans }}</a>
+                </li>#}
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('user_logout') }}">{{ 'menu.logout'|trans }}</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>

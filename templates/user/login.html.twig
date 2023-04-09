@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block sub_title %}
+    {{ 'login.title'|trans }}
+{% endblock %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-4 d-flex flex-column align-items-center">
+            {{ form_start(form) }}
+                <div class="row justify-content-center">
+                    <div class="col-12">
+                        <div class="form-control d-flex flex-column align-items-center">
+                            {{ form_row(form.username, {'attr': {'class': 'form-group m-2'}}) }}
+                            {{ form_row(form.password, {'attr': {'class': 'form-group m-2'}}) }}
+                            <div class="row m-2 form-check">
+                                <div class="col-12">
+                                    {{ form_widget(form.rememberMe) }}
+                                    <span class="px-2">{{ form_label(form.rememberMe) }}</span>
+
+                                </div>
+                            </div>
+
+                            {{ form_row(form.submit) }}
+                        </div>
+                    </div>
+                </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
