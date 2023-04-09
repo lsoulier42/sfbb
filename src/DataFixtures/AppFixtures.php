@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Contract\Service\UserServiceInterface;
 use App\Dto\User\UserCreateDto;
+use App\Dto\User\UserCreateFixturesDto;
 use App\Enum\RoleEnum;
 use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -19,7 +20,7 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $users = [
-                new UserCreateDto(
+                new UserCreateFixturesDto(
                     'louise',
                     'louise@truc.com',
                     'bidule',

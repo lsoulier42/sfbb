@@ -2,9 +2,9 @@
 
 namespace App\Contract\Service;
 
-use App\Dto\User\UserCreateDto;
+use App\Dto\User\AbstractUserCreateDto;
 
 interface UserServiceInterface
 {
-    public function createNewUser(UserCreateDto $dto, bool $flush = true): void;
+    public function createNewUser(AbstractUserCreateDto $dto, bool $flush = true): void;
 }

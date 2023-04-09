@@ -13,9 +13,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('user_login') }}">{{ 'menu.login'|trans }}</a>
                 </li>
-{#                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('account_register') }}">{{ 'account.register.menu'|trans }}</a>
-                </li>#}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('user_register') }}">{{ 'menu.register'|trans }}</a>
+                </li>
             {% else %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('user_logout') }}">{{ 'menu.logout'|trans }}</a>

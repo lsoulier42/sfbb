@@ -2,17 +2,28 @@ project:
   name: Sfbb
 user:
   login:
+    title: Connexion
     not_enabled: Utilisateur non activé
   label:
     username: Nom d'utilisateur
     password: Mot de passe
+    confirm_password: Confirmer le mot de passe
     remember_me: Se souvenir de moi
     login: Connexion
+    register: S'inscrire
+    email: Adresse e-mail
+    first_name: Prénom
+    last_name: Nom
+    birth_date: Date de naissance
+    city: Ville
+    agree_terms: J'ai lu et j'accepte les règles du site
+  register:
+    title: Formulaire d'inscription
+    success: Inscription réalisée avec succès
 menu:
   homepage: Accueil
   login: Connexion
   logout: Déconnexion
-login:
-  title: Connexion
+  register: Inscription
 homepage:
   title: Accueil

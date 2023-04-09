@@ -27,8 +27,15 @@
             {% block header %}
                 {% include 'shared/layout/_menu.html.twig' %}
             {% endblock %}
-            {% block content %}
-            {% endblock %}
+            <div class="row">
+                <div class="col-12 px-3">
+                    {% block alert %}
+                        {% include 'shared/layout/_alert.html.twig' %}
+                    {% endblock %}
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
             {% block footer %}
             {% endblock %}
         {% endblock %}

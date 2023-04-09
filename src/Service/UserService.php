@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Contract\Service\UserServiceInterface;
+use App\Dto\User\AbstractUserCreateDto;
 use App\Dto\User\UserCreateDto;
 use App\Entity\User;
 use App\Entity\UserProfile;
@@ -17,7 +18,7 @@ class UserService implements UserServiceInterface
     ) {
     }
 
-    public function createNewUser(UserCreateDto $dto, bool $flush = true): void
+    public function createNewUser(AbstractUserCreateDto $dto, bool $flush = true): void
     {
         $user = new User();
         $user->setUsername($dto->getUsername())

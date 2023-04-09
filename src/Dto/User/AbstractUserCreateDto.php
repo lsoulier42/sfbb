@@ -4,28 +4,42 @@ namespace App\Dto\User;
 
 use App\Enum\RoleEnum;
 use DateTimeImmutable;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
-class UserCreateDto
+abstract class AbstractUserCreateDto
 {
-    public function __construct(
-        private string $username,
-        private string $email,
-        private string $password,
-        private RoleEnum $role,
-        private ?string $firstName = null,
-        private ?string $lastName = null,
-        private ?DateTimeImmutable $birthDate = null,
-        private ?string $city = null,
-        private ?string $avatarUrl = null
-    ) {
-    }
+    #[NotBlank]
+    #[Length(min: 4)]
+    protected string $username;
+
+    #[Email]
+    #[NotBlank]
+    protected string $email;
+
+    #[NotBlank]
+    #[Length(min: 6)]
+    protected string $password;
+
+    protected RoleEnum $role = RoleEnum::ROLE_USER;
+
+    protected ?string $firstName = null;
+
+    protected ?string $lastName = null;
+
+    protected ?DateTimeImmutable $birthDate = null;
+
+    protected ?string $city = null;
+
+    protected ?string $avatarUrl = null;
 
     public function getUsername(): string
     {
         return $this->username;
     }
 
-    public function setUsername(string $username): UserCreateDto
+    public function setUsername(string $username): self
     {
         $this->username = $username;
         return $this;
@@ -36,7 +50,7 @@ class UserCreateDto
         return $this->email;
     }
 
-    public function setEmail(string $email): UserCreateDto
+    public function setEmail(string $email): self
     {
         $this->email = $email;
         return $this;
@@ -47,7 +61,7 @@ class UserCreateDto
         return $this->password;
     }
 
-    public function setPassword(string $password): UserCreateDto
+    public function setPassword(string $password): self
     {
         $this->password = $password;
         return $this;
@@ -58,7 +72,7 @@ class UserCreateDto
         return $this->role;
     }
 
-    public function setRole(RoleEnum $role): UserCreateDto
+    public function setRole(RoleEnum $role): self
     {
         $this->role = $role;
         return $this;
@@ -69,7 +83,7 @@ class UserCreateDto
         return $this->firstName;
     }
 
-    public function setFirstName(?string $firstName): UserCreateDto
+    public function setFirstName(?string $firstName): self
     {
         $this->firstName = $firstName;
         return $this;
@@ -80,7 +94,7 @@ class UserCreateDto
         return $this->lastName;
     }
 
-    public function setLastName(?string $lastName): UserCreateDto
+    public function setLastName(?string $lastName): self
     {
         $this->lastName = $lastName;
         return $this;
@@ -91,7 +105,7 @@ class UserCreateDto
         return $this->birthDate;
     }
 
-    public function setBirthDate(?DateTimeImmutable $birthDate): UserCreateDto
+    public function setBirthDate(?DateTimeImmutable $birthDate): self
     {
         $this->birthDate = $birthDate;
         return $this;
@@ -102,7 +116,7 @@ class UserCreateDto
         return $this->city;
     }
 
-    public function setCity(?string $city): UserCreateDto
+    public function setCity(?string $city): self
     {
         $this->city = $city;
         return $this;
@@ -113,7 +127,7 @@ class UserCreateDto
         return $this->avatarUrl;
     }
 
-    public function setAvatarUrl(?string $avatarUrl): UserCreateDto
+    public function setAvatarUrl(?string $avatarUrl): self
     {
         $this->avatarUrl = $avatarUrl;
         return $this;

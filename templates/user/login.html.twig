@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block sub_title %}
-    {{ 'login.title'|trans }}
+    {{ 'user.login.title'|trans }}
 {% endblock %}
 
 {% block content %}
@@ -17,10 +17,8 @@
                                 <div class="col-12">
                                     {{ form_widget(form.rememberMe) }}
                                     <span class="px-2">{{ form_label(form.rememberMe) }}</span>
-
                                 </div>
                             </div>
-
                             {{ form_row(form.submit) }}
                         </div>
                     </div>

@@ -23,8 +23,7 @@ class UserLoginType extends AbstractType
                     'required' => true,
                     'label' => false,
                     'attr' => [
-                        'placeholder' => 'user.label.username',
-                        'name' => '_username'
+                        'placeholder' => 'user.label.username'
                     ]
                 ]
             )
