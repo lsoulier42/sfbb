@@ -14,11 +14,11 @@ use Doctrine\ORM\Mapping\OneToMany;
 #[HasLifecycleCallbacks]
 class Category extends AbstractEntity
 {
-    #[Column]
+    #[Column(unique: true)]
     private string $title;
 
-    #[Column]
-    private int $order = 0;
+    #[Column()]
+    private int $orderNumber;
 
     /**
      * @var Collection<Forum>
@@ -43,14 +43,14 @@ class Category extends AbstractEntity
         return $this;
     }
 
-    public function getOrder(): int
+    public function getOrderNumber(): int
     {
-        return $this->order;
+        return $this->orderNumber;
     }
 
-    public function setOrder(int $order): Category
+    public function setOrderNumber(int $orderNumber): Category
     {
-        $this->order = $order;
+        $this->orderNumber = $orderNumber;
         return $this;
     }
 

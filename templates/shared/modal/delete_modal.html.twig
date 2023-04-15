@@ -1,0 +1,52 @@
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>{{ "global.modal.body.delete"|trans }}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ "global.label.close"|trans }}</button>
+                <button id="modalConfirm" class="btn btn-primary"
+                        data-target="" data-csrf="{{ csrf_token('delete-category') }}">
+                    {{ 'global.label.confirm'|trans }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="application/javascript">
+    $(function() {
+        let deleteModal = $("#deleteModal");
+        let confirmButton = $('#modalConfirm');
+        deleteModal.on('show.bs.modal', function(event) {
+            let button = event.relatedTarget;
+            let route = button.getAttribute('data-bs-route');
+            confirmButton.attr("data-target", route);
+        });
+        confirmButton.on('click', function(event) {
+            event.preventDefault();
+            let url = window.location.origin + $(this).data('target');
+            let formData = {
+                token: $(this).data('csrf')
+            }
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: formData,
+                dataType: "json",
+                encode: true,
+                success: function(data) {
+                    location.reload()
+                },
+                error: function (ajaxContext) {
+                    alert(ajaxContext.responseText)
+                }
+            });
+
+        });
+    });
+</script>

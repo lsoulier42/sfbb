@@ -108,7 +108,7 @@ class UserRegisterType extends AbstractType
                 [
                     'label' => 'user.label.register',
                     'attr' => [
-                        'class' => 'btn btn-primary px-5 m-2'
+                        'class' => 'btn btn-primary px-5 mb-2'
                     ]
                 ]
             );

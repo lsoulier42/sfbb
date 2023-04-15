@@ -1,0 +1,6 @@
+<button type="button" class="btn btn-danger"
+        data-bs-toggle="modal" data-bs-target="#deleteModal"
+        data-bs-route="{{ route }}">
+    {{ 'global.label.delete'|trans }}
+</button>
+{% include 'shared/modal/delete_modal.html.twig' %}

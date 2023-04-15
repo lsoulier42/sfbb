@@ -7,6 +7,11 @@ use Doctrine\Persistence\ManagerRegistry;
 
 abstract class BaseRepository extends ServiceEntityRepository
 {
+    public const ALIAS_CATEGORY = 'category';
+
+    public const TITLE_FIELD = 'title';
+    public const ORDER_FIELD = 'orderNumber';
+
     public function __construct(ManagerRegistry $registry, string $entityClass)
     {
         parent::__construct($registry, $entityClass);

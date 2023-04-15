@@ -21,7 +21,7 @@ class Forum extends AbstractEntity
     private ?string $subTitle = null;
 
     #[Column]
-    private int $order = 0;
+    private int $orderNumber;
 
     #[ManyToOne(targetEntity: Category::class, inversedBy: 'forums')]
     private Category $category;
@@ -54,14 +54,14 @@ class Forum extends AbstractEntity
         return $this;
     }
 
-    public function getOrder(): int
+    public function getOrderNumber(): int
     {
-        return $this->order;
+        return $this->orderNumber;
     }
 
-    public function setOrder(int $order): Forum
+    public function setOrderNumber(int $orderNumber): Forum
     {
-        $this->order = $order;
+        $this->orderNumber = $orderNumber;
         return $this;
     }
 

@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+
+{% block sub_title %}
+    {{ 'category.title.new'|trans }}
+{% endblock %}
+{% block content %}
+    {% include 'admin/category/_form.html.twig' with {'form': form} only %}
+{% endblock %}

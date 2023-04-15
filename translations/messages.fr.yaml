@@ -25,5 +25,28 @@ menu:
   login: Connexion
   logout: Déconnexion
   register: Inscription
+  category: Catégories
 homepage:
   title: Accueil
+global:
+  modal:
+    body:
+      delete: Etes-vous sûr.e de vouloir supprimer cet élément ?
+  label:
+    new: Ajouter
+    edit: Editer
+    delete: Supprimer
+    confirm: Confirmer
+    close: Fermer
+  error:
+    csrf:
+      invalid: Jeton CSRF invalide
+category:
+  none_found: Aucune catégorie
+  title:
+    index: Liste des catégories
+    delete_modal: Supprimer une catégorie
+  label:
+    title: Titre
+    orderNumber: Ordre
+    change_order: Monter/Descendre

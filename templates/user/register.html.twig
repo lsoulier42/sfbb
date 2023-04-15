@@ -6,8 +6,8 @@
 
 {% block content %}
     <div class="row ms-3">
-        <div class="col-4">
-            <h2>{{ 'user.register.title'|trans }}</h2>
+        <div class="col-12">
+            <h3>{{ 'user.register.title'|trans }}</h3>
             {{ form_start(form) }}
             <div class="row border rounded border-opacity-50 p-2">
                 <div class="col-12">
@@ -35,6 +35,7 @@
                             {{ form_widget(form.password.second, {'attr': {'class': 'form-control'}}) }}
                         </div>
                     </div>
+                    <hr />
                     <div class="mb-3 row">
                         {{ form_label(form.firstName, null, {'label_attr': {'class': 'col-4 col-form-label'}}) }}
                         <div class="col-8">
@@ -63,7 +64,12 @@
                         {{ form_widget(form.agreeTerms, {'attr': {'class': 'form-check-input'}}) }}
                         {{ form_label(form.agreeTerms, null, {'label_attr': {'class': 'form-check-label'}}) }}
                     </div>
-                    {{ form_row(form.submit) }}
+                    <div class="row justify-content-end">
+                        <div class="col-1 d-flex flex-column align-items-end">
+                            {{ form_widget(form.submit) }}
+                        </div>
+                    </div>
+
                 </div>
             </div>
             {{ form_end(form) }}
