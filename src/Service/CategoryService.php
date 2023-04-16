@@ -6,7 +6,6 @@ use App\Contract\Service\CategoryServiceInterface;
 use App\Entity\Category;
 use App\Enum\ChangeOrderEnum;
 use App\Repository\CategoryRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\NonUniqueResultException;
 use InvalidArgumentException;
@@ -26,12 +25,9 @@ class CategoryService implements CategoryServiceInterface
         return $this->categoryRepository->listAll();
     }
 
-    /**
-     * @throws NonUniqueResultException
-     */
     public function createNewCategory(Category $category): Category
     {
-        $lastOrderNumber = $this->categoryRepository->findLastOrderNumber();
+        $lastOrderNumber = $this->categoryRepository->findCategoryLastOrderNumber();
         $category->setOrderNumber($lastOrderNumber + 1);
         $this->categoryRepository->createOrUpdate($category);
         return $category;
@@ -51,9 +47,12 @@ class CategoryService implements CategoryServiceInterface
         $this->categoryRepository->remove($category);
     }
 
+    /**
+     * @throws NonUniqueResultException
+     */
     public function changeOrder(Category $category, ChangeOrderEnum $direction): void
     {
-        $next = $this->categoryRepository->findOneAfter($category, $direction);
+        $next = $this->categoryRepository->findOneCategoryAfter($category, $direction);
         if ($next === null) {
             throw new InvalidArgumentException('category.error.change_direction');
         }

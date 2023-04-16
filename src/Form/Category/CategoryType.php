@@ -16,6 +16,8 @@ class CategoryType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $category = $options['data'];
+        $isEdit = $category->getId() !== null;
         $builder
             ->add(
                 'title',
@@ -29,10 +31,7 @@ class CategoryType extends AbstractType
                 'submit',
                 SubmitType::class,
                 [
-                    'label' => 'global.label.confirm',
-                    'attr' => [
-                        'class' => 'btn btn-primary mt-2'
-                    ]
+                    'label' => $isEdit ? 'global.label.update' : 'global.label.create'
                 ]
             );
     }

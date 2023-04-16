@@ -2,7 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\Category;
 use App\Entity\Forum;
+use App\Enum\ChangeOrderEnum;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -16,5 +19,18 @@ class ForumRepository extends BaseRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Forum::class);
+    }
+
+    public function findForumLastOrderNumber(Category $category): int
+    {
+        return $this->findLastOrderNumber(self::ALIAS_FORUM, $category);
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function findOneForumAfter(Forum $forum, ChangeOrderEnum $direction): ?Forum
+    {
+        return $this->findOneAfter(self::ALIAS_FORUM, $forum, $direction);
     }
 }

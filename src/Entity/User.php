@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\RoleEnum;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -186,5 +187,10 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
             $this->posts->removeElement($post);
         }
         return $this;
+    }
+
+    public function hasRole(RoleEnum $role): bool
+    {
+        return in_array($role->name, $this->getRoles());
     }
 }

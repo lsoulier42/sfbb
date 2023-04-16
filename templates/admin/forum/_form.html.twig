@@ -1,9 +1,11 @@
 {{ form_start(form) }}
+    {{ form_row(form.category) }}
     {{ form_row(form.title) }}
+    {{ form_row(form.subTitle) }}
     <div class="row">
         <div class="col-12">
             {{ form_widget(form.submit) }}
-            <a href="{{ path('category_index') }}" class="btn btn-info">{{ 'global.label.return'|trans }}</a>
+            <a href="{{ path('forum_index') }}" class="btn btn-info">{{ 'global.label.return'|trans }}</a>
         </div>
     </div>
 {{ form_end(form) }}

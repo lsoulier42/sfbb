@@ -1,6 +1,11 @@
+{% set title = title is defined ? title : 'global.modal.delete.title'|trans %}
+{% set csrf_key = csrf_key is defined ? csrf_key : 'delete-item' %}
 <button type="button" class="btn btn-danger"
         data-bs-toggle="modal" data-bs-target="#deleteModal"
         data-bs-route="{{ route }}">
     {{ 'global.label.delete'|trans }}
 </button>
-{% include 'shared/modal/delete_modal.html.twig' %}
+{% include 'shared/modal/delete_modal.html.twig' with {
+    'title': title,
+    'csrf_key': csrf_key
+} only %}

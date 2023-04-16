@@ -32,34 +32,16 @@ class CategoryRepository extends BaseRepository
         return new ArrayCollection($queryBuilder->getQuery()->getResult());
     }
 
-    /**
-     * @throws NonUniqueResultException
-     */
-    public function findLastOrderNumber(): int
+    public function findCategoryLastOrderNumber(): int
     {
-        $alias = self::ALIAS_CATEGORY;
-        $queryBuilder = $this->createQueryBuilder($alias);
-        $orderField = self::ORDER_FIELD;
-        $queryBuilder->select("MAX($alias.$orderField) as last_order_number");
-        $result = $queryBuilder->getQuery()->getArrayResult();
-        $lastNumber = current($result)['last_order_number'];
-        return $lastNumber === null ? 0 : $lastNumber;
+        return $this->findLastOrderNumber(self::ALIAS_CATEGORY);
     }
 
     /**
      * @throws NonUniqueResultException
      */
-    public function findOneAfter(Category $category, ChangeOrderEnum $direction): ?Category
+    public function findOneCategoryAfter(Category $category, ChangeOrderEnum $direction): ?Category
     {
-        $alias = self::ALIAS_CATEGORY;
-        $queryBuilder = $this->createQueryBuilder($alias);
-        $orderField = self::ORDER_FIELD;
-        $condition = $direction === ChangeOrderEnum::UP ? '<' : '>';
-        $criteria = $direction === ChangeOrderEnum::UP ? Criteria::DESC : Criteria::ASC;
-        $queryBuilder->andWhere("$alias.$orderField $condition :$orderField")
-            ->setParameter($orderField, $category->getOrderNumber())
-            ->orderBy("$alias.$orderField", $criteria)
-            ->setMaxResults(1);
-        return $queryBuilder->getQuery()->getOneOrNullResult();
+        return $this->findOneAfter(self::ALIAS_CATEGORY, $category, $direction);
     }
 }

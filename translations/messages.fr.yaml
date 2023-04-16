@@ -26,18 +26,34 @@ menu:
   logout: Déconnexion
   register: Inscription
   category: Catégories
+  forum: Forums
+  admin: Administration
+  user:
+    login_as: Connecté en tant que `%username%`
 homepage:
   title: Accueil
+  table:
+    title:
+      forum: Forum
+      topics: Sujets
+      posts: Messages
+      last_post: Dernier message
+      online: Qui est en ligne
+      login: Se connecter
 global:
   modal:
-    body:
-      delete: Etes-vous sûr.e de vouloir supprimer cet élément ?
+    delete:
+      body: Etes-vous sûr.e de vouloir supprimer cet élément ?
+      title: Supprimer un élément
   label:
     new: Ajouter
     edit: Editer
+    create: Créer
+    update: Mettre à jour
     delete: Supprimer
     confirm: Confirmer
     close: Fermer
+    return: Retour
   error:
     csrf:
       invalid: Jeton CSRF invalide
@@ -45,8 +61,50 @@ category:
   none_found: Aucune catégorie
   title:
     index: Liste des catégories
-    delete_modal: Supprimer une catégorie
+    delete_modal: Supprimer la catégorie `%title%`
+    new: Créer une nouvelle catégorie
+    edit: Editer la catégorie `%title%`
+    forum: 'Catégorie : `%title%`'
   label:
     title: Titre
     orderNumber: Ordre
     change_order: Monter/Descendre
+    add_category: Ajouter une catégorie
+  success:
+    delete: La catégorie `%title%` a été supprimée avec succès
+    new: La catégorie `%title%` a été créée avec succès
+    edit: La catégorie `%title%` a été éditée avec succès
+    change_order:
+      message: La catégorie `%title%` a été %direction% avec succès
+      up: montée
+      down: descendue
+  error:
+    contains_forum: Cette catégorie ne peut pas être supprimée car elle contient des forums
+    change_direction: Erreur pendant le changement d'ordre de la catégorie
+forum:
+  none_found: Aucun forum
+  title:
+    index: Liste des forums
+    delete_modal: Supprimer le forum `%title%`
+    new: Créer un nouveau forum
+    edit: Editer le forum `%title%`
+  label:
+    title: Titre
+    sub_title: Sous-titre
+    orderNumber: Ordre
+    change_order: Monter/Descendre
+    add_forum: Ajouter un forum
+    category: Catégorie
+    select_category: Sélectionner une catégorie
+    no_post: Aucun message
+  success:
+    delete: Le forum `%title%` a été supprimé avec succès
+    new: Le forum `%title%` a été créé avec succès
+    edit: Le forum `%title%` a été édité avec succès
+    change_order:
+      message: Le forum `%title%` a été %direction% avec succès
+      up: monté
+      down: descendu
+  error:
+    contains_topics: Ce forum ne peut pas être supprimé car il contient des sujets
+    change_direction: Erreur pendant le changement d'ordre du forum

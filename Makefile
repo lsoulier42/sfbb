@@ -39,5 +39,8 @@ node-install:
 node-build:
 	$(DOCKER_COMPOSE_DEV) run --rm nodejs ash -ci 'npm run build'
 
+node-build-watch:
+	$(DOCKER_COMPOSE_DEV) run --rm nodejs ash -ci 'npm run watch'
+
 node-connect:
 	$(DOCKER_COMPOSE_DEV) exec nodejs ash

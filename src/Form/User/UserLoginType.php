@@ -21,10 +21,7 @@ class UserLoginType extends AbstractType
                 TextType::class,
                 [
                     'required' => true,
-                    'label' => false,
-                    'attr' => [
-                        'placeholder' => 'user.label.username'
-                    ]
+                    'label' => 'user.label.username'
                 ]
             )
             ->add(
@@ -32,10 +29,7 @@ class UserLoginType extends AbstractType
                 PasswordType::class,
                 [
                     'required' => true,
-                    'label' => false,
-                    'attr' => [
-                        'placeholder' => 'user.label.password'
-                    ]
+                    'label' => 'user.label.password',
                 ]
             )
             ->add(
@@ -51,9 +45,6 @@ class UserLoginType extends AbstractType
                 SubmitType::class,
                 [
                     'label' => 'user.label.login',
-                    'attr' => [
-                        'class' => 'btn btn-primary px-5 m-2'
-                    ]
                 ]
             );
     }

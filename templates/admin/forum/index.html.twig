@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block sub_title %}
+    {{ 'forum.title.index'|trans }}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h3>{{ 'forum.title.index'|trans }}</h3>
+        {% for category in categories %}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col" colspan="6">
+                            {{ 'category.title.forum'|trans({'%title%': category.title}) }}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">{{ 'forum.label.title'|trans }}</th>
+                    <th scope="col">{{ 'forum.label.orderNumber'|trans }}</th>
+                    <th scope="col">{{ 'global.label.edit'|trans }}</th>
+                    <th scope="col">{{ 'forum.label.change_order'|trans }}</th>
+                    <th scope="col">{{ 'global.label.delete'|trans }}</th>
+                </tr>
+                    {% for forum in category.forums %}
+                        <tr>
+                            <th scope="row">{{ forum.id }}</th>
+                            <td>
+                                {{ forum.title }}<br />
+                                <span class="small">{{ forum.subTitle }}</span>
+                            </td>
+                            <td>{{ forum.orderNumber }}</td>
+                            <td>
+                                <a class="btn btn-primary" href="{{ path('forum_edit', {'forum': forum.id}) }}">
+                                    {{ 'global.label.edit'|trans }}
+                                </a>
+                            </td>
+                            <td>
+                                <div class="row">
+                                    <div class="col-1">
+                                        {% if loop.first == false %}
+                                            <a class="btn btn-info" href="{{ path('forum_change_order', {'forum': forum.id, 'direction': 'up'}) }}">
+                                                <i class="fa-solid fa-arrow-up"></i>
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-1">
+                                        {% if loop.last == false %}
+                                            <a class="btn btn-info" href="{{ path('forum_change_order', {'forum': forum.id, 'direction': 'down'}) }}">
+                                                <i class="fa-solid fa-arrow-down"></i>
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                {% include 'shared/modal/delete_button.html.twig' with {
+                                    'route': path('forum_delete', {'forum': forum.id}),
+                                    'title': 'forum.title.delete_modal'|trans({'%title%': forum.title}),
+                                    'csrf_key': 'delete-forum'
+                                } only %}
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="6">{{ "forum.none_found"|trans }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="row mb-5">
+                <div class="col-12">
+                    <a class="btn btn-success" href="{{ path('forum_new', {'category': category.id}) }}">
+                        {{ 'forum.label.add_forum'|trans }}
+                    </a>
+                </div>
+            </div>
+        {% else %}
+            {{ 'category.none_found'|trans }}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

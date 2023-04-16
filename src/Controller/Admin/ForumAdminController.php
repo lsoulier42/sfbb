@@ -3,10 +3,12 @@
 namespace App\Controller\Admin;
 
 use App\Contract\Service\CategoryServiceInterface;
+use App\Contract\Service\ForumServiceInterface;
 use App\Controller\BaseController;
 use App\Entity\Category;
+use App\Entity\Forum;
 use App\Enum\ChangeOrderEnum;
-use App\Form\Category\CategoryType;
+use App\Form\Forum\ForumType;
 use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -15,94 +17,89 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[Route('/admin/category'), IsGranted('ROLE_ADMIN')]
-class CategoryAdminController extends BaseController
+#[Route('/admin/forum'), IsGranted('ROLE_ADMIN')]
+class ForumAdminController extends BaseController
 {
-    #[Route(path: '/', name: 'category_index', methods: ['GET'])]
+    #[Route(path: '/', name: 'forum_index', methods: ['GET'])]
     public function index(CategoryServiceInterface $categoryService): Response
     {
         $categories = $categoryService->listAll();
         return $this->render(
-            'admin/category/index.html.twig',
+            'admin/forum/index.html.twig',
             [
                 'categories' => $categories
             ]
         );
     }
 
-    #[Route(path: '/new', name: 'category_new', methods: ['GET', 'POST'])]
+    #[Route(path: '/new/{category}', name: 'forum_new', methods: ['GET', 'POST'])]
     public function new(
         Request $request,
-        CategoryServiceInterface $categoryService
+        ForumServiceInterface $forumService,
+        ?Category $category = null
     ): Response|RedirectResponse {
-        $category = new Category();
-        $form = $this->createForm(CategoryType::class, $category);
+        $forum = new Forum();
+        $form = $this->createForm(ForumType::class, $forum, ['category' => $category]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $categoryService->createNewCategory($category);
-                $this->addSuccessMessage(
-                    'category.success.new',
-                    ['%title%' => $category->getTitle()]
-                );
-                return $this->redirectToRoute(
-                    'category_edit',
-                    ['category' => $category->getId()]
-                );
+                $forumService->createNewForum($forum);
+                $this->addSuccessMessage('forum.success.new', ['%title%' => $forum->getTitle()]);
+                return $this->redirectToRoute('forum_edit', ['forum' => $forum->getId()]);
             } catch (Exception $exception) {
                 $this->addErrorMessage($exception->getMessage());
             }
-            return $this->redirectToRoute('category_index');
+            return $this->redirectToRoute('forum_index');
         }
         return $this->render(
-            'admin/category/new.html.twig',
+            'admin/forum/new.html.twig',
             [
                 'form' => $form->createView()
             ]
         );
     }
 
-    #[Route(path: '/{category}/edit', name: 'category_edit', methods: ['GET', 'POST'])]
+    #[Route(path: '/{forum}/edit', name: 'forum_edit', methods: ['GET', 'POST'])]
     public function edit(
         Request $request,
-        Category $category,
-        CategoryServiceInterface $categoryService
+        Forum $forum,
+        ForumServiceInterface $forumService
     ): Response|RedirectResponse {
-        $form = $this->createForm(CategoryType::class, $category);
+        $form = $this->createForm(ForumType::class, $forum);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $categoryService->editCategory($category);
-                $this->addSuccessMessage('category.success.edit', ['%title%' => $category->getTitle()]);
-                return $this->redirectToRoute('category_edit', ['category' => $category->getId()]);
+                $forumService->editForum($forum);
+                $this->addSuccessMessage('forum.success.edit', ['%title%' => $forum->getTitle()]);
+                return $this->redirectToRoute('forum_edit', ['forum' => $forum->getId()]);
             } catch (Exception $exception) {
                 $this->addErrorMessage($exception->getMessage());
             }
-            return $this->redirectToRoute('category_index');
+            return $this->redirectToRoute('forum_index');
         }
         return $this->render(
-            'admin/category/edit.html.twig',
+            'admin/forum/edit.html.twig',
             [
                 'form' => $form->createView(),
-                'category' => $category
+                'forum' => $forum
             ]
         );
     }
 
-    #[Route(path: '/{category}/delete', name: 'category_delete', methods: ['POST'])]
+    #[Route(path: '/{forum}/delete', name: 'forum_delete', methods: ['POST'])]
     public function delete(
         Request $request,
-        Category $category,
-        CategoryServiceInterface $categoryService
+        Forum $forum,
+        ForumServiceInterface $forumService
     ): JsonResponse {
-        if (!$this->isCsrfTokenValid('delete-category', (string)$request->request->get('token'))) {
+        if (!$this->isCsrfTokenValid('delete-forum', (string)$request->request->get('token'))) {
             return new JsonResponse('global.error.csrf.invalid', 500);
         }
         try {
-            $categoryService->deleteCategory($category);
+            $forumService->deleteForum($forum);
             $this->addSuccessMessage(
-                'category.success.delete',
-                ['%title%' => $category->getTitle()]
+                'forum.success.delete',
+                ['%title%' => $forum->getTitle()]
             );
             return new JsonResponse("OK", 200);
         } catch (Exception $exception) {
@@ -112,30 +109,30 @@ class CategoryAdminController extends BaseController
     }
 
     #[Route(
-        path: '/{category}/change-order/{direction}',
-        name: 'category_change_order',
+        path: '/{forum}/change-order/{direction}',
+        name: 'forum_change_order',
         requirements: ['direction' => '^(up|down)$'],
         methods: ['GET']
     )]
     public function changeOrder(
-        Category $category,
+        Forum $forum,
         string $direction,
-        CategoryServiceInterface $categoryService
+        ForumServiceInterface $forumService
     ): RedirectResponse {
         try {
             $changeOrderDirection = ChangeOrderEnum::from($direction);
-            $categoryService->changeOrder($category, $changeOrderDirection);
+            $forumService->changeOrder($forum, $changeOrderDirection);
             $directionTranslationKey = $changeOrderDirection === ChangeOrderEnum::UP
-                ? 'category.success.change_order.up'
-                : 'category.success.change_order.down';
+                ? 'forum.success.change_order.up'
+                : 'forum.success.change_order.down';
             $directionMessage = $this->translator->trans($directionTranslationKey);
             $this->addSuccessMessage(
-                'category.success.change_order.message',
-                ['%title%' => $category->getTitle(), '%direction%' => $directionMessage]
+                'forum.success.change_order.message',
+                ['%title%' => $forum->getTitle(), '%direction%' => $directionMessage]
             );
         } catch (Exception $exception) {
             $this->addErrorMessage($exception->getMessage());
         }
-        return $this->redirectToRoute('category_index');
+        return $this->redirectToRoute('forum_index');
     }
 }

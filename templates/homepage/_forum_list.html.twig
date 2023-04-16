@@ -1,0 +1,40 @@
+<table class="table forum-table">
+    <thead class="text-center forum-table-title">
+    <tr>
+        <th scope="col" width="80%" colspan="2">{{ 'homepage.table.title.forum'|trans }}</th>
+        <th scope="col">{{ 'homepage.table.title.topics'|trans }}</th>
+        <th scope="col">{{ 'homepage.table.title.posts'|trans }}</th>
+        <th scope="col">{{ 'homepage.table.title.last_post'|trans }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for category in categories %}
+        <tr>
+            <td class="homepage-category" colspan="2">
+                <span class="homepage-category-title">{{ category.title }}</span>
+            </td>
+            <td colspan="3" class="homepage-category"></td>
+        </tr>
+        {% for forum in category.forums %}
+            <tr>
+                <td width="2%" class="forum-table-row-title text-center align-middle">
+                    <img src="{{ asset('folder_big.gif') }}" alt="no new post icon" />
+                </td>
+                <td class="forum-table-row-title">
+                    <span class="homepage-forum-title">{{ forum.title }}</span><br />
+                    <span class="small">{{ forum.subTitle }}</span>
+                </td>
+                <td class="forum-table-row-messages">
+                    {{ forum.topics.count }}
+                </td>
+                <td class="forum-table-row-messages">
+                    0
+                </td>
+                <td class="forum-table-row-messages">
+                    {{ 'forum.label.no_post'|trans }}
+                </td>
+            </tr>
+        {% endfor %}
+    {% endfor %}
+    </tbody>
+</table>

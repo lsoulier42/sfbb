@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
@@ -32,6 +33,11 @@ class Category extends AbstractEntity
         $this->forums = new ArrayCollection();
     }
 
+    public function __toString(): string
+    {
+        return $this->getTitle();
+    }
+
     public function getTitle(): string
     {
         return $this->title;
@@ -56,7 +62,9 @@ class Category extends AbstractEntity
 
     public function getForums(): Collection
     {
-        return $this->forums;
+        $criteria = Criteria::create()
+            ->orderBy(['orderNumber' => Criteria::ASC]);
+        return $this->forums->matching($criteria);
     }
 
     public function setForums(Collection $forums): Category

@@ -1,29 +1,50 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
-    <a class="navbar-brand mx-2" href="#">{{ 'project.name'|trans }}</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="/">{{ 'menu.homepage'|trans }}</a>
-            </li>
-            {% if app.user is null %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('user_login') }}">{{ 'menu.login'|trans }}</a>
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="{{ asset('discuter.png') }}" alt="application icon" height="40px" />
+            {{ 'project.name'|trans }}
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarSupportedContent">
+            <div class="user-content mb-1">
+                {% if app.user %}
+                    {{ 'menu.user.login_as'|trans({'%username%': app.user.username}) }}
+                {% endif %}
+            </div>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">{{ 'menu.homepage'|trans }}</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('user_register') }}">{{ 'menu.register'|trans }}</a>
-                </li>
-            {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('category_index') }}">{{ 'menu.category'|trans }}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('user_logout') }}">{{ 'menu.logout'|trans }}</a>
-                </li>
-            {% endif %}
-        </ul>
+                {% if app.user is null %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('user_login') }}">{{ 'menu.login'|trans }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('user_register') }}">{{ 'menu.register'|trans }}</a>
+                    </li>
+                {% else %}
+                    {% if is_admin(app.user) %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ 'menu.admin'|trans }}
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('category_index') }}">{{ 'menu.category'|trans }}</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('forum_index') }}">{{ 'menu.forum'|trans }}</a>
+                                </li>
+                            </ul>
+                        </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('user_logout') }}">{{ 'menu.logout'|trans }}</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
     </div>
 </nav>

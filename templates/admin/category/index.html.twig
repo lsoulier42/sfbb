@@ -10,60 +10,61 @@
             <h3>{{ 'category.title.index'|trans }}</h3>
             <table class="table table-striped">
                 <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">{{ 'category.label.title'|trans }}</th>
-                    <th scope="col">{{ 'category.label.orderNumber'|trans }}</th>
-                    <th scope="col">{{ 'global.label.edit'|trans }}</th>
-                    <th scope="col">{{ 'category.label.change_order'|trans }}</th>
-                    <th scope="col">{{ 'global.label.delete'|trans }}</th>
-                </tr>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">{{ 'category.label.title'|trans }}</th>
+                        <th scope="col">{{ 'category.label.orderNumber'|trans }}</th>
+                        <th scope="col">{{ 'global.label.edit'|trans }}</th>
+                        <th scope="col">{{ 'category.label.change_order'|trans }}</th>
+                        <th scope="col">{{ 'global.label.delete'|trans }}</th>
+                    </tr>
                 </thead>
                 <tbody>
-                {% for category in categories %}
-                    <tr>
-                        <th scope="row">{{ category.id }}</th>
-                        <td>
-                            {{ category.title }}
-                        </td>
-                        <td>
-                            {{ category.orderNumber }}
-                        </td>
-                        <td>
-                            <a class="btn btn-primary" href="{{ path('category_edit', {'category': category.id}) }}">
-                                {{ 'global.label.edit'|trans }}
-                            </a>
-                        </td>
-                        <td>
-                            <div class="row">
-                                <div class="col-1">
-                                    {% if loop.first == false %}
-                                        <a class="btn btn-info" href="{{ path('category_change_order', {'category': category.id, 'direction': 'up'}) }}">
-                                            <i class="fa-solid fa-arrow-up"></i>
-                                        </a>
-                                    {% endif %}
+                    {% for category in categories %}
+                        <tr>
+                            <th scope="row">{{ category.id }}</th>
+                            <td>
+                                {{ category.title }}
+                            </td>
+                            <td>
+                                {{ category.orderNumber }}
+                            </td>
+                            <td>
+                                <a class="btn btn-primary" href="{{ path('category_edit', {'category': category.id}) }}">
+                                    {{ 'global.label.edit'|trans }}
+                                </a>
+                            </td>
+                            <td>
+                                <div class="row">
+                                    <div class="col-1">
+                                        {% if loop.first == false %}
+                                            <a class="btn btn-info" href="{{ path('category_change_order', {'category': category.id, 'direction': 'up'}) }}">
+                                                <i class="fa-solid fa-arrow-up"></i>
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-1">
+                                        {% if loop.last == false %}
+                                            <a class="btn btn-info" href="{{ path('category_change_order', {'category': category.id, 'direction': 'down'}) }}">
+                                                <i class="fa-solid fa-arrow-down"></i>
+                                            </a>
+                                        {% endif %}
+                                    </div>
                                 </div>
-                                <div class="col-1">
-                                    {% if loop.last == false %}
-                                        <a class="btn btn-info" href="{{ path('category_change_order', {'category': category.id, 'direction': 'down'}) }}">
-                                            <i class="fa-solid fa-arrow-down"></i>
-                                        </a>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            {% include 'shared/modal/delete_button.html.twig' with {
-                                'route': path('category_delete', {'category': category.id}),
-                                'title': 'category.title.delete_modal'|trans
-                            } %}
-                        </td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td>{{ 'category.none_found'|trans }}</td>
-                    </tr>
-                {% endfor %}
+                            </td>
+                            <td>
+                                {% include 'shared/modal/delete_button.html.twig' with {
+                                    'route': path('category_delete', {'category': category.id}),
+                                    'title': 'category.title.delete_modal'|trans({'%title%': category.title}),
+                                    'csrf_key': 'delete-category'
+                                } only %}
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="6" class="text-center">{{ 'category.none_found'|trans }}</td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
@@ -71,7 +72,7 @@
     <div class="row">
         <div class="col-12">
             <a class="btn btn-success" href="{{ path('category_new') }}">
-                {{ 'global.label.new'|trans }}
+                {{ 'category.label.add_category'|trans }}
             </a>
         </div>
     </div>
