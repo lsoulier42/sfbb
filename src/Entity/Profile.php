@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\UserProfileRepository;
+use App\Repository\ProfileRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 
-#[Entity(repositoryClass: UserProfileRepository::class)]
+#[Entity(repositoryClass: ProfileRepository::class)]
 #[HasLifecycleCallbacks]
-class UserProfile extends AbstractEntity
+class Profile extends AbstractEntity
 {
     #[ORM\Column(nullable: true)]
     private ?string $firstName = null;
@@ -35,7 +35,7 @@ class UserProfile extends AbstractEntity
         return $this->firstName;
     }
 
-    public function setFirstName(?string $firstName): UserProfile
+    public function setFirstName(?string $firstName): Profile
     {
         $this->firstName = $firstName;
         return $this;
@@ -46,7 +46,7 @@ class UserProfile extends AbstractEntity
         return $this->lastName;
     }
 
-    public function setLastName(?string $lastName): UserProfile
+    public function setLastName(?string $lastName): Profile
     {
         $this->lastName = $lastName;
         return $this;
@@ -57,7 +57,7 @@ class UserProfile extends AbstractEntity
         return $this->birthDate;
     }
 
-    public function setBirthDate(?DateTimeImmutable $birthDate): UserProfile
+    public function setBirthDate(?DateTimeImmutable $birthDate): Profile
     {
         $this->birthDate = $birthDate;
         return $this;
@@ -68,7 +68,7 @@ class UserProfile extends AbstractEntity
         return $this->city;
     }
 
-    public function setCity(?string $city): UserProfile
+    public function setCity(?string $city): Profile
     {
         $this->city = $city;
         return $this;
@@ -79,7 +79,7 @@ class UserProfile extends AbstractEntity
         return $this->avatarUrl;
     }
 
-    public function setAvatarUrl(?string $avatarUrl): UserProfile
+    public function setAvatarUrl(?string $avatarUrl): Profile
     {
         $this->avatarUrl = $avatarUrl;
         return $this;
@@ -90,7 +90,7 @@ class UserProfile extends AbstractEntity
         return $this->user;
     }
 
-    public function setUser(User $user): UserProfile
+    public function setUser(User $user): Profile
     {
         $this->user = $user;
         return $this;

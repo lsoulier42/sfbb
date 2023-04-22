@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 
@@ -10,8 +11,8 @@ abstract class AbstractMessage extends AbstractEntity
 {
     private User $author;
 
-    #[Column]
-    private string $content;
+    #[Column(type: Types::TEXT)]
+    protected string $content;
 
     public function __construct()
     {

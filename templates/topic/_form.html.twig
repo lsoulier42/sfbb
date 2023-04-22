@@ -1,0 +1,50 @@
+{{ form_start(form) }}
+<table class="table forum-table my-1">
+    <thead class="text-center forum-table-title">
+    <tr>
+        <th scope="col" colspan="2">
+            {{ 'topic.label.post_new_topic'|trans }}
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="forum-table-row-title">
+            {{ 'topic.label.author'|trans }}
+        </td>
+        <td class="forum-table-row-title">
+            {{ user.username }}
+        </td>
+    </tr>
+    <tr>
+        <td class="forum-table-row-title">
+            {{ 'topic.label.forum'|trans }}
+        </td>
+        <td class="forum-table-row-title">
+            {{ forum.title }}
+        </td>
+    </tr>
+    <tr>
+        <td class="forum-table-row-title">
+            {{ form_label(form.title) }}
+        </td>
+        <td class="forum-table-row-title">
+            {{ form_widget(form.title) }}
+        </td>
+    </tr>
+    <tr>
+        <td class="forum-table-row-title">
+            {{ form_label(form.content) }}
+        </td>
+        <td class="forum-table-row-title">
+            {{ form_widget(form.content) }}
+        </td>
+    </tr>
+    <tr>
+        <td class="forum-table-row-title text-center" colspan="2">
+            {{ form_widget(form.submit) }}
+        </td>
+    </tr>
+    </tbody>
+</table>
+{{ form_end(form) }}

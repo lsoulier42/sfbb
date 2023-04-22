@@ -18,7 +18,7 @@ class Category extends AbstractEntity
     #[Column(unique: true)]
     private string $title;
 
-    #[Column()]
+    #[Column]
     private int $orderNumber;
 
     /**

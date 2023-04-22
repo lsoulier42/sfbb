@@ -33,7 +33,7 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     private ?string $password = null;
 
     #[OneToOne]
-    private UserProfile $userProfile;
+    private Profile $profile;
 
     /**
      * @var Collection<Topic>
@@ -122,14 +122,14 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
         return $this;
     }
 
-    public function getUserProfile(): UserProfile
+    public function getProfile(): Profile
     {
-        return $this->userProfile;
+        return $this->profile;
     }
 
-    public function setUserProfile(UserProfile $userProfile): User
+    public function setProfile(Profile $profile): User
     {
-        $this->userProfile = $userProfile;
+        $this->profile = $profile;
         return $this;
     }
 
@@ -192,5 +192,20 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     public function hasRole(RoleEnum $role): bool
     {
         return in_array($role->name, $this->getRoles());
+    }
+
+    public function getMainRole(): RoleEnum
+    {
+        $roles = $this->getRoles();
+        usort($roles, static function ($role1, $role2) {
+            return RoleEnum::fromName($role2)->value - RoleEnum::fromName($role1)->value;
+        });
+        return RoleEnum::fromName((string)current($roles));
+    }
+
+    public function getRoleTitle(): string
+    {
+        $role = $this->getMainRole();
+        return $role->getTransKey();
     }
 }

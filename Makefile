@@ -14,12 +14,40 @@ install:
 	$(MAKE) composer-update
 	$(MAKE) node-install
 	$(MAKE) node-build
+	$(MAKE) db-migrate
+	$(MAKE) db-fixtures-install
 
 composer-install:
 	$(DOCKER_COMPOSE_DEV) run --rm php bash -ci 'php -d memory_limit=4G bin/composer install'
 
 composer-update:
 	$(DOCKER_COMPOSE_DEV) run --rm php bash -ci 'php -d memory_limit=4G bin/composer update -W'
+
+db-migrate:
+	$(DOCKER_COMPOSE_DEV) run --rm php bash -ci 'php -d memory_limit=4G bin/console doctrine:migrations:migrate -n'
+
+db-fixtures-install:
+	$(DOCKER_COMPOSE_DEV) run --rm php bash -ci 'php -d memory_limit=4G bin/console doctrine:fixtures:load --purge-with-truncate -n'
+
+db-create:
+	$(DOCKER_COMPOSE_DEV) run --rm php bash -ci 'php -d memory_limit=4G bin/console doctrine:database:create --if-not-exists'
+
+db-drop:
+	$(DOCKER_COMPOSE_DEV) run --rm php bash -ci 'php -d memory_limit=4G bin/console doctrine:database:drop --force'
+
+db-migrations-diff:
+	$(DOCKER_COMPOSE_DEV) run --rm php bash -ci 'php -d memory_limit=4G bin/console doctrine:migrations:diff'
+
+db-delete-migrations:
+	rm migrations/* | true
+
+db-reset:
+	$(MAKE) db-delete-migrations
+	$(MAKE) db-drop
+	$(MAKE) db-create
+	$(MAKE) db-migrations-diff
+	$(MAKE) db-migrate
+	$(MAKE) db-fixtures-install
 
 start:
 	$(DOCKER_COMPOSE_DEV) up

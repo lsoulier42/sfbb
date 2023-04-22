@@ -1,0 +1,42 @@
+# Read the documentation: https://symfony.com/doc/current/bundles/FOSCKEditorBundle/index.html
+fos_ck_editor:
+    default_config: my_config
+    configs:
+        my_config:
+            toolbar: [["EmojiPanel", "-", 'Image', "-", "Bold", "Italic", "Underline", '-', 'TextColor', 'BGColor', "-", 'Link', 'Unlink', "-", 'Cut', 'Copy', 'Paste', "-", 'NumberedList', 'BulletedList', "-", "Blockquote", '-', 'JustifyLeft', 'JustifyRight', 'JustifyCenter', 'JustifyBlock', '-', 'Undo', 'Redo', ]]
+            extraPlugins: ['ajax', 'textwatcher', 'xml', 'button', 'panel', 'autocomplete', 'floatpanel', 'panelbutton', 'textmatch', 'emoji']
+    plugins:
+        ajax:
+            path:     "ckeditor-plugins/ajax/"
+            filename: "plugin.js"
+        xml:
+            path: "ckeditor-plugins/xml/"
+            filename: "plugin.js"
+        button:
+            path: "ckeditor-plugins/button/"
+            filename: "plugin.js"
+        panel:
+            path: "ckeditor-plugins/panel/"
+            filename: "plugin.js"
+        textwatcher:
+            path: "ckeditor-plugins/textwatcher/"
+            filename: "plugin.js"
+        autocomplete:
+            path: "ckeditor-plugins/autocomplete/"
+            filename: "plugin.js"
+        floatpanel:
+            path: "ckeditor-plugins/floatpanel/"
+            filename: "plugin.js"
+        panelbutton:
+            path: "ckeditor-plugins/panelbutton/"
+            filename: "plugin.js"
+        textmatch:
+            path: "ckeditor-plugins/textmatch/"
+            filename: "plugin.js"
+        emoji:
+            path: "ckeditor-plugins/emoji/"
+            filename: "plugin.js"
+
+twig:
+    form_themes:
+        - '@FOSCKEditor/Form/ckeditor_widget.html.twig'

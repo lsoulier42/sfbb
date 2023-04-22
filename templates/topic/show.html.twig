@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block sub_title %}
+    {{ 'topic.title.show'|trans({'%topic%': topic.title}) }}
+{% endblock %}
+{% block content %}
+    {% include 'forum/_new_topic.html.twig' with {'forum': topic.forum} only %}
+    <table class="table forum-table my-1">
+        <thead class="text-center forum-table-row-title">
+        <tr>
+            <th scope="col" colspan="2">{{ topic.title }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="text-center forum-table-title">
+            <th scope="col" width="15%">{{ 'topic.label.author'|trans }}</th>
+            <th scope="col">{{ 'topic.label.message'|trans }}</th>
+        </tr>
+        <tr>
+            <td rowspan="2" class="forum-table-row-title">
+                <div class="row mb-5">
+                    <div class="col-12">
+                        {{ topic.author.username }}<br />
+                        {{ topic.author.getRoleTitle|trans }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        {{ 'topic.label.message'|trans }}:
+                        {{ topic.author.topics|length }}<br />
+                        {{ 'topic.label.register_date'|trans }}:
+                        {{ topic.author.createdAt|date('d/m/Y') }}
+                    </div>
+                </div>
+            </td>
+        <tr>
+            <td>
+                <span>
+                   <img src="{{ asset('images/icon_minipost.gif') }}" alt="icon mini post" />
+                    {{ 'topic.label.subject'|trans({'%title%': topic.title}) }}
+                </span>
+                <span>
+                    - {{ topic.createdAt|date('D d M Y - H:i') }}
+                </span>
+                <span class="float-end">
+                    <a href="{{ path('topic_edit', {'topic': topic.id}) }}">
+                        <img src="{{ asset('images/lang_english/icon_edit.gif') }}" alt="icon edit" />
+                    </a>
+                </span>
+
+            </td>
+        </tr>
+        <tr>
+            <td class="forum-table-row-title" height="300px">
+                {{ topic.content|raw }}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    {% include 'forum/_new_topic.html.twig' with {'forum': topic.forum} only %}
+{% endblock %}

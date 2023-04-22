@@ -1,4 +1,4 @@
-.homepage-content {
+.content {
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 10px;
 
@@ -51,5 +51,33 @@
       background-color: #EFEFEF;
       border-bottom: 1px #FFFFFF solid;
     }
+  }
+
+  a:link, a:active, a:visited {
+    color: #006699;
+  }
+
+  .forum-show-title {
+    font-weight: bold;
+    font-size: 22px;
+    font-family: "Trebuchet MS",Verdana, Arial, Helvetica, sans-serif;
+    line-height: 120%;
+    text-decoration: none;
+  }
+
+  .forum-show-info {
+    font-size: 10px;
+    color: black;
+    font-weight: bold;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+  }
+
+  .forum-topic-title {
+    font-weight: bold;
+    text-decoration: none;
+  }
+  .forum-topic-title:hover {
+    color: #dd6900;
+    text-decoration: underline;
   }
 }

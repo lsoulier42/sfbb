@@ -20,6 +20,12 @@ user:
   register:
     title: Formulaire d'inscription
     success: Inscription réalisée avec succès
+  role:
+    label:
+      user: Utilisateur
+      moderator: Modérateur
+      super_moderator: Super-modérateur
+      admin: Administrateur
 menu:
   homepage: Accueil
   login: Connexion
@@ -54,6 +60,7 @@ global:
     confirm: Confirmer
     close: Fermer
     return: Retour
+    none: Aucun
   error:
     csrf:
       invalid: Jeton CSRF invalide
@@ -88,6 +95,7 @@ forum:
     delete_modal: Supprimer le forum `%title%`
     new: Créer un nouveau forum
     edit: Editer le forum `%title%`
+    show: Voir le forum %forum%
   label:
     title: Titre
     sub_title: Sous-titre
@@ -97,6 +105,15 @@ forum:
     category: Catégorie
     select_category: Sélectionner une catégorie
     no_post: Aucun message
+    topics: Sujets
+    replies: Réponses
+    author: Auteur.e
+    views: Vues
+    last_post: Dernière réponse
+    moderators: Modérateurs
+    users_browsing: Utilisateurs sur ce forum
+  topics:
+    none: Il n'y a pas de sujet dans ce forum.
   success:
     delete: Le forum `%title%` a été supprimé avec succès
     new: Le forum `%title%` a été créé avec succès
@@ -108,3 +125,23 @@ forum:
   error:
     contains_topics: Ce forum ne peut pas être supprimé car il contient des sujets
     change_direction: Erreur pendant le changement d'ordre du forum
+topic:
+  title:
+    new: Nouveau sujet
+    edit: Editer le sujet %topic%
+    show: Voir le sujet %topic%
+  label:
+    post_new_topic: Poster un nouveau sujet
+    title: Titre du sujet
+    content: Corps du message
+    submit: Envoyer
+    author: Auteur.e
+    forum: Forum
+    message: Message
+    subject: 'Sujet: %title%'
+    register_date: Date d'inscription
+  success:
+    create: Sujet %topic% créé avec succès
+    edit: Sujet %topic% édité avec succès
+  error:
+    cant_edit: Vous ne pouvez pas éditer ce sujet

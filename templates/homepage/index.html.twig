@@ -5,11 +5,9 @@
 {% endblock %}
 
 {% block content %}
-    <div class="homepage-content">
-        {% include 'homepage/_forum_list.html.twig' with {'categories': categories} only %}
-        {% include 'homepage/_who_is_online.html.twig' %}
-        {% if app.user is null %}
-            {% include 'homepage/_login_form.html.twig' with {'form': form} only %}
-        {% endif %}
-    </div>
+    {% include 'homepage/_forum_list.html.twig' with {'categories': categories} only %}
+    {% include 'homepage/_who_is_online.html.twig' %}
+    {% if app.user is null %}
+        {% include 'homepage/_login_form.html.twig' with {'form': form} only %}
+    {% endif %}
 {% endblock %}

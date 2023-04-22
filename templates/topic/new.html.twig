@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block sub_title %}
+    {{ 'topic.title.new'|trans }}
+{% endblock %}
+{% block content %}
+    {% include 'topic/_form.html.twig' with {
+        'form': form,
+        'user': user,
+        'forum': forum
+    } %}
+{% endblock %}

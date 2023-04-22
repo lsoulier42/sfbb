@@ -9,7 +9,7 @@
                 {% endblock %}
             {% endblock %}
         </title>
-        <link rel="icon" href="{{ asset('favicon.ico') }}">
+        <link rel="icon" href="{{ asset('images/favicon.ico') }}">
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
             {% block additionnal_stylesheets %}
@@ -32,8 +32,10 @@
                     {% block alert %}
                         {% include 'shared/layout/_alert.html.twig' %}
                     {% endblock %}
-                    {% block content %}
-                    {% endblock %}
+                    <div class="content">
+                        {% block content %}
+                        {% endblock %}
+                    </div>
                 </div>
             </div>
             {% block footer %}

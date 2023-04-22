@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block sub_title %}
+    {{ 'forum.title.show'|trans({'%forum%': forum.title}) }}
+{% endblock %}
+
+{% block content %}
+    <div class="forum-show-header mb-1">
+        <a class="forum-show-title" href="{{ path('forum_show', {'forum': forum.id}) }}">
+            {{ forum.title }}
+        </a><br />
+        <span class="forum-show-info">
+            {{ 'forum.label.moderators'|trans }} : {{ 'global.label.none'|trans }}<br />
+            {{ 'forum.label.users_browsing'|trans }} : {{ 'global.label.none'|trans }}
+        </span>
+    </div>
+    {% include 'forum/_new_topic.html.twig' with {'forum': forum} only %}
+    <table class="table forum-table my-1">
+        <thead class="text-center forum-table-title">
+        <tr>
+            <th scope="col" width="70%" colspan="2">{{ 'forum.label.topics'|trans }}</th>
+            <th scope="col">{{ 'forum.label.replies'|trans }}</th>
+            <th scope="col">{{ 'forum.label.author'|trans }}</th>
+            <th scope="col">{{ 'forum.label.views'|trans }}</th>
+            <th scope="col">{{ 'forum.label.last_post'|trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for topic in forum.topics %}
+            <tr>
+                <td width="1%" class="forum-table-row-title text-center align-middle">
+                    <img src="{{ asset('images/folder.gif') }}" alt="no new post small icon" />
+                </td>
+                <td class="forum-table-row-title">
+                    <a class="forum-topic-title" href="{{ path('topic_show', {'topic': topic.id}) }}">
+                        {{ topic.title }}
+                    </a>
+                    <br />
+                </td>
+                <td class="forum-table-row-messages">
+                    {{ topic.posts.count }}
+                </td>
+                <td class="forum-table-row-messages">
+                    {{ topic.author.username }}
+                </td>
+                <td class="forum-table-row-messages">
+                    0
+                </td>
+                <td class="forum-table-row-messages">
+                    {{ 'forum.label.no_post'|trans }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6" class="forum-table-row-messages text-center border-0">{{ 'forum.topics.none'|trans }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% include 'forum/_new_topic.html.twig' with {'forum': forum} only %}
+{% endblock %}

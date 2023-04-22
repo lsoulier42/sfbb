@@ -18,10 +18,14 @@
         {% for forum in category.forums %}
             <tr>
                 <td width="2%" class="forum-table-row-title text-center align-middle">
-                    <img src="{{ asset('folder_big.gif') }}" alt="no new post icon" />
+                    <img src="{{ asset('images/folder_big.gif') }}" alt="no new post icon" />
                 </td>
                 <td class="forum-table-row-title">
-                    <span class="homepage-forum-title">{{ forum.title }}</span><br />
+                    <span class="homepage-forum-title">
+                        <a href="{{ path('forum_show', {'forum': forum.id}) }}">
+                            {{ forum.title }}
+                        </a>
+                    </span><br />
                     <span class="small">{{ forum.subTitle }}</span>
                 </td>
                 <td class="forum-table-row-messages">
@@ -34,7 +38,15 @@
                     {{ 'forum.label.no_post'|trans }}
                 </td>
             </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">{{ 'forum.none_found'|trans }}</td>
+            </tr>
         {% endfor %}
+    {% else %}
+        <tr>
+            <td colspan="5">{{ 'category.none_found'|trans }}</td>
+        </tr>
     {% endfor %}
     </tbody>
 </table>

@@ -6,15 +6,15 @@ use App\Contract\Service\UserServiceInterface;
 use App\Dto\User\AbstractUserCreateDto;
 use App\Dto\User\UserCreateDto;
 use App\Entity\User;
-use App\Entity\UserProfile;
-use App\Repository\UserProfileRepository;
+use App\Entity\Profile;
+use App\Repository\ProfileRepository;
 use App\Repository\UserRepository;
 
 class UserService implements UserServiceInterface
 {
     public function __construct(
         private readonly UserRepository $userRepository,
-        private readonly UserProfileRepository $userProfileRepository
+        private readonly ProfileRepository $userProfileRepository
     ) {
     }
 
@@ -26,14 +26,14 @@ class UserService implements UserServiceInterface
             ->setEmail($dto->getEmail())
             ->setRoles(array($dto->getRole()->name))
             ->setIsEnabled(true);
-        $userProfile = new UserProfile();
+        $userProfile = new Profile();
         $userProfile->setFirstName($dto->getFirstName())
             ->setLastName($dto->getLastName())
             ->setBirthDate($dto->getBirthDate())
             ->setCity($dto->getCity())
             ->setAvatarUrl($dto->getAvatarUrl())
             ->setUser($user);
-        $user->setUserProfile($userProfile);
+        $user->setProfile($userProfile);
         $this->userProfileRepository->createOrUpdate($userProfile, false);
         $this->userRepository->createOrUpdate($user, $flush);
     }
