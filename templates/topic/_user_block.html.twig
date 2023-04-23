@@ -1,0 +1,14 @@
+<div class="row mb-5 message-user-block">
+    <div class="col-12 message-user-username">
+        {{ author.username }}<br />
+        {{ author.getRoleTitle|trans }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 message-user-data">
+        {{ 'topic.label.message'|trans }}:
+        {{ author.topics|length }}<br />
+        {{ 'topic.label.register_date'|trans }}:
+        {{ author.createdAt|date('d/m/Y') }}
+    </div>
+</div>
