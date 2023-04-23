@@ -6,7 +6,7 @@
 {% block content %}
     {% include 'topic/_form.html.twig' with {
         'form': form,
-        'user': topic.author,
+        'author': topic.author,
         'forum': topic.forum
     } %}
 {% endblock %}

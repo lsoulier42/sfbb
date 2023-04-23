@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Contract\Service\TopicServiceInterface;
+use App\Contract\Service\MessageServiceInterface;
 use App\Dto\Topic\TopicDto;
 use App\Entity\Forum;
 use App\Entity\Topic;
@@ -23,7 +23,7 @@ class TopicController extends BaseController
         Request $request,
         Forum $forum,
         #[CurrentUser] User $user,
-        TopicServiceInterface $topicService
+        MessageServiceInterface $topicService
     ): Response|RedirectResponse {
         $dto = new TopicDto();
         $form = $this->createForm(TopicType::class, $dto);
@@ -42,7 +42,7 @@ class TopicController extends BaseController
             'topic/new.html.twig',
             [
                 'form' => $form->createView(),
-                'user' => $user,
+                'author' => $user,
                 'forum' => $forum
             ]
         );
@@ -53,7 +53,7 @@ class TopicController extends BaseController
         Request $request,
         Topic $topic,
         #[CurrentUser] User $user,
-        TopicServiceInterface $topicService
+        MessageServiceInterface $topicService
     ): Response|RedirectResponse {
         if ($user !== $topic->getAuthor()) {
             throw new UnauthorizedHttpException('topic.error.cant_edit');

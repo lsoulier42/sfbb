@@ -107,9 +107,6 @@ class UserRegisterType extends AbstractType
                 SubmitType::class,
                 [
                     'label' => 'user.label.register',
-                    'attr' => [
-                        'class' => 'btn btn-primary px-5 mb-2'
-                    ]
                 ]
             );
     }

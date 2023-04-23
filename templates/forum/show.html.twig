@@ -41,7 +41,9 @@
                     {{ topic.posts.count }}
                 </td>
                 <td class="forum-table-row-messages">
-                    {{ topic.author.username }}
+                    <a href="{{ path('user_profile', {'user': topic.author.id}) }}">
+                        {{ topic.author.username }}
+                    </a>
                 </td>
                 <td class="forum-table-row-messages">
                     0

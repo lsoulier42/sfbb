@@ -103,4 +103,19 @@ class Forum extends AbstractEntity
         }
         return $this;
     }
+
+    public function getNbTopics(): int
+    {
+        return $this->getTopics()->count();
+    }
+
+    public function getNbMessages(): int
+    {
+        $nbMessages = $this->getNbTopics();
+        $topics = $this->getTopics()->toArray();
+        array_walk($topics, static function ($topic) use (&$nbMessages) {
+            $nbMessages += (int)($topic->getPosts()->count());
+        });
+        return $nbMessages;
+    }
 }

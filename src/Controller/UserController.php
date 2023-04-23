@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Contract\Service\UserServiceInterface;
 use App\Dto\User\UserLoginDto;
 use App\Dto\User\UserRegisterDto;
+use App\Entity\User;
 use App\Form\User\UserRegisterType;
 use App\Form\User\UserLoginType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -61,6 +62,15 @@ class UserController extends AbstractController
             [
                 'form' => $form->createView()
             ]
+        );
+    }
+
+    #[Route(path: '/{user}/profile', name: 'user_profile')]
+    public function profile(User $user): Response
+    {
+        return $this->render(
+            'user/profile.html.twig',
+            ['user' => $user]
         );
     }
 }

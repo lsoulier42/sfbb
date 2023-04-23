@@ -17,9 +17,27 @@ user:
     birth_date: Date de naissance
     city: Ville
     agree_terms: J'ai lu et j'accepte les règles du site
+    table:
+      login: Se connecter
+      user_info: Informations de connexion
+      profile_info: Informations du profil
   register:
     title: Formulaire d'inscription
     success: Inscription réalisée avec succès
+  profile:
+    title: Profil de l'utilisateur %user%
+    label:
+      table:
+        title: 'Voir le profil :: %user%'
+      all_about: Tout savoir sur %user%
+      avatar: Avatar
+      contact: Adresses de contact
+      firstName: Prénom
+      lastName: Nom
+      register_date: Date d'inscription
+      total_messages: Nombre total de messages
+      city: Ville
+      email: Adresse e-mail
   role:
     label:
       user: Utilisateur
@@ -145,3 +163,16 @@ topic:
     edit: Sujet %topic% édité avec succès
   error:
     cant_edit: Vous ne pouvez pas éditer ce sujet
+post:
+  title:
+    new: Nouvelle réponse au sujet %topic%
+    edit: Editer une réponse au sujet %topic%
+  label:
+    new_post: Poster une nouvelle réponse
+    author: Auteur.e
+    topic: Sujet
+  success:
+    create: Réponse au sujet %topic% créée avec succès
+    edit: Réponse au sujet %topic% éditée avec succès
+  error:
+    cant_edit: Vous ne pouvez pas éditer cette réponse

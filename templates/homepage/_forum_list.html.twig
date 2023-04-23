@@ -29,10 +29,10 @@
                     <span class="small">{{ forum.subTitle }}</span>
                 </td>
                 <td class="forum-table-row-messages">
-                    {{ forum.topics.count }}
+                    {{ forum.getNbTopics }}
                 </td>
                 <td class="forum-table-row-messages">
-                    0
+                    {{ forum.getNbMessages }}
                 </td>
                 <td class="forum-table-row-messages">
                     {{ 'forum.label.no_post'|trans }}

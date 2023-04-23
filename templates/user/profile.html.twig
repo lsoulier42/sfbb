@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block sub_title %}
+    {{ 'user.profile.title'|trans({'%user%': user.username}) }}
+{% endblock %}
+
+{% block content %}
+    <table class="table forum-table my-1">
+        <thead class="text-center forum-table-title">
+            <tr>
+                <th scope="col" colspan="2">{{ 'user.profile.label.table.title'|trans({'%user%': user.username}) }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr class="homepage-category">
+            <th scope="col" class="text-center">
+                {{ 'user.profile.label.avatar'|trans }}
+            </th>
+            <th scope="col">
+                {{ 'user.profile.label.all_about'|trans({'%user%': user.username}) }}
+            </th>
+        </tr>
+        <tr>
+            <td class="forum-table-row-title text-center">
+                {% if user.profile.avatarUrl is not empty %}
+                    <img src="{{ user.profile.avatarUrl }}" alt="avatar user" />
+                {% endif %}
+                <br />
+                {{ user.getRoleTitle()|trans }}
+            </td>
+            <td class="forum-table-row-title" rowspan="3">
+                {{ 'user.profile.label.firstName'|trans }}:
+                {{ user.profile.firstName }}
+                <br />
+                {{ 'user.profile.label.lastName'|trans }}:
+                {{ user.profile.lastName }}
+                <br />
+                {{ 'user.profile.label.register_date'|trans }}:
+                {{ user.createdAt|format_datetime('short', locale='fr') }}
+                <br />
+                {{ 'user.profile.label.total_messages'|trans }}:
+                {{ user.getTotalMessages() }}
+                <br />
+                {{ 'user.profile.label.city'|trans }}:
+                {{ user.profile.city }}
+            </td>
+        </tr>
+        <tr>
+            <th scope="col" class="homepage-category text-center">
+                {{ 'user.profile.label.contact'|trans }}
+            </th>
+        </tr>
+        <tr>
+            <td class="forum-table-row-title">
+                {{ 'user.profile.label.email'|trans }}:
+                {{ user.email }}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+{% endblock %}

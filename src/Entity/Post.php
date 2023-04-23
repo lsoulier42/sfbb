@@ -14,7 +14,7 @@ class Post extends AbstractMessage
     #[ManyToOne(targetEntity: User::class, inversedBy: 'posts')]
     private User $author;
 
-    #[ManyToOne(targetEntity: User::class, inversedBy: 'topics')]
+    #[ManyToOne(targetEntity: Topic::class, inversedBy: 'topics')]
     private Topic $topic;
 
     public function getAuthor(): User

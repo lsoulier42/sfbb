@@ -1,6 +1,9 @@
 <div class="row mb-5 message-user-block">
     <div class="col-12 message-user-username">
-        {{ author.username }}<br />
+        <a href="{{ path('user_profile', {'user': author.id}) }}">
+            {{ author.username }}
+        </a>
+        <br />
         {{ author.getRoleTitle|trans }}
     </div>
 </div>

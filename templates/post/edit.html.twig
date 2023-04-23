@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block sub_title %}
+    {{ 'post.title.edit'|trans({'%topic%': post.topic.title}) }}
+{% endblock %}
+{% block content %}
+    {% include 'post/_form.html.twig' with {
+        'form': form,
+        'author': post.author,
+        'topic': post.topic
+    } %}
+{% endblock %}

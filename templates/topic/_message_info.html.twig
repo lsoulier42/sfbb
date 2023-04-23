@@ -2,10 +2,10 @@
     <div class="col-12">
         <span class="message-info-title">
            <img src="{{ asset('images/icon_minipost.gif') }}" alt="icon mini post" />
-            {{ 'topic.label.subject'|trans({'%title%': message.title}) }}
+            {{ 'topic.label.subject'|trans({'%title%': title}) }}
         </span>
         <span class="message-info-date">
-            - {{ message.createdAt|date('D d M Y - H:i') }}
+            » {{ message.createdAt|format_datetime('full', locale='fr') }}
         </span>
         <span class="float-end message-info-edit-link">
             <a href="{{ edit_link }}">

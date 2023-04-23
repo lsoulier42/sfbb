@@ -208,4 +208,19 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
         $role = $this->getMainRole();
         return $role->getTransKey();
     }
+
+    public function getTotalTopics(): int
+    {
+        return $this->getTopics()->count();
+    }
+
+    public function getTotalPosts(): int
+    {
+        return $this->getPosts()->count();
+    }
+
+    public function getTotalMessages(): int
+    {
+        return $this->getTotalPosts() + $this->getTotalTopics();
+    }
 }

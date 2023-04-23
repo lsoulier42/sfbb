@@ -1,0 +1,20 @@
+<tr>
+    <td rowspan="2" class="forum-table-row-title">
+        {% include 'topic/_user_block.html.twig' with {'author': message.author} only %}
+    </td>
+    <td class="forum-table-row-title">
+        {% include 'topic/_message_info.html.twig' with
+            {
+                'message': message,
+                'edit_link': edit_link,
+                'title': title
+            }
+            only
+        %}
+    </td>
+</tr>
+<tr>
+    <td class="forum-table-row-title" height="200px">
+        {{ message.content|raw }}
+    </td>
+</tr>

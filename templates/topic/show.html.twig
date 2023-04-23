@@ -4,7 +4,7 @@
     {{ 'topic.title.show'|trans({'%topic%': topic.title}) }}
 {% endblock %}
 {% block content %}
-    {% include 'forum/_new_topic.html.twig' with {'forum': topic.forum} only %}
+    {% include 'forum/_new_topic.html.twig' with {'forum': topic.forum, 'topic': topic} only %}
     <table class="table forum-table my-1">
         <tbody>
         {% include 'topic/_topic_title.html.twig' with {'title': topic.title} only %}
@@ -12,27 +12,21 @@
             <th scope="col" width="15%">{{ 'topic.label.author'|trans }}</th>
             <th scope="col">{{ 'topic.label.message'|trans }}</th>
         </tr>
-        <tr>
-            <td rowspan="2" class="forum-table-row-title">
-                {% include 'topic/_user_block.html.twig' with {'author': topic.author} only %}
-            </td>
-            <td class="forum-table-row-title">
-                {% include 'topic/_message_info.html.twig' with
-                    {
-                        'message': topic,
-                        'edit_link': path('topic_edit', {'topic': topic.id})
-                    }
-                    only
-                %}
-            </td>
-        </tr>
-        <tr>
-            <td class="forum-table-row-title" height="200px">
-                {{ topic.content|raw }}
-            </td>
-        </tr>
+        {% include 'topic/_message_block.html.twig' with {
+            'title': topic.title,
+            'message': topic,
+            'author': topic.author,
+            'edit_link': path('topic_edit', {'topic': topic.id})
+        } only %}
+        {% for post in topic.posts %}
+            {% include 'topic/_message_block.html.twig' with {
+                'title': post.topic.title,
+                'message': post,
+                'edit_link': path('post_edit', {'post': post.id})
+            } only %}
+        {% endfor %}
         {% include 'topic/_topic_title.html.twig' with {'title': topic.title} only %}
         </tbody>
     </table>
-    {% include 'forum/_new_topic.html.twig' with {'forum': topic.forum} only %}
+    {% include 'forum/_new_topic.html.twig' with {'forum': topic.forum, 'topic': topic} only %}
 {% endblock %}

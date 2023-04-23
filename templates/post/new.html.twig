@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block sub_title %}
-    {{ 'topic.title.new'|trans }}
+    {{ 'post.title.new'|trans({'%topic%': topic.title}) }}
 {% endblock %}
 {% block content %}
-    {% include 'topic/_form.html.twig' with {
+    {% include 'post/_form.html.twig' with {
         'form': form,
         'author': author,
-        'forum': forum
+        'topic': topic
     } %}
 {% endblock %}
