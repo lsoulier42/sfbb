@@ -96,4 +96,11 @@ class Topic extends AbstractMessage
         $this->forum = $forum;
         return $this;
     }
+
+    public function getLastPost(): ?Post
+    {
+        $posts = $this->getPosts();
+        $lastPost = $posts->last();
+        return $lastPost instanceof Post ? $lastPost : null;
+    }
 }

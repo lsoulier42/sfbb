@@ -1,4 +1,5 @@
-<tr>
+{% set message_id_prefix = message.title is defined ? 'topic_' : 'post_' %}
+<tr id="{{ message_id_prefix ~ message.id }}">
     <td rowspan="2" class="forum-table-row-title">
         {% include 'topic/_user_block.html.twig' with {'author': message.author} only %}
     </td>

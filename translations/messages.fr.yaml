@@ -17,6 +17,7 @@ user:
     birth_date: Date de naissance
     city: Ville
     agree_terms: J'ai lu et j'accepte les règles du site
+    online: 'Membres en ligne : '
     table:
       login: Se connecter
       user_info: Informations de connexion
@@ -56,6 +57,11 @@ menu:
     login_as: Connecté en tant que `%username%`
 homepage:
   title: Accueil
+  label:
+    who_is_online:
+      nb_topics_posted: 'Nos membres ont postés un total de <b>%nbTopics%</b> sujet(s)'
+      nb_registered_users: 'Nous avons <b>%nbUsers%</b> utilisateur(s) enregistrés</b>'
+      last_registered_user: 'Le dernier utilisateur enregistré est '
   table:
     title:
       forum: Forum
@@ -122,7 +128,7 @@ forum:
     add_forum: Ajouter un forum
     category: Catégorie
     select_category: Sélectionner une catégorie
-    no_post: Aucun message
+    no_message: Aucun message
     topics: Sujets
     replies: Réponses
     author: Auteur.e
@@ -158,6 +164,7 @@ topic:
     message: Message
     subject: 'Sujet: %title%'
     register_date: Date d'inscription
+    no_post: Aucune réponse
   success:
     create: Sujet %topic% créé avec succès
     edit: Sujet %topic% édité avec succès

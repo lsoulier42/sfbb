@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\User;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -32,5 +34,47 @@ class UserRepository extends BaseRepository implements PasswordUpgraderInterface
         $user->setPassword($newHashedPassword);
 
         $this->createOrUpdate($user);
+    }
+
+    /**
+     * @return Collection<User>
+     */
+    public function findByOnline(): Collection
+    {
+        $aliasUser = self::ALIAS_USER;
+        $aliasProfile = self::ALIAS_PROFILE;
+        $queryBuilder = $this->createQueryBuilder($aliasUser);
+        self::addTableJoin(
+            $queryBuilder,
+            $aliasUser,
+            'profile',
+            $aliasProfile
+        );
+        $fieldName = self::LAST_ACTIVITY_FIELD;
+        $queryBuilder->andWhere("$aliasProfile.$fieldName IS NOT NULL");
+        $queryBuilder->andWhere("$aliasProfile.$fieldName > DATE_SUB(CURRENT_TIMESTAMP(), 5, 'minute')");
+        return self::getCollectionFromQueryBuilder($queryBuilder);
+    }
+
+    /**
+     * @return User|null
+     * @throws NonUniqueResultException
+     */
+    public function findOneByLastRegistered(): ?User
+    {
+        $aliasUser = self::ALIAS_USER;
+        $queryBuilder = $this->createQueryBuilder($aliasUser);
+        $fieldName = self::CREATED_AT_FIELD;
+        $queryBuilder->orderBy("$aliasUser.$fieldName", Criteria::DESC);
+        $queryBuilder->setMaxResults(1);
+        return $queryBuilder->getQuery()->getOneOrNullResult();
+    }
+
+    public function getNbRegisteredUsers(): int
+    {
+        $aliasUser = self::ALIAS_USER;
+        $queryBuilder = $this->createQueryBuilder($aliasUser);
+        $queryBuilder->select("COUNT($aliasUser.id) as nb_registered_users");
+        return $queryBuilder->getQuery()->getResult()[0]['nb_registered_users'];
     }
 }

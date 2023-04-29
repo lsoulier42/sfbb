@@ -21,6 +21,16 @@ enum RoleEnum: int
         };
     }
 
+    public function getClassColor(): string
+    {
+        return match ($this) {
+            self::ROLE_USER => 'text-success',
+            self::ROLE_MODERATOR => 'text-primary',
+            self::ROLE_SUPER_MODERATOR => 'text-warning',
+            self::ROLE_ADMIN => 'text-danger'
+        };
+    }
+
     public static function fromName(string $name): RoleEnum
     {
         $cases = self::cases();

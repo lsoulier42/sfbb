@@ -4,7 +4,9 @@ namespace App\Repository;
 
 use App\Entity\Category;
 use App\Entity\Forum;
+use App\Entity\Topic;
 use App\Enum\ChangeOrderEnum;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 

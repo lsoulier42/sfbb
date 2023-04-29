@@ -1,0 +1,7 @@
+{{ message.createdAt|format_datetime('full', locale='fr') }}<br />
+{% include 'shared/component/_user_link.html.twig' with {
+    'user': message.author
+} only %}
+{% include 'shared/component/_go_to_message_link.html.twig' with {
+    'message': message
+} only %}

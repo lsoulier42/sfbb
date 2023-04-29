@@ -26,7 +26,7 @@
         </tr>
         </thead>
         <tbody>
-        {% for topic in forum.topics %}
+        {% for topic in topics %}
             <tr>
                 <td width="1%" class="forum-table-row-title text-center align-middle">
                     <img src="{{ asset('images/folder.gif') }}" alt="no new post small icon" />
@@ -41,15 +41,23 @@
                     {{ topic.posts.count }}
                 </td>
                 <td class="forum-table-row-messages">
-                    <a href="{{ path('user_profile', {'user': topic.author.id}) }}">
-                        {{ topic.author.username }}
-                    </a>
+                    {% include 'shared/component/_user_link.html.twig' with
+                        {
+                            'user': topic.author
+                        } only
+                    %}
                 </td>
                 <td class="forum-table-row-messages">
                     0
                 </td>
                 <td class="forum-table-row-messages">
-                    {{ 'forum.label.no_post'|trans }}
+                    {% if topic.lastPost is not null %}
+                        {% include 'shared/component/_last_message.html.twig' with {
+                            'message': topic.lastPost
+                        } only %}
+                    {% else %}
+                        {{ 'topic.label.no_post'|trans }}
+                    {% endif %}
                 </td>
             </tr>
         {% else %}

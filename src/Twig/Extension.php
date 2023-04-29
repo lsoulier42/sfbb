@@ -19,11 +19,18 @@ class Extension extends AbstractExtension
     {
         return [
             new TwigFunction('is_admin', [$this, 'isAdmin']),
+            new TwigFunction('get_role_color_class', [$this, 'getRoleColorClass']),
         ];
     }
 
     public function isAdmin(User $user): bool
     {
         return $this->authorizationChecker->isGranted(RoleEnum::ROLE_ADMIN->name, $user);
+    }
+
+    public function getRoleColorClass(User $user): string
+    {
+        $role = $user->getMainRole();
+        return $role->getClassColor();
     }
 }

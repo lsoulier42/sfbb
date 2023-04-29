@@ -2,6 +2,7 @@
 
 namespace App\Contract\Service;
 
+use App\Dto\ViewModel\CategoryViewModel;
 use App\Entity\Category;
 use App\Enum\ChangeOrderEnum;
 use Doctrine\Common\Collections\Collection;
@@ -13,6 +14,11 @@ interface CategoryServiceInterface
      * @return Collection<Category>
      */
     public function listAll(): Collection;
+
+    /**
+     * @return Collection<CategoryViewModel>
+     */
+    public function getCategoryViewModels(): Collection;
 
     /**
      * @throws NonUniqueResultException

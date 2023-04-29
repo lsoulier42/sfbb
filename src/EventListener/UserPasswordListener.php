@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Event;
+namespace App\EventListener;
 
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;

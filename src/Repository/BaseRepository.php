@@ -6,6 +6,8 @@ use App\Entity\Category;
 use App\Entity\Forum;
 use App\Enum\ChangeOrderEnum;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\Query\Expr\Join;
@@ -16,10 +18,17 @@ abstract class BaseRepository extends ServiceEntityRepository
 {
     public const ALIAS_CATEGORY = 'category';
     public const ALIAS_FORUM = 'forum';
+    public const ALIAS_TOPIC = 'topic';
+    public const ALIAS_POST = 'post';
+    public const ALIAS_USER = 'user';
+    public const ALIAS_PROFILE = 'profile';
 
     public const TITLE_FIELD = 'title';
     public const ORDER_FIELD = 'orderNumber';
     public const CATEGORY_FIELD = 'category';
+    public const FORUM_FIELD = 'forum';
+    public const CREATED_AT_FIELD = 'createdAt';
+    public const LAST_ACTIVITY_FIELD = 'lastActivity';
 
     public function __construct(ManagerRegistry $registry, string $entityClass)
     {
@@ -137,5 +146,10 @@ abstract class BaseRepository extends ServiceEntityRepository
             ->setMaxResults(1);
 
         return $queryBuilder->getQuery()->getOneOrNullResult();
+    }
+
+    public static function getCollectionFromQueryBuilder(QueryBuilder $queryBuilder): Collection
+    {
+        return new ArrayCollection($queryBuilder->getQuery()->getResult());
     }
 }

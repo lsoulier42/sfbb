@@ -27,6 +27,12 @@ class Profile extends AbstractEntity
     #[ORM\Column(nullable: true)]
     private ?string $avatarUrl = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?DateTimeImmutable $lastConnexion = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?DateTimeImmutable $lastActivity = null;
+
     #[ORM\OneToOne]
     private User $user;
 
@@ -93,6 +99,42 @@ class Profile extends AbstractEntity
     public function setUser(User $user): Profile
     {
         $this->user = $user;
+        return $this;
+    }
+
+    /**
+     * @return DateTimeImmutable|null
+     */
+    public function getLastConnexion(): ?DateTimeImmutable
+    {
+        return $this->lastConnexion;
+    }
+
+    /**
+     * @param DateTimeImmutable|null $lastConnexion
+     * @return Profile
+     */
+    public function setLastConnexion(?DateTimeImmutable $lastConnexion): Profile
+    {
+        $this->lastConnexion = $lastConnexion;
+        return $this;
+    }
+
+    /**
+     * @return DateTimeImmutable|null
+     */
+    public function getLastActivity(): ?DateTimeImmutable
+    {
+        return $this->lastActivity;
+    }
+
+    /**
+     * @param DateTimeImmutable|null $lastActivity
+     * @return Profile
+     */
+    public function setLastActivity(?DateTimeImmutable $lastActivity): Profile
+    {
+        $this->lastActivity = $lastActivity;
         return $this;
     }
 }

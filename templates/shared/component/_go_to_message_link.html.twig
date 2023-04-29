@@ -1,0 +1,5 @@
+{% set topic_id = message.title is defined ? message.id : message.topic.id %}
+{% set ancre_prefix = message.title is defined ? 'topic_' : 'post_' %}
+<a href="{{ path('topic_show', {'topic': topic_id}) }}#{{ ancre_prefix ~ message.id }}">
+   <img src="{{ asset('images/icon_latest_reply.gif') }}" alt="icone dernière réponse">
+</a>

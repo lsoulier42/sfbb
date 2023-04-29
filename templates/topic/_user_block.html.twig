@@ -1,8 +1,8 @@
 <div class="row mb-5 message-user-block">
     <div class="col-12 message-user-username">
-        <a href="{{ path('user_profile', {'user': author.id}) }}">
-            {{ author.username }}
-        </a>
+        {% include 'shared/component/_user_link.html.twig' with {
+            'user': author
+        } only %}
         <br />
         {{ author.getRoleTitle|trans }}
     </div>

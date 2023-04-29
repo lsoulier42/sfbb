@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Profile;
+use DateTimeImmutable;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**

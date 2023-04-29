@@ -6,7 +6,9 @@
 
 {% block content %}
     {% include 'homepage/_forum_list.html.twig' with {'categories': categories} only %}
-    {% include 'homepage/_who_is_online.html.twig' %}
+    {% include 'homepage/_who_is_online.html.twig' with {
+        'who_is_online_vm': who_is_online_vm
+    } only %}
     {% if app.user is null %}
         {% include 'homepage/_login_form.html.twig' with {'form': form} only %}
     {% endif %}

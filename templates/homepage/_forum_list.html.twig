@@ -15,7 +15,7 @@
             </td>
             <td colspan="3" class="homepage-category"></td>
         </tr>
-        {% for forum in category.forums %}
+        {% for forum in category.forumViewModels %}
             <tr>
                 <td width="2%" class="forum-table-row-title text-center align-middle">
                     <img src="{{ asset('images/folder_big.gif') }}" alt="no new post icon" />
@@ -29,13 +29,21 @@
                     <span class="small">{{ forum.subTitle }}</span>
                 </td>
                 <td class="forum-table-row-messages">
-                    {{ forum.getNbTopics }}
+                    {{ forum.nbTopics }}
                 </td>
                 <td class="forum-table-row-messages">
-                    {{ forum.getNbMessages }}
+                    {{ forum.nbMessages }}
                 </td>
                 <td class="forum-table-row-messages">
-                    {{ 'forum.label.no_post'|trans }}
+                    {% if forum.lastMessage is not null %}
+                        {% include 'shared/component/_last_message.html.twig' with
+                            {
+                                'message': forum.lastMessage
+                            } only
+                        %}
+                    {% else %}
+                        {{ 'forum.label.no_message'|trans }}
+                    {% endif %}
                 </td>
             </tr>
         {% else %}

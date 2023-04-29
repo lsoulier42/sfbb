@@ -12,17 +12,29 @@
             <img src="{{ asset('images/whosonline.gif') }}" alt="who is online icon" />
         </td>
         <td>
-            Our users have posted a total of ... topics<br />
-            We have ... registered users<br />
-            The newest registered user is ...
+            {{ 'homepage.label.who_is_online.nb_topics_posted'|trans({'%nbTopics%': who_is_online_vm.nbTopics})|raw }}<br />
+            {{ 'homepage.label.who_is_online.nb_registered_users'|trans({'%nbUsers%': who_is_online_vm.nbRegisteredUsers})|raw }}<br />
+            {{ 'homepage.label.who_is_online.last_registered_user'|trans() }}
+            {% include 'shared/component/_user_link.html.twig' with {
+                'user': who_is_online_vm.lastRegisteredUser
+            } only %}
         </td>
     </tr>
     <tr>
         <td>
-            In total there is ... user online :: ... Registered, ... Hidden and ... Guest<br />
-            [ Administrator ]   [ Moderator ]<br />
-            Most users ever online was ... on ...<br />
-            Registered Users: ...
+            {% for role in who_is_online_vm.roles %}
+                <span class="fw-bold {{ role.getClassColor }}">[ {{ role.getTransKey|trans }} ]</span>
+            {% endfor %}
+            <br />
+            {{ 'user.label.online'|trans }}
+            {% for user in who_is_online_vm.usersOnline %}
+                {% include 'shared/component/_user_link.html.twig' with {
+                    'user': user
+                } only %}
+                {% if loop.last == false %}
+                ,
+                {% endif %}
+            {% endfor %}
         </td>
     </tr>
     </tbody>
