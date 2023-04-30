@@ -8,9 +8,11 @@
             » {{ message.createdAt|format_datetime('full', locale='fr') }}
         </span>
         <span class="float-end message-info-edit-link">
-            <a href="{{ edit_link }}">
-                <img src="{{ asset('images/lang_english/icon_edit.gif') }}" alt="icon edit" />
-            </a>
+            {% if can_edit_post(app.user, message) %}
+                <a href="{{ edit_link }}">
+                    <img src="{{ asset('images/lang_english/icon_edit.gif') }}" alt="icon edit" />
+                </a>
+            {% endif %}
         </span>
     </div>
 </div>

@@ -53,15 +53,19 @@ menu:
   category: Catégories
   forum: Forums
   admin: Administration
+  profile: Profil
   user:
     login_as: Connecté en tant que `%username%`
 homepage:
   title: Accueil
   label:
+    current_date: La date actuelle est
     who_is_online:
       nb_topics_posted: 'Nos membres ont postés un total de <b>%nbTopics%</b> sujet(s)'
       nb_registered_users: 'Nous avons <b>%nbUsers%</b> utilisateur(s) enregistrés</b>'
       last_registered_user: 'Le dernier utilisateur enregistré est '
+      roles: 'Roles : '
+      footer: Ces données sont basées sur l'activité des utilisateurs des 5 dernières minutes
   table:
     title:
       forum: Forum

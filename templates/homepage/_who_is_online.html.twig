@@ -1,4 +1,4 @@
-<table class="table forum-table">
+<table class="table forum-table mb-0">
     <thead>
     <tr>
         <th scope="col" colspan="3" class="homepage-category">
@@ -22,8 +22,9 @@
     </tr>
     <tr>
         <td>
+            {{ 'homepage.label.who_is_online.roles'|trans }}
             {% for role in who_is_online_vm.roles %}
-                <span class="fw-bold {{ role.getClassColor }}">[ {{ role.getTransKey|trans }} ]</span>
+                [ <span class="fw-bold {{ role.getClassColor }}">{{ role.getTransKey|trans }}</span> ]
             {% endfor %}
             <br />
             {{ 'user.label.online'|trans }}
@@ -39,3 +40,4 @@
     </tr>
     </tbody>
 </table>
+{{ 'homepage.label.who_is_online.footer'|trans }}

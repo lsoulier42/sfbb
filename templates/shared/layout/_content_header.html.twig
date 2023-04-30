@@ -1,0 +1,2 @@
+{{ 'homepage.label.current_date'|trans }} {{ 'now'|format_datetime('full', locale='fr') }}<br />
+{{ render(controller('App\\Controller\\HomepageController::breadcrumb', {'request': app.request})) }}

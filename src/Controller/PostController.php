@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Contract\Service\AccessServiceInterface;
 use App\Contract\Service\MessageServiceInterface;
 use App\Dto\Topic\PostDto;
 use App\Entity\Post;
@@ -48,10 +49,12 @@ class PostController extends BaseController
         Request $request,
         Post $post,
         #[CurrentUser] User $user,
-        MessageServiceInterface $messageService
+        MessageServiceInterface $messageService,
+        AccessServiceInterface $accessService
     ): Response|RedirectResponse {
-        if ($user !== $post->getAuthor()) {
-            throw new UnauthorizedHttpException('post.error.cant_edit');
+        if (!$accessService->canEditPost($user, $post)) {
+            $this->addErrorMessage('post.error.cant_edit');
+            return $this->redirectToRoute('topic_show', ['topic' => $post->getTopic()->getId()]);
         }
         $dto = $messageService->hydrateDtoWithPost($post);
         $form = $this->createForm(PostType::class, $dto);

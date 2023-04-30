@@ -1,94 +1,94 @@
-.content {
+body {
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 10px;
 
-  .forum-table {
-    background-color: #FFFFFF;
-    border: 2px #006699 solid;
-    border-collapse: separate;
-    .forum-table-title {
-      th {
-        color: #FFA34F;
-        font-size: 11px;
-        font-weight: bold;
-        background-color: #006699;
-        background-image: url('../../images/cellpic3.gif');
-      }
-    }
-
-    .homepage-forum-title {
-      color: #006699;
-      font-size: 12px;
-      font-weight: bold;
-    }
-
-    .forum-table-row-title {
-      background-color: #EFEFEF;
-      border-bottom: 1px #FFFFFF solid;
-    }
-
-    .forum-table-row-messages {
-      background-color: #DEE3E7;
-      text-align: center;
-      vertical-align: middle;
-      border-bottom: 0;
-    }
-
-    .homepage-category {
-      background-color:rgba(209, 215, 220, 0.6);
-      height: 28px;
-      border: 0;
-      border-left-width: 1px;
-
-      .homepage-category-title {
-        font-weight: bold;
-        font-size: 12px;
-        letter-spacing: 1px;
-        color: #006699;
-      }
-    }
-    .forum-table-online {
-      background-color: #EFEFEF;
-      border-bottom: 1px #FFFFFF solid;
-    }
-  }
-
   a:link, a:active, a:visited {
     color: #006699;
-  }
-
-  .forum-show-title {
-    font-weight: bold;
-    font-size: 22px;
-    font-family: "Trebuchet MS",Verdana, Arial, Helvetica, sans-serif;
-    line-height: 120%;
     text-decoration: none;
   }
 
-  .forum-show-info {
-    font-size: 10px;
-    color: black;
-    font-weight: bold;
-    font-family: Verdana, Arial, Helvetica, sans-serif;
-  }
-
-  .forum-topic-title {
-    font-weight: bold;
-    text-decoration: none;
-  }
-  .forum-topic-title:hover {
+  a:hover {
     color: #dd6900;
     text-decoration: underline;
   }
 
-  .topic-show-title {
-    font-weight: 700;
-    font-size: 12px;
-    letter-spacing: 1px;
-    color: #069;
-  }
+  .content {
+    .forum-table {
+      background-color: #FFFFFF;
+      border: 2px #006699 solid;
+      border-collapse: separate;
+      .forum-table-title {
+        th {
+          color: #FFA34F;
+          font-size: 11px;
+          font-weight: bold;
+          background-color: #006699;
+          background-image: url('../../images/cellpic3.gif');
+        }
+      }
 
-  .role-link {
-    text-decoration: none !important;
+      .homepage-forum-title {
+        color: #006699;
+        font-size: 12px;
+        font-weight: bold;
+      }
+
+      .forum-table-row-title {
+        background-color: #EFEFEF;
+        border-bottom: 1px #FFFFFF solid;
+      }
+
+      .forum-table-row-messages {
+        background-color: #DEE3E7;
+        text-align: center;
+        vertical-align: middle;
+        border-bottom: 0;
+      }
+
+      .homepage-category {
+        background-color:rgba(209, 215, 220, 0.6);
+        height: 28px;
+        border: 0;
+        border-left-width: 1px;
+
+        .homepage-category-title {
+          font-weight: bold;
+          font-size: 12px;
+          letter-spacing: 1px;
+          color: #006699;
+        }
+      }
+      .forum-table-online {
+        background-color: #EFEFEF;
+        border-bottom: 1px #FFFFFF solid;
+      }
+    }
+
+    .forum-show-title {
+      font-weight: bold;
+      font-size: 22px;
+      font-family: "Trebuchet MS",Verdana, Arial, Helvetica, sans-serif;
+      line-height: 120%;
+      text-decoration: none;
+    }
+
+    .forum-show-info {
+      font-size: 10px;
+      color: black;
+      font-weight: bold;
+      font-family: Verdana, Arial, Helvetica, sans-serif;
+    }
+
+    .forum-topic-title {
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .topic-show-title {
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 1px;
+      color: #069;
+    }
   }
 }

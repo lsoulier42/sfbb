@@ -1,50 +1,29 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-            <img src="{{ asset('images/discuter.png') }}" alt="application icon" height="40px" />
-            {{ 'project.name'|trans }}
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarSupportedContent">
-            <div class="user-content mb-1">
-                {% if app.user %}
-                    {{ 'menu.user.login_as'|trans({'%username%': app.user.username}) }}
+<div class="row justify-content-between">
+    <div class="col-2">
+        <a href="{{ path('homepage') }}"><img src="{{ asset('images/discuter.png') }}" alt="logo site" width="80px" /></a>
+    </div>
+    <div class="col-4">
+        <div class="row justify-content-center">
+            <div class="col-8">
+                <h3>Forum test SFBB</h3>
+                <img src="{{ asset('images/mini/icon_mini_house.gif') }}" alt="icon admin" />
+                <a href="{{ path('homepage') }}" class="pe-1">{{ 'menu.homepage'|trans }}</a>
+                {% if app.user is not null %}
+                    {% if is_admin(app.user) %}
+                        <img src="{{ asset('images/mini/icon_mini_gallery.gif') }}" alt="icon admin" />
+                        <a href="{{ path('admin_index') }}" class="pe-1">{{ 'menu.admin'|trans }}</a>
+                    {% endif %}
+                    <img src="{{ asset('images/mini/icon_mini_profile.gif') }}" alt="icon profile" />
+                    <a href="{{ path('user_profile', {'user': app.user.id}) }}" class="pe-1">{{ 'menu.profile'|trans }}</a>
+                    <img src="{{ asset('images/mini/icon_mini_login.gif') }}" alt="icon logout" />
+                    <a href="{{ path('user_logout') }}" class="pe-1">{{ 'menu.logout'|trans }}</a>
+                {% else %}
+                    <img src="{{ asset('images/mini/icon_mini_login.gif') }}" alt="icon logout" />
+                    <a href="{{ path('user_login') }}" class="pe-1">{{ 'menu.login'|trans }}</a>
+                    <img src="{{ asset('images/mini/icon_mini_register.gif') }}" alt="icon register" />
+                    <a href="{{ path('user_register') }}" class="pe-1">{{ 'menu.register'|trans }}</a>
                 {% endif %}
             </div>
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/">{{ 'menu.homepage'|trans }}</a>
-                </li>
-                {% if app.user is null %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('user_login') }}">{{ 'menu.login'|trans }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('user_register') }}">{{ 'menu.register'|trans }}</a>
-                    </li>
-                {% else %}
-                    {% if is_admin(app.user) %}
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                {{ 'menu.admin'|trans }}
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a class="dropdown-item" href="{{ path('category_index') }}">{{ 'menu.category'|trans }}</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ path('forum_index') }}">{{ 'menu.forum'|trans }}</a>
-                                </li>
-                            </ul>
-                        </li>
-                    {% endif %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('user_logout') }}">{{ 'menu.logout'|trans }}</a>
-                    </li>
-                {% endif %}
-            </ul>
         </div>
     </div>
-</nav>
+</div>

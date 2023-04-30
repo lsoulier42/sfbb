@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ForumRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
@@ -31,6 +32,12 @@ class Forum extends AbstractEntity
      */
     #[OneToMany(mappedBy: 'forum', targetEntity: Topic::class)]
     private Collection $topics;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->topics = new ArrayCollection();
+    }
 
     public function getTitle(): string
     {

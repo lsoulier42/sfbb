@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Contract\Service\AccessServiceInterface;
 use App\Contract\Service\MessageServiceInterface;
 use App\Dto\Topic\TopicDto;
 use App\Entity\Forum;
@@ -11,7 +12,6 @@ use App\Form\Topic\TopicType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
@@ -53,10 +53,12 @@ class TopicController extends BaseController
         Request $request,
         Topic $topic,
         #[CurrentUser] User $user,
-        MessageServiceInterface $topicService
+        MessageServiceInterface $topicService,
+        AccessServiceInterface $accessService
     ): Response|RedirectResponse {
-        if ($user !== $topic->getAuthor()) {
-            throw new UnauthorizedHttpException('topic.error.cant_edit');
+        if (!$accessService->canEditPost($user, $topic)) {
+            $this->addErrorMessage('topic.error.cant_edit');
+            return $this->redirectToRoute('topic_show', ['topic' => $topic->getId()]);
         }
         $dto = $topicService->hydrateDtoWithTopic($topic);
         $form = $this->createForm(TopicType::class, $dto);

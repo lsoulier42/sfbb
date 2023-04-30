@@ -18,7 +18,7 @@ class UserService implements UserServiceInterface
     ) {
     }
 
-    public function createNewUser(AbstractUserCreateDto $dto, bool $flush = true): void
+    public function createNewUser(AbstractUserCreateDto $dto, bool $flush = true): User
     {
         $user = new User();
         $user->setUsername($dto->getUsername())
@@ -36,5 +36,6 @@ class UserService implements UserServiceInterface
         $user->setProfile($userProfile);
         $this->userProfileRepository->createOrUpdate($userProfile, false);
         $this->userRepository->createOrUpdate($user, $flush);
+        return $user;
     }
 }

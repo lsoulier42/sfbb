@@ -1,0 +1,6 @@
+{% for breadcrumb_element in breadcrumb_list %}
+    <a href="{{ breadcrumb_element.link }}" class="fw-bold">{{ breadcrumb_element.title }}</a>
+    {% if loop.last == false %}
+    ->
+    {% endif %}
+{% endfor %}

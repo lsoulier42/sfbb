@@ -22,25 +22,34 @@
             {% endblock %}
         {% endblock %}
     </head>
-    <body>
-        {% block body %}
-            {% block header %}
-                {% include 'shared/layout/_menu.html.twig' %}
-            {% endblock %}
-            <div class="row justify-content-center">
-                <div class="col-10">
-                    {% block alert %}
-                        {% include 'shared/layout/_alert.html.twig' %}
-                    {% endblock %}
+    <body class="bg-black bg-opacity-25 py-3">
+        <div class="row justify-content-center">
+            <div class="col-10 border border-dark border-opacity-75 bg-white">
+                {% block body %}
+                    <div class="header my-3">
+                        {% block header %}
+                            {% include 'shared/layout/_menu.html.twig' %}
+                        {% endblock %}
+                    </div>
+                    <div class="body-alert">
+                        {% block alert %}
+                            {% include 'shared/layout/_alert.html.twig' %}
+                        {% endblock %}
+                    </div>
                     <div class="content">
+                        {% block breadcrumb %}
+                            {% include 'shared/layout/_content_header.html.twig' %}
+                        {% endblock %}
                         {% block content %}
                         {% endblock %}
                     </div>
-                </div>
+                    <div class="footer my-3">
+                        {% block footer %}
+                        {% endblock %}
+                    </div>
+                {% endblock %}
             </div>
-            {% block footer %}
-            {% endblock %}
-        {% endblock %}
+        </div>
         {% block additionnal_javascripts_bottom %}
         {% endblock %}
     </body>
