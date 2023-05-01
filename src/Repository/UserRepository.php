@@ -2,11 +2,16 @@
 
 namespace App\Repository;
 
+use App\Dto\Pager\PagerDto;
+use App\Dto\User\MemberFilterDto;
 use App\Entity\User;
+use App\Enum\RoleEnum;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use Pagerfanta\Pagerfanta;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
@@ -76,5 +81,107 @@ class UserRepository extends BaseRepository implements PasswordUpgraderInterface
         $queryBuilder = $this->createQueryBuilder($aliasUser);
         $queryBuilder->select("COUNT($aliasUser.id) as nb_registered_users");
         return $queryBuilder->getQuery()->getResult()[0]['nb_registered_users'];
+    }
+
+    /**
+     * @param PagerDto $dto
+     * @return Pagerfanta<User>
+     */
+    public function findAllPaginated(PagerDto $dto): Pagerfanta
+    {
+        return self::createPaginator($this->createQueryBuilder(self::ALIAS_USER), $dto);
+    }
+
+    /**
+     * @param MemberFilterDto $dto
+     * @return Pagerfanta<User>
+     */
+    public function findByFilterDtoPaginated(MemberFilterDto $dto): Pagerfanta
+    {
+        $alias = self::ALIAS_USER;
+        $queryBuilder = $this->createQueryBuilder($alias);
+        $username = $dto->getUsername();
+        if (!empty($username)) {
+            self::addUsernameLike($queryBuilder, $username, $alias);
+        }
+        $name = $dto->getName();
+        if (!empty($name)) {
+            self::addNameLike($queryBuilder, $name, $alias);
+        }
+        $city = $dto->getCity();
+        if (!empty($city)) {
+            self::addCityLike($queryBuilder, $city, $alias);
+        }
+        $role = $dto->getRole();
+        if ($role !== null) {
+            self::addRoleWhere($queryBuilder, $role, $alias);
+        }
+        return self::createPaginator($queryBuilder, $dto);
+    }
+
+    public static function addUsernameLike(
+        QueryBuilder $queryBuilder,
+        string $username,
+        string $alias
+    ): QueryBuilder {
+        return self::addFieldLike(
+            $queryBuilder,
+            $alias,
+            self::USERNAME_FIELD,
+            $username
+        );
+    }
+
+    public static function addNameLike(
+        QueryBuilder $queryBuilder,
+        string $name,
+        string $aliasUser,
+        string $aliasProfile = self::ALIAS_PROFILE
+    ): QueryBuilder {
+        self::addProfileJoin($queryBuilder, $aliasUser, $aliasProfile);
+        return self::addMultipleFieldsLikeSameValue(
+            $queryBuilder,
+            $aliasProfile,
+            [self::FIRST_NAME_FIELD, self::LAST_NAME_FIELD],
+            $name
+        );
+    }
+
+    public static function addProfileJoin(
+        QueryBuilder $queryBuilder,
+        string $aliasUser,
+        string $aliasProfile
+    ): QueryBuilder {
+        return self::addTableJoin(
+            $queryBuilder,
+            $aliasUser,
+            self::PROFILE_FIELD,
+            $aliasProfile
+        );
+    }
+
+    public static function addCityLike(
+        QueryBuilder $queryBuilder,
+        string $city,
+        string $aliasUser,
+        string $aliasProfile = self::ALIAS_PROFILE
+    ): QueryBuilder {
+        self::addProfileJoin($queryBuilder, $aliasUser, $aliasProfile);
+        return self::addFieldLike(
+            $queryBuilder,
+            $aliasProfile,
+            self::CITY_FIELD,
+            $city
+        );
+    }
+
+    public static function addRoleWhere(
+        QueryBuilder $queryBuilder,
+        RoleEnum $role,
+        string $aliasUser
+    ): QueryBuilder {
+        $roleName = self::ROLES_FIELD;
+        return $queryBuilder->andWhere("JSON_GET_TEXT($aliasUser.$roleName, 0) = :$roleName")
+            ->setParameter($roleName, $role->name);
     }
 }

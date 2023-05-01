@@ -12,6 +12,7 @@
         <link rel="icon" href="{{ asset('images/favicon.ico') }}">
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
+            <link rel="stylesheet" href="{{ asset('bundles/babdevpagerfanta/css/pagerfanta.css') }}">
             {% block additionnal_stylesheets %}
             {% endblock %}
         {% endblock %}

@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Dto\Pager\PagerDto;
 use App\Entity\Forum;
 use App\Entity\Post;
 use App\Entity\Topic;
@@ -11,6 +12,7 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use Pagerfanta\Pagerfanta;
 
 /**
  * @method Topic|null find($id, $lockMode = null, $lockVersion = null)
@@ -31,6 +33,21 @@ class TopicRepository extends BaseRepository
      */
     public function findByLatestPost(Forum $forum): Collection
     {
+        return self::getCollectionFromQueryBuilder($this->findByLatestPostQueryBuilder($forum));
+    }
+
+    /**
+     * @param Forum $forum
+     * @param PagerDto $dto
+     * @return Pagerfanta<Topic>
+     */
+    public function findByLatestPostPaginated(Forum $forum, PagerDto $dto): Pagerfanta
+    {
+        return self::createPaginator($this->findByLatestPostQueryBuilder($forum), $dto);
+    }
+
+    private function findByLatestPostQueryBuilder(Forum $forum): QueryBuilder
+    {
         $aliasTopic = self::ALIAS_TOPIC;
         $aliasPost = self::ALIAS_POST;
         $subAliasPost = $aliasPost . '_2';
@@ -44,21 +61,13 @@ class TopicRepository extends BaseRepository
             ->where("$subAliasPost.topic = $aliasTopic");
         $queryBuilder->andWhere("($aliasPost.createdAt = (" .
             $subQueryBuilder->getQuery()->getDQL() . ") OR $aliasPost.id IS NULL)");
-        $queryBuilder
-            ->addSelect("
-                (CASE
+        return $queryBuilder->addOrderBy(
+            "CASE
                     WHEN $aliasPost.id IS NOT NULL THEN $aliasPost.$createdAtField
                     ELSE $aliasTopic.$createdAtField
-                END) AS last_message_date
-            ");
-        $queryBuilder->addOrderBy(
-            "last_message_date",
+                END",
             Criteria::DESC
         );
-        $results = $queryBuilder->getQuery()->getResult();
-        return new ArrayCollection(array_map(static function ($el) {
-            return $el[0];
-        }, $results));
     }
 
     public static function addForumWhere(

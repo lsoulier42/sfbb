@@ -9,6 +9,7 @@ use App\Entity\Forum;
 use App\Entity\Topic;
 use App\Entity\User;
 use App\Form\Topic\TopicType;
+use App\Repository\PostRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -84,12 +85,19 @@ class TopicController extends BaseController
 
     #[Route(path: '/{topic}/show', name: 'topic_show')]
     public function show(
-        Topic $topic
+        Request $request,
+        Topic $topic,
+        PostRepository $postRepository
     ): Response {
+        $posts = $postRepository->findAllPaginated(
+            $topic,
+            self::hydratePagerDto($request)
+        );
         return $this->render(
             'topic/show.html.twig',
             [
-                'topic' => $topic
+                'topic' => $topic,
+                'posts' => $posts
             ]
         );
     }

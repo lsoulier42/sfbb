@@ -4,7 +4,7 @@
     {{ 'topic.title.show'|trans({'%topic%': topic.title}) }}
 {% endblock %}
 {% block content %}
-    {% include 'forum/_new_topic.html.twig' with {'forum': topic.forum, 'topic': topic} only %}
+    {% include 'forum/_new_topic.html.twig' with {'forum': topic.forum, 'topic': topic, 'pager': posts } only %}
     <table class="table forum-table my-1">
         <tbody>
         {% include 'topic/_topic_title.html.twig' with {'title': topic.title} only %}
@@ -18,7 +18,7 @@
             'author': topic.author,
             'edit_link': path('topic_edit', {'topic': topic.id})
         } only %}
-        {% for post in topic.posts %}
+        {% for post in posts %}
             {% include 'topic/_message_block.html.twig' with {
                 'title': post.topic.title,
                 'message': post,
@@ -28,5 +28,5 @@
         {% include 'topic/_topic_title.html.twig' with {'title': topic.title} only %}
         </tbody>
     </table>
-    {% include 'forum/_new_topic.html.twig' with {'forum': topic.forum, 'topic': topic} only %}
+    {% include 'forum/_new_topic.html.twig' with {'forum': topic.forum, 'topic': topic, 'pager': posts } only %}
 {% endblock %}

@@ -14,7 +14,7 @@
             {{ 'forum.label.users_browsing'|trans }} : {{ 'global.label.none'|trans }}
         </span>
     </div>
-    {% include 'forum/_new_topic.html.twig' with {'forum': forum} only %}
+    {% include 'forum/_new_topic.html.twig' with {'forum': forum, 'pager': topics} only %}
     <table class="table forum-table my-1">
         <thead class="text-center forum-table-title">
         <tr>
@@ -67,5 +67,5 @@
         {% endfor %}
         </tbody>
     </table>
-    {% include 'forum/_new_topic.html.twig' with {'forum': forum} only %}
+    {% include 'forum/_new_topic.html.twig' with {'forum': forum, 'pager': topics} only %}
 {% endblock %}

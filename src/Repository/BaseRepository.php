@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Dto\Pager\PagerDto;
 use App\Entity\Category;
 use App\Entity\Forum;
 use App\Enum\ChangeOrderEnum;
@@ -11,8 +12,11 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\ORM\Query\Expr\Orx;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
+use Pagerfanta\Pagerfanta;
 
 abstract class BaseRepository extends ServiceEntityRepository
 {
@@ -29,6 +33,14 @@ abstract class BaseRepository extends ServiceEntityRepository
     public const FORUM_FIELD = 'forum';
     public const CREATED_AT_FIELD = 'createdAt';
     public const LAST_ACTIVITY_FIELD = 'lastActivity';
+    public const POST_FIELD = 'post';
+    public const TOPIC_FIELD = 'topic';
+    public const USERNAME_FIELD = 'username';
+    public const CITY_FIELD = 'city';
+    public const ROLES_FIELD = 'roles';
+    public const PROFILE_FIELD = 'profile';
+    public const FIRST_NAME_FIELD = 'firstName';
+    public const LAST_NAME_FIELD = 'lastName';
 
     public function __construct(ManagerRegistry $registry, string $entityClass)
     {
@@ -74,11 +86,36 @@ abstract class BaseRepository extends ServiceEntityRepository
         string $fieldName,
         mixed $fieldValue,
     ): QueryBuilder {
+        $orx = new Orx();
+        self::formatOrxLike($queryBuilder, $orx, $alias, $fieldName, $fieldValue);
+        return $queryBuilder->andWhere($queryBuilder->expr()->orX($orx));
+    }
+
+    private static function formatOrxLike(
+        QueryBuilder $queryBuilder,
+        Orx $orx,
+        string $alias,
+        string $fieldName,
+        mixed $fieldValue
+    ): void {
         $fieldWithAlias = "$alias.$fieldName";
-        return $queryBuilder->andWhere($queryBuilder->expr()->orX(
-            $queryBuilder->expr()->like($fieldWithAlias, $queryBuilder->expr()->literal("%$fieldValue%")),
-            $queryBuilder->expr()->like($fieldWithAlias, $queryBuilder->expr()->literal("$fieldValue%"))
-        ));
+        $likeVersions = ["%$fieldValue%", "$fieldValue%", "%$fieldValue"];
+        foreach ($likeVersions as $version) {
+            $orx->add($queryBuilder->expr()->like($fieldWithAlias, $queryBuilder->expr()->literal($version)));
+        }
+    }
+
+    public static function addMultipleFieldsLikeSameValue(
+        QueryBuilder $queryBuilder,
+        string $alias,
+        array $fieldsNames,
+        mixed $fieldValue
+    ): QueryBuilder {
+        $orx = new Orx();
+        foreach ($fieldsNames as $fieldName) {
+           self::formatOrxLike($queryBuilder, $orx, $alias, $fieldName, $fieldValue);
+        }
+        return $queryBuilder->andWhere($queryBuilder->expr()->orX($orx));
     }
 
     public static function addFieldAndWhere(
@@ -151,5 +188,17 @@ abstract class BaseRepository extends ServiceEntityRepository
     public static function getCollectionFromQueryBuilder(QueryBuilder $queryBuilder): Collection
     {
         return new ArrayCollection($queryBuilder->getQuery()->getResult());
+    }
+
+    public static function createPaginator(
+        QueryBuilder $queryBuilder,
+        PagerDto $dto
+    ): Pagerfanta {
+        $adapter = new QueryAdapter($queryBuilder);
+        return Pagerfanta::createForCurrentPageWithMaxPerPage(
+            $adapter,
+            $dto->getCurrentPage(),
+            $dto->getItemsPerPage()
+        );
     }
 }

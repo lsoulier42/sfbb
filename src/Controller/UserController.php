@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Contract\Service\UserServiceInterface;
+use App\Dto\User\MemberFilterDto;
 use App\Dto\User\UserLoginDto;
 use App\Dto\User\UserRegisterDto;
 use App\Entity\User;
+use App\Form\User\MemberFilterType;
 use App\Form\User\UserRegisterType;
 use App\Form\User\UserLoginType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/user')]
-class UserController extends AbstractController
+class UserController extends BaseController
 {
     #[Route(path: '/login', name: 'user_login')]
     public function login(): Response
@@ -71,6 +73,24 @@ class UserController extends AbstractController
         return $this->render(
             'user/profile.html.twig',
             ['user' => $user]
+        );
+    }
+    #[Route(path: '/members-list', name: 'user_members_list')]
+    public function membersList(
+        Request $request,
+        UserServiceInterface $userService
+    ): Response {
+        $dto = new MemberFilterDto();
+        self::hydrateFilterDto($request, $dto);
+        $form = $this->createForm(MemberFilterType::class, $dto);
+        $form->handleRequest($request);
+        $members = $userService->findByFilterDtoPaginated($dto);
+        return $this->render(
+            'user/member_list.html.twig',
+            [
+                'members' => $members,
+                'form' => $form->createView()
+            ]
         );
     }
 }

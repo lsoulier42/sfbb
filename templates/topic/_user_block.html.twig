@@ -9,8 +9,9 @@
 </div>
 <div class="row">
     <div class="col-12 message-user-data">
-        {{ 'topic.label.message'|trans }}:
-        {{ author.topics|length }}<br />
+        {% set nbMessages = author.topics|length %}
+        {{ 'topic.label.message'|trans({}, null, null, nbMessages) }} :
+        {{ nbMessages }}<br />
         {{ 'topic.label.register_date'|trans }}:
         {{ author.createdAt|date('d/m/Y') }}
     </div>

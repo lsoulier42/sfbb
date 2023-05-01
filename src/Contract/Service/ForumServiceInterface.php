@@ -2,6 +2,7 @@
 
 namespace App\Contract\Service;
 
+use App\Dto\Pager\PagerDto;
 use App\Dto\ViewModel\ForumViewModel;
 use App\Entity\Category;
 use App\Entity\Forum;
@@ -9,6 +10,7 @@ use App\Entity\Topic;
 use App\Enum\ChangeOrderEnum;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\NonUniqueResultException;
+use Pagerfanta\Pagerfanta;
 
 interface ForumServiceInterface
 {
@@ -22,6 +24,13 @@ interface ForumServiceInterface
      * @throws NonUniqueResultException
      */
     public function changeOrder(Forum $forum, ChangeOrderEnum $direction): void;
+
+    /**
+     * @param Forum $forum
+     * @param PagerDto $dto
+     * @return Pagerfanta<Topic>
+     */
+    public function getTopicsByLatestsPostsPaginated(Forum $forum, PagerDto $dto): Pagerfanta;
 
     /**
      * @param Forum $forum

@@ -1,5 +1,5 @@
 <div class="row justify-content-between">
-    <div class="col-2">
+    <div class="col-auto">
         <a href="{{ path('homepage') }}"><img src="{{ asset('images/discuter.png') }}" alt="logo site" width="80px" /></a>
     </div>
     <div class="col-4">
@@ -15,6 +15,9 @@
                     {% endif %}
                     <img src="{{ asset('images/mini/icon_mini_profile.gif') }}" alt="icon profile" />
                     <a href="{{ path('user_profile', {'user': app.user.id}) }}" class="pe-1">{{ 'menu.profile'|trans }}</a>
+                    <br />
+                    <img src="{{ asset('images/mini/icon_mini_members.gif') }}" alt="icon members-list" />
+                    <a href="{{ path('user_members_list') }}" class="pe-1">{{ 'menu.members_list'|trans }}</a>
                     <img src="{{ asset('images/mini/icon_mini_login.gif') }}" alt="icon logout" />
                     <a href="{{ path('user_logout') }}" class="pe-1">{{ 'menu.logout'|trans }}</a>
                 {% else %}

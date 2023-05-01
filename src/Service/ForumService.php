@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Contract\Service\ForumServiceInterface;
+use App\Dto\Pager\PagerDto;
 use App\Dto\ViewModel\ForumViewModel;
 use App\Entity\Category;
 use App\Entity\Forum;
@@ -16,6 +17,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\NonUniqueResultException;
 use InvalidArgumentException;
 use LogicException;
+use Pagerfanta\Pagerfanta;
 
 class ForumService implements ForumServiceInterface
 {
@@ -60,6 +62,14 @@ class ForumService implements ForumServiceInterface
         $next->setOrderNumber($forum->getOrderNumber());
         $forum->setOrderNumber($oldOrder);
         $this->forumRepository->createOrUpdate($forum);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getTopicsByLatestsPostsPaginated(Forum $forum, PagerDto $dto): Pagerfanta
+    {
+        return $this->topicRepository->findByLatestPostPaginated($forum, $dto);
     }
 
     /**
