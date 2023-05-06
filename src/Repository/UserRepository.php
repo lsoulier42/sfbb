@@ -47,17 +47,10 @@ class UserRepository extends BaseRepository implements PasswordUpgraderInterface
     public function findByOnline(): Collection
     {
         $aliasUser = self::ALIAS_USER;
-        $aliasProfile = self::ALIAS_PROFILE;
         $queryBuilder = $this->createQueryBuilder($aliasUser);
-        self::addTableJoin(
-            $queryBuilder,
-            $aliasUser,
-            'profile',
-            $aliasProfile
-        );
         $fieldName = self::LAST_ACTIVITY_FIELD;
-        $queryBuilder->andWhere("$aliasProfile.$fieldName IS NOT NULL");
-        $queryBuilder->andWhere("$aliasProfile.$fieldName > DATE_SUB(CURRENT_TIMESTAMP(), 5, 'minute')");
+        $queryBuilder->andWhere("$aliasUser.$fieldName IS NOT NULL");
+        $queryBuilder->andWhere("$aliasUser.$fieldName > DATE_SUB(CURRENT_TIMESTAMP(), 5, 'minute')");
         return self::getCollectionFromQueryBuilder($queryBuilder);
     }
 
@@ -135,28 +128,13 @@ class UserRepository extends BaseRepository implements PasswordUpgraderInterface
     public static function addNameLike(
         QueryBuilder $queryBuilder,
         string $name,
-        string $aliasUser,
-        string $aliasProfile = self::ALIAS_PROFILE
+        string $aliasUser
     ): QueryBuilder {
-        self::addProfileJoin($queryBuilder, $aliasUser, $aliasProfile);
         return self::addMultipleFieldsLikeSameValue(
             $queryBuilder,
-            $aliasProfile,
+            $aliasUser,
             [self::FIRST_NAME_FIELD, self::LAST_NAME_FIELD],
             $name
-        );
-    }
-
-    public static function addProfileJoin(
-        QueryBuilder $queryBuilder,
-        string $aliasUser,
-        string $aliasProfile
-    ): QueryBuilder {
-        return self::addTableJoin(
-            $queryBuilder,
-            $aliasUser,
-            self::PROFILE_FIELD,
-            $aliasProfile
         );
     }
 
@@ -164,12 +142,10 @@ class UserRepository extends BaseRepository implements PasswordUpgraderInterface
         QueryBuilder $queryBuilder,
         string $city,
         string $aliasUser,
-        string $aliasProfile = self::ALIAS_PROFILE
     ): QueryBuilder {
-        self::addProfileJoin($queryBuilder, $aliasUser, $aliasProfile);
         return self::addFieldLike(
             $queryBuilder,
-            $aliasProfile,
+            $aliasUser,
             self::CITY_FIELD,
             $city
         );

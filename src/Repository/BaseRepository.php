@@ -25,7 +25,6 @@ abstract class BaseRepository extends ServiceEntityRepository
     public const ALIAS_TOPIC = 'topic';
     public const ALIAS_POST = 'post';
     public const ALIAS_USER = 'user';
-    public const ALIAS_PROFILE = 'profile';
 
     public const TITLE_FIELD = 'title';
     public const ORDER_FIELD = 'orderNumber';
@@ -38,7 +37,6 @@ abstract class BaseRepository extends ServiceEntityRepository
     public const USERNAME_FIELD = 'username';
     public const CITY_FIELD = 'city';
     public const ROLES_FIELD = 'roles';
-    public const PROFILE_FIELD = 'profile';
     public const FIRST_NAME_FIELD = 'firstName';
     public const LAST_NAME_FIELD = 'lastName';
 

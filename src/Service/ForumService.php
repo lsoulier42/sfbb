@@ -14,7 +14,6 @@ use App\Repository\ForumRepository;
 use App\Repository\TopicRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\NonUniqueResultException;
 use InvalidArgumentException;
 use LogicException;
 use Pagerfanta\Pagerfanta;

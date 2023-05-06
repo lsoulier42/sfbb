@@ -6,7 +6,6 @@ use App\Dto\Pager\PagerDto;
 use App\Entity\Forum;
 use App\Entity\Post;
 use App\Entity\Topic;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Query\Expr\Join;

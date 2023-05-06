@@ -30,10 +30,17 @@ class Topic extends AbstractMessage
     #[ManyToOne(targetEntity: Forum::class, inversedBy: 'topics')]
     private Forum $forum;
 
+    /**
+     * @var Collection<UserTopicView>
+     */
+    #[OneToMany(mappedBy: 'topic', targetEntity: UserTopicView::class)]
+    private Collection $userViews;
+
     public function __construct()
     {
         parent::__construct();
         $this->posts = new ArrayCollection();
+        $this->userViews = new ArrayCollection();
     }
 
     public function getTitle(): string
@@ -102,5 +109,40 @@ class Topic extends AbstractMessage
         $posts = $this->getPosts();
         $lastPost = $posts->last();
         return $lastPost instanceof Post ? $lastPost : null;
+    }
+
+    /**
+     * @return Collection<UserTopicView>
+     */
+    public function getUserViews(): Collection
+    {
+        return $this->userViews;
+    }
+
+    /**
+     * @param Collection<UserTopicView> $userViews
+     * @return Topic
+     */
+    public function setUserViews(Collection $userViews): Topic
+    {
+        $this->userViews = $userViews;
+        return $this;
+    }
+
+    public function addUserView(UserTopicView $userView): Topic
+    {
+        if (!$this->userViews->contains($userView)) {
+            $this->userViews->add($userView);
+        }
+        $userView->setTopic($this);
+        return $this;
+    }
+
+    public function removeUserView(UserTopicView $userView): Topic
+    {
+        if ($this->userViews->contains($userView)) {
+            $this->userViews->removeElement($userView);
+        }
+        return $this;
     }
 }

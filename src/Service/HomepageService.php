@@ -7,6 +7,7 @@ use App\Dto\ViewModel\WhoIsOnlineViewModel;
 use App\Enum\RoleEnum;
 use App\Repository\TopicRepository;
 use App\Repository\UserRepository;
+use Doctrine\ORM\NonUniqueResultException;
 
 class HomepageService implements HomepageServiceInterface
 {
@@ -16,6 +17,9 @@ class HomepageService implements HomepageServiceInterface
     ) {
     }
 
+    /**
+     * @throws NonUniqueResultException
+     */
     public function getWhoIsOnlineVm(): WhoIsOnlineViewModel
     {
         $vm = new WhoIsOnlineViewModel();

@@ -22,18 +22,18 @@
         </tr>
         <tr>
             <td class="forum-table-row-title text-center">
-                {% if user.profile.avatarUrl is not empty %}
-                    <img src="{{ user.profile.avatarUrl }}" alt="avatar user" />
+                {% if user.avatarUrl is not empty %}
+                    <img src="{{ user.avatarUrl }}" alt="avatar user" />
                 {% endif %}
                 <br />
                 {{ user.getRoleTitle()|trans }}
             </td>
             <td class="forum-table-row-title" rowspan="3">
                 {{ 'user.profile.label.firstName'|trans }}:
-                {{ user.profile.firstName }}
+                {{ user.firstName }}
                 <br />
                 {{ 'user.profile.label.lastName'|trans }}:
-                {{ user.profile.lastName }}
+                {{ user.lastName }}
                 <br />
                 {{ 'user.profile.label.register_date'|trans }}:
                 {{ user.createdAt|format_datetime('short', locale='fr') }}
@@ -42,7 +42,7 @@
                 {{ user.getTotalMessages() }}
                 <br />
                 {{ 'user.profile.label.city'|trans }}:
-                {{ user.profile.city }}
+                {{ user.city }}
             </td>
         </tr>
         <tr>

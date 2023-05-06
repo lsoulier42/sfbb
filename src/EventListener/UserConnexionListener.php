@@ -3,7 +3,7 @@
 namespace App\EventListener;
 
 use App\Entity\User;
-use App\Repository\ProfileRepository;
+use App\Repository\UserRepository;
 use DateTimeImmutable;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
@@ -11,7 +11,7 @@ use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
 class UserConnexionListener implements EventSubscriberInterface
 {
     public function __construct(
-        private readonly ProfileRepository $profileRepository
+        private readonly UserRepository $userRepository
     ) {
     }
 
@@ -28,9 +28,8 @@ class UserConnexionListener implements EventSubscriberInterface
         if (!$user instanceof User) {
             return;
         }
-        $profile = $user->getProfile();
         $now = new DateTimeImmutable();
-        $profile->setLastConnexion($now);
-        $this->profileRepository->createOrUpdate($profile);
+        $user->setLastConnexion($now);
+        $this->userRepository->createOrUpdate($user);
     }
 }

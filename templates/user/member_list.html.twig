@@ -86,16 +86,16 @@
                     } only %}
                 </td>
                 <td>
-                    {{ member.profile.fullName }}
+                    {{ member.fullName }}
                 </td>
                 <td>
-                    {{ member.profile.city }}
+                    {{ member.city }}
                 </td>
                 <td>
                     {{ member.createdAt|format_datetime('full', locale='fr') }}
                 </td>
                 <td>
-                    {{ member.profile.lastConnexion|format_datetime('full', locale='fr') }}
+                    {{ member.lastConnexion|format_datetime('full', locale='fr') }}
                 </td>
                 <td>
                     {{ member.getTotalPosts }}

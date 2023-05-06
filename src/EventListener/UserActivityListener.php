@@ -3,7 +3,7 @@
 namespace App\EventListener;
 
 use App\Entity\User;
-use App\Repository\ProfileRepository;
+use App\Repository\UserRepository;
 use DateTimeImmutable;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
@@ -16,7 +16,7 @@ class UserActivityListener implements EventSubscriberInterface
     public const INACTIVITY_TIME = 300;
 
     public function __construct(
-        private readonly ProfileRepository $profileRepository,
+        private readonly UserRepository $userRepository,
         private readonly TokenStorageInterface $tokenStorage
     ) {
     }
@@ -43,16 +43,15 @@ class UserActivityListener implements EventSubscriberInterface
         if (!$user instanceof User) {
             return;
         }
-        $profile = $user->getProfile();
         $now = new DateTimeImmutable();
-        $oldActivity = $profile->getLastActivity();
+        $oldActivity = $user->getLastActivity();
         if (
             $oldActivity !== null
             && ($now->getTimestamp() - $oldActivity->getTimestamp() > self::INACTIVITY_TIME)
         ) {
-            $profile->setLastConnexion($now);
+            $user->setLastConnexion($now);
         }
-        $profile->setLastActivity($now);
-        $this->profileRepository->createOrUpdate($profile);
+        $user->setLastActivity($now);
+        $this->userRepository->createOrUpdate($user);
     }
 }

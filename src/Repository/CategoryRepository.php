@@ -5,7 +5,6 @@ namespace App\Repository;
 use App\Dto\Pager\PagerDto;
 use App\Entity\Category;
 use App\Enum\ChangeOrderEnum;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\NonUniqueResultException;
