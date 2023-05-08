@@ -1,11 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block sub_title %}
-    {{ 'user.register.title'|trans }}
+    {{ 'user.edit_profile.title'|trans }}
 {% endblock %}
 
 {% block content %}
     {% include 'user/_form.html.twig' with {
-        'form': form
+        'form': form,
+        'user': user
     } only %}
 {% endblock %}

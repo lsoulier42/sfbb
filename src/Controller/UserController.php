@@ -8,12 +8,15 @@ use App\Dto\User\UserLoginDto;
 use App\Dto\User\UserRegisterDto;
 use App\Entity\User;
 use App\Form\User\MemberFilterType;
+use App\Form\User\UserEditProfileType;
 use App\Form\User\UserRegisterType;
 use App\Form\User\UserLoginType;
+use Exception;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 #[Route('/user')]
 class UserController extends BaseController
@@ -62,6 +65,42 @@ class UserController extends BaseController
             'user/register.html.twig',
             [
                 'form' => $form->createView()
+            ]
+        );
+    }
+
+    #[Route(path: '/edit-profile', name: 'user_edit_profile')]
+    public function editProfile(
+        Request $request,
+        #[CurrentUser] User $user,
+        UserServiceInterface $userService
+    ): Response|RedirectResponse {
+        $dto = $userService->getUserEditProfileDtoFromUser($user);
+        $form = $this->createForm(
+            UserEditProfileType::class,
+            $dto
+        );
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $userService->editUserProfile($dto, $user);
+                $this->addFlash(
+                    'success',
+                    'user.edit_profile.success'
+                );
+            } catch (Exception $exception) {
+                $this->addFlash(
+                    'danger',
+                    $exception->getMessage()
+                );
+            }
+            return $this->redirectToRoute('user_edit_profile');
+        }
+        return $this->render(
+            'user/edit-profile.html.twig',
+            [
+                'form' => $form->createView(),
+                'user' => $user
             ]
         );
     }

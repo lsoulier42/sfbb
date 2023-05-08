@@ -2,11 +2,9 @@
 
 namespace App\Form\User;
 
-use App\Dto\User\UserRegisterDto;
+use App\Dto\User\UserEditProfileDto;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -16,13 +14,13 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserRegisterType extends AbstractType
+class UserEditProfileType extends AbstractType
 {
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(
             [
-                'data_class' => UserRegisterDto::class
+                'data_class' => UserEditProfileDto::class
             ]
         );
     }
@@ -30,14 +28,6 @@ class UserRegisterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add(
-                'username',
-                TextType::class,
-                [
-                    'required' => true,
-                    'label' => 'user.label.username',
-                ]
-            )
             ->add(
                 'email',
                 EmailType::class,
@@ -47,15 +37,23 @@ class UserRegisterType extends AbstractType
                 ]
             )
             ->add(
-                'password',
+                'currentPassword',
+                PasswordType::class,
+                [
+                    'required' => false,
+                    'label' => 'user.label.current_password'
+                ]
+            )
+            ->add(
+                'newPassword',
                 RepeatedType::class,
                 [
                     'type' => PasswordType::class,
                     'invalid_message' => 'user.register.password.error',
-                    'required' => true,
+                    'required' => false,
                     'first_options' =>
                         [
-                            'label' => 'user.label.password',
+                            'label' => 'user.label.new_password',
                         ],
                     'second_options' =>
                         [
@@ -96,18 +94,10 @@ class UserRegisterType extends AbstractType
                 ]
             )
             ->add(
-                'agreeTerms',
-                CheckboxType::class,
-                [
-                    'label' => 'user.label.agree_terms',
-                    'required' => true
-                ]
-            )
-            ->add(
                 'submit',
                 SubmitType::class,
                 [
-                    'label' => 'user.label.register',
+                    'label' => 'global.label.edit',
                 ]
             );
     }

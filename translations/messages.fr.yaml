@@ -28,6 +28,8 @@ user:
     last_visit: Dernière visite
     nb_messages: Messages
     private_message: Contacter
+    current_password: Mot de passe actuel
+    new_password: Nouveau mot de passe
   register:
     title: Formulaire d'inscription
     success: Inscription réalisée avec succès
@@ -47,6 +49,12 @@ user:
       total_messages: Nombre total de messages
       city: Ville
       email: Adresse e-mail
+  edit_profile:
+    title: Editer son profil
+    error:
+      no_current_password: Vous devez rentre votre mot de passe actuel pour éditer ce champs
+      invalid_current_password: Mot de passe actuel incorrect
+    success: Profil édité avec succès
   role:
     label:
       user: Utilisateur

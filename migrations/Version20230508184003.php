@@ -10,11 +10,11 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20230506130453 extends AbstractMigration
+final class Version20230508184003 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'Base entity arch';
+        return '';
     }
 
     public function up(Schema $schema): void
@@ -49,10 +49,10 @@ final class Version20230506130453 extends AbstractMigration
         $this->addSql('CREATE TABLE topic (id INT NOT NULL, author_id INT DEFAULT NULL, forum_id INT DEFAULT NULL, title VARCHAR(255) NOT NULL, content TEXT NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_9D40DE1BF675F31B ON topic (author_id)');
         $this->addSql('CREATE INDEX IDX_9D40DE1B29CCBAD0 ON topic (forum_id)');
-        $this->addSql('CREATE TABLE "user" (id INT NOT NULL, username VARCHAR(180) NOT NULL, email VARCHAR(255) NOT NULL, is_enabled BOOLEAN NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, first_name VARCHAR(255) DEFAULT NULL, last_name VARCHAR(255) DEFAULT NULL, birth_date TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, city VARCHAR(255) DEFAULT NULL, avatar_url VARCHAR(255) DEFAULT NULL, last_connexion TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, last_activity TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE "user" (id INT NOT NULL, username VARCHAR(180) NOT NULL, email VARCHAR(255) NOT NULL, is_enabled BOOLEAN NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, first_name VARCHAR(255) DEFAULT NULL, last_name VARCHAR(255) DEFAULT NULL, birth_date DATE DEFAULT NULL, city VARCHAR(255) DEFAULT NULL, avatar_url VARCHAR(255) DEFAULT NULL, last_connexion TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, last_activity TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_8D93D649F85E0677 ON "user" (username)');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_8D93D649E7927C74 ON "user" (email)');
-        $this->addSql('COMMENT ON COLUMN "user".birth_date IS \'(DC2Type:datetime_immutable)\'');
+        $this->addSql('COMMENT ON COLUMN "user".birth_date IS \'(DC2Type:date_immutable)\'');
         $this->addSql('COMMENT ON COLUMN "user".last_connexion IS \'(DC2Type:datetime_immutable)\'');
         $this->addSql('COMMENT ON COLUMN "user".last_activity IS \'(DC2Type:datetime_immutable)\'');
         $this->addSql('CREATE TABLE user_forum (user_id INT NOT NULL, forum_id INT NOT NULL, PRIMARY KEY(user_id, forum_id))');

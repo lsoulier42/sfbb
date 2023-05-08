@@ -1,0 +1,115 @@
+{% set user = user is defined ? user : null %}
+{% set form_password_field = user != null ? form.newPassword : form.password %}
+{{ form_start(form) }}
+<table class="table forum-table my-1">
+    <tbody>
+    <tr class="text-center forum-table-title">
+        <th scope="col" colspan="2">
+            {{ 'user.label.table.user_info'|trans }}
+        </th>
+    </tr>
+    <tr>
+        <td class="forum-table-row-title w-25">
+            {% if user == null %}
+                {{ form_label(form.username) }}
+            {% else %}
+                {{ 'user.label.username'|trans }}
+            {% endif %}
+        </td>
+        <td class="forum-table-row-title">
+            {% if user == null %}
+                {{ form_widget(form.username, {'attr': {'class': 'w-25'}}) }}
+            {% else %}
+                {{ user.username }}
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <td class="forum-table-row-title">
+            {{ form_label(form.email) }}
+        </td>
+        <td class="forum-table-row-title">
+            {{ form_widget(form.email, {'attr': {'class': 'w-25'}}) }}
+        </td>
+    </tr>
+    {% if user != null %}
+        <tr>
+            <td class="forum-table-row-title">
+                {{ form_label(form.currentPassword) }}
+            </td>
+            <td class="forum-table-row-title">
+                {{ form_widget(form.currentPassword, {'attr': {'class': 'w-25'}}) }}
+            </td>
+        </tr>
+    {% endif %}
+    <tr>
+        <td class="forum-table-row-title">
+            {{ form_label(form_password_field.first) }}
+        </td>
+        <td class="forum-table-row-title">
+            {{ form_widget(form_password_field.first, {'attr': {'class': 'w-25'}}) }}
+        </td>
+    </tr>
+    <tr>
+        <td class="forum-table-row-title">
+            {{ form_label(form_password_field.second) }}
+        </td>
+        <td class="forum-table-row-title">
+            {{ form_widget(form_password_field.second, {'attr': {'class': 'w-25'}}) }}
+        </td>
+    </tr>
+    <tr class="text-center forum-table-title">
+        <th scope="col" colspan="2">
+            {{ 'user.label.table.profile_info'|trans }}
+        </th>
+    </tr>
+    <tr>
+        <td class="forum-table-row-title">
+            {{ form_label(form.firstName) }}
+        </td>
+        <td class="forum-table-row-title">
+            {{ form_widget(form.firstName, {'attr': {'class': 'w-25'}}) }}
+        </td>
+    </tr>
+    <tr>
+        <td class="forum-table-row-title">
+            {{ form_label(form.lastName) }}
+        </td>
+        <td class="forum-table-row-title">
+            {{ form_widget(form.lastName, {'attr': {'class': 'w-25'}}) }}
+        </td>
+    </tr>
+    <tr>
+        <td class="forum-table-row-title">
+            {{ form_label(form.birthDate) }}
+        </td>
+        <td class="forum-table-row-title">
+            {{ form_widget(form.birthDate) }}
+        </td>
+    </tr>
+    <tr>
+        <td class="forum-table-row-title">
+            {{ form_label(form.city) }}
+        </td>
+        <td class="forum-table-row-title">
+            {{ form_widget(form.city, {'attr': {'class': 'w-25'}}) }}
+        </td>
+    </tr>
+    {% if user == null %}
+        <tr>
+            <td class="forum-table-row-title">
+                {{ form_label(form.agreeTerms) }}
+            </td>
+            <td class="forum-table-row-title">
+                {{ form_widget(form.agreeTerms) }}
+            </td>
+        </tr>
+    {% endif %}
+    <tr>
+        <td class="forum-table-row-title text-center" colspan="2">
+            {{ form_widget(form.submit) }}
+        </td>
+    </tr>
+    </tbody>
+</table>
+{{ form_end(form) }}

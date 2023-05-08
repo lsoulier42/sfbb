@@ -14,7 +14,7 @@
                         <a href="{{ path('admin_index') }}" class="pe-1">{{ 'menu.admin'|trans }}</a>
                     {% endif %}
                     <img src="{{ asset('images/mini/icon_mini_profile.gif') }}" alt="icon profile" />
-                    <a href="{{ path('user_profile', {'user': app.user.id}) }}" class="pe-1">{{ 'menu.profile'|trans }}</a>
+                    <a href="{{ path('user_edit_profile') }}" class="pe-1">{{ 'menu.profile'|trans }}</a>
                     <br />
                     <img src="{{ asset('images/mini/icon_mini_members.gif') }}" alt="icon members-list" />
                     <a href="{{ path('user_members_list') }}" class="pe-1">{{ 'menu.members_list'|trans }}</a>

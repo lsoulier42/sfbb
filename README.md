@@ -1,3 +1,6 @@
+
+
+
 # SFBB - Symfony Bulletin Board
 
 Reproduction du forum phpBB en symfony
@@ -6,7 +9,7 @@ Reproduction du forum phpBB en symfony
 - php 8.1
 - symfony 6.2
 - postgresql 15
-- nginx 1.23.4-alpine
+- nginx 1.23
 
 ## Utilisation :
 - make install : build des images docker, composer install, npm install et build assets
