@@ -25,6 +25,7 @@ abstract class BaseRepository extends ServiceEntityRepository
     public const ALIAS_TOPIC = 'topic';
     public const ALIAS_POST = 'post';
     public const ALIAS_USER = 'user';
+    public const ALIAS_CONFIGURATION = 'configuration';
 
     public const TITLE_FIELD = 'title';
     public const ORDER_FIELD = 'orderNumber';
@@ -39,6 +40,7 @@ abstract class BaseRepository extends ServiceEntityRepository
     public const ROLES_FIELD = 'roles';
     public const FIRST_NAME_FIELD = 'firstName';
     public const LAST_NAME_FIELD = 'lastName';
+    public const CONFIG_KEY_FIELD = 'configKey';
 
     public function __construct(ManagerRegistry $registry, string $entityClass)
     {

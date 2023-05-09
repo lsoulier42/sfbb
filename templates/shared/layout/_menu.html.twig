@@ -5,11 +5,12 @@
     <div class="col-4">
         <div class="row justify-content-center">
             <div class="col-8">
-                <h3>Forum test SFBB</h3>
+                <h3>{{ forum_name }}</h3>
+                <p>{{ forum_description }}</p>
                 <img src="{{ asset('images/mini/icon_mini_house.gif') }}" alt="icon admin" />
                 <a href="{{ path('homepage') }}" class="pe-1">{{ 'menu.homepage'|trans }}</a>
-                {% if app.user is not null %}
-                    {% if is_admin(app.user) %}
+                {% if user is not null %}
+                    {% if is_admin(user) %}
                         <img src="{{ asset('images/mini/icon_mini_gallery.gif') }}" alt="icon admin" />
                         <a href="{{ path('admin_index') }}" class="pe-1">{{ 'menu.admin'|trans }}</a>
                     {% endif %}
@@ -19,7 +20,7 @@
                     <img src="{{ asset('images/mini/icon_mini_members.gif') }}" alt="icon members-list" />
                     <a href="{{ path('user_members_list') }}" class="pe-1">{{ 'menu.members_list'|trans }}</a>
                     <img src="{{ asset('images/mini/icon_mini_login.gif') }}" alt="icon logout" />
-                    <a href="{{ path('user_logout') }}" class="pe-1">{{ 'menu.logout'|trans }}</a>
+                    <a href="{{ path('user_logout') }}" class="pe-1">{{ 'menu.logout'|trans({'%username%': user.username}) }}</a>
                 {% else %}
                     <img src="{{ asset('images/mini/icon_mini_login.gif') }}" alt="icon logout" />
                     <a href="{{ path('user_login') }}" class="pe-1">{{ 'menu.login'|trans }}</a>

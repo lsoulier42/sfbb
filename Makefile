@@ -62,13 +62,10 @@ clear:
 	php ./bin/console cache:clear
 
 node-install:
-	$(DOCKER_COMPOSE_DEV) run --rm nodejs ash -ci 'npm install'
+	$(DOCKER_COMPOSE_DEV) run --rm php bash -ci 'npm install'
 
 node-build:
-	$(DOCKER_COMPOSE_DEV) run --rm nodejs ash -ci 'npm run build'
+	$(DOCKER_COMPOSE_DEV) run --rm php bash -ci 'npm run build'
 
 node-build-watch:
-	$(DOCKER_COMPOSE_DEV) run --rm nodejs ash -ci 'npm run watch'
-
-node-connect:
-	$(DOCKER_COMPOSE_DEV) exec nodejs ash
+	$(DOCKER_COMPOSE_DEV) run --rm php bash -ci 'npm run watch'

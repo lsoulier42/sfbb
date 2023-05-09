@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20230508184003 extends AbstractMigration
+final class Version20230509194014 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -22,6 +22,7 @@ final class Version20230508184003 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE SEQUENCE category_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE chat_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
+        $this->addSql('CREATE SEQUENCE configuration_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE direct_message_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE forum_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE post_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
@@ -35,6 +36,7 @@ final class Version20230508184003 extends AbstractMigration
         $this->addSql('CREATE TABLE chat_user (chat_id INT NOT NULL, user_id INT NOT NULL, PRIMARY KEY(chat_id, user_id))');
         $this->addSql('CREATE INDEX IDX_2B0F4B081A9A7125 ON chat_user (chat_id)');
         $this->addSql('CREATE INDEX IDX_2B0F4B08A76ED395 ON chat_user (user_id)');
+        $this->addSql('CREATE TABLE configuration (id INT NOT NULL, config_key VARCHAR(255) NOT NULL, config_value VARCHAR(255) NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE direct_message (id INT NOT NULL, author_id INT DEFAULT NULL, chat_id INT DEFAULT NULL, content TEXT NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_1416AF93F675F31B ON direct_message (author_id)');
         $this->addSql('CREATE INDEX IDX_1416AF931A9A7125 ON direct_message (chat_id)');
@@ -107,6 +109,7 @@ final class Version20230508184003 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('DROP SEQUENCE category_id_seq CASCADE');
         $this->addSql('DROP SEQUENCE chat_id_seq CASCADE');
+        $this->addSql('DROP SEQUENCE configuration_id_seq CASCADE');
         $this->addSql('DROP SEQUENCE direct_message_id_seq CASCADE');
         $this->addSql('DROP SEQUENCE forum_id_seq CASCADE');
         $this->addSql('DROP SEQUENCE post_id_seq CASCADE');
@@ -136,6 +139,7 @@ final class Version20230508184003 extends AbstractMigration
         $this->addSql('DROP TABLE category');
         $this->addSql('DROP TABLE chat');
         $this->addSql('DROP TABLE chat_user');
+        $this->addSql('DROP TABLE configuration');
         $this->addSql('DROP TABLE direct_message');
         $this->addSql('DROP TABLE forum');
         $this->addSql('DROP TABLE forum_user');

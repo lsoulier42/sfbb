@@ -29,7 +29,7 @@
                 {% block body %}
                     <div class="header my-3">
                         {% block header %}
-                            {% include 'shared/layout/_menu.html.twig' %}
+                            {{ render(controller('App\\Controller\\MenuController::renderMenu')) }}
                         {% endblock %}
                     </div>
                     <div class="body-alert">

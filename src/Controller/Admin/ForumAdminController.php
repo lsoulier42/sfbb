@@ -20,7 +20,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route('/admin/forum'), IsGranted('ROLE_ADMIN')]
 class ForumAdminController extends BaseController
 {
-    #[Route(path: '/', name: 'forum_index', methods: ['GET'])]
+    #[Route(path: '/', name: 'admin_forum_index', methods: ['GET'])]
     public function index(CategoryServiceInterface $categoryService): Response
     {
         $categories = $categoryService->listAll();
@@ -32,7 +32,7 @@ class ForumAdminController extends BaseController
         );
     }
 
-    #[Route(path: '/new/{category}', name: 'forum_new', methods: ['GET', 'POST'])]
+    #[Route(path: '/new/{category}', name: 'admin_forum_new', methods: ['GET', 'POST'])]
     public function new(
         Request $request,
         ForumServiceInterface $forumService,
@@ -45,11 +45,11 @@ class ForumAdminController extends BaseController
             try {
                 $forumService->createNewForum($forum);
                 $this->addSuccessMessage('forum.success.new', ['%title%' => $forum->getTitle()]);
-                return $this->redirectToRoute('forum_edit', ['forum' => $forum->getId()]);
+                return $this->redirectToRoute('admin_forum_edit', ['forum' => $forum->getId()]);
             } catch (Exception $exception) {
                 $this->addErrorMessage($exception->getMessage());
             }
-            return $this->redirectToRoute('forum_index');
+            return $this->redirectToRoute('admin_forum_index');
         }
         return $this->render(
             'admin/forum/new.html.twig',
@@ -59,7 +59,7 @@ class ForumAdminController extends BaseController
         );
     }
 
-    #[Route(path: '/{forum}/edit', name: 'forum_edit', methods: ['GET', 'POST'])]
+    #[Route(path: '/{forum}/edit', name: 'admin_forum_edit', methods: ['GET', 'POST'])]
     public function edit(
         Request $request,
         Forum $forum,
@@ -71,11 +71,11 @@ class ForumAdminController extends BaseController
             try {
                 $forumService->editForum($forum);
                 $this->addSuccessMessage('forum.success.edit', ['%title%' => $forum->getTitle()]);
-                return $this->redirectToRoute('forum_edit', ['forum' => $forum->getId()]);
+                return $this->redirectToRoute('admin_forum_edit', ['forum' => $forum->getId()]);
             } catch (Exception $exception) {
                 $this->addErrorMessage($exception->getMessage());
             }
-            return $this->redirectToRoute('forum_index');
+            return $this->redirectToRoute('admin_forum_index');
         }
         return $this->render(
             'admin/forum/edit.html.twig',
@@ -86,7 +86,7 @@ class ForumAdminController extends BaseController
         );
     }
 
-    #[Route(path: '/{forum}/delete', name: 'forum_delete', methods: ['POST'])]
+    #[Route(path: '/{forum}/delete', name: 'admin_forum_delete', methods: ['POST'])]
     public function delete(
         Request $request,
         Forum $forum,
@@ -110,7 +110,7 @@ class ForumAdminController extends BaseController
 
     #[Route(
         path: '/{forum}/change-order/{direction}',
-        name: 'forum_change_order',
+        name: 'admin_forum_change_order',
         requirements: ['direction' => '^(up|down)$'],
         methods: ['GET']
     )]
@@ -133,6 +133,6 @@ class ForumAdminController extends BaseController
         } catch (Exception $exception) {
             $this->addErrorMessage($exception->getMessage());
         }
-        return $this->redirectToRoute('forum_index');
+        return $this->redirectToRoute('admin_forum_index');
     }
 }

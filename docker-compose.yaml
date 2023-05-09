@@ -45,10 +45,3 @@ services:
     ports:
     - "1125:1025"
     - "1180:1080"
-
-  nodejs:
-    build:
-      context: ./docker/nodejs
-    user: "${HOST_UID}:${HOST_GROUP_ID}"
-    volumes:
-      - ".:/app"

@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Contract\Service\CategoryServiceInterface;
+use App\Contract\Service\ConfigurationServiceInterface;
 use App\Contract\Service\ForumServiceInterface;
 use App\Contract\Service\MessageServiceInterface;
 use App\Contract\Service\UserServiceInterface;
@@ -32,7 +33,8 @@ class AppFixtures extends Fixture
         private readonly UserServiceInterface $userService,
         private readonly CategoryServiceInterface $categoryService,
         private readonly ForumServiceInterface $forumService,
-        private readonly MessageServiceInterface $messageService
+        private readonly MessageServiceInterface $messageService,
+        private readonly ConfigurationServiceInterface $configurationService
     ) {
         $this->faker = Factory::create('fr');
     }
@@ -44,6 +46,7 @@ class AppFixtures extends Fixture
      */
     public function load(ObjectManager $manager): void
     {
+        $this->createConfigurations();
         $users = $this->createUsers($manager);
         $categories = $this->createCategories();
         $forums = $this->createForums($categories);
@@ -62,8 +65,24 @@ class AppFixtures extends Fixture
         $password = 'bidule';
         $users = [
             ['louise', 'louise@truc.com', RoleEnum::ROLE_ADMIN, 'louise', 'soulier', '1990-05-29', 'Strasbourg'],
-            ['jean-marc', 'jean-marc@truc.com', RoleEnum::ROLE_SUPER_MODERATOR, 'jean-marc', 'dupont', '1985-04-01', 'Paris'],
-            ['jean-michel', 'jean-michel@truc.com', RoleEnum::ROLE_MODERATOR, 'jean-michel', 'jarr', '1970-12-24', 'Marseille']
+            [
+                'jean-marc',
+                'jean-marc@truc.com',
+                RoleEnum::ROLE_SUPER_MODERATOR,
+                'jean-marc',
+                'dupont',
+                '1985-04-01',
+                'Paris'
+            ],
+            [
+                'jean-michel',
+                'jean-michel@truc.com',
+                RoleEnum::ROLE_MODERATOR,
+                'jean-michel',
+                'jarr',
+                '1970-12-24',
+                'Marseille'
+            ]
         ];
         foreach ($users as $user) {
             $dto = new UserCreateFixturesDto(
@@ -205,5 +224,14 @@ class AppFixtures extends Fixture
         $array = $users->toArray();
         shuffle($array);
         return $array[0];
+    }
+
+    public function createConfigurations(): void
+    {
+        $configs = [
+            'forum_name' => $this->faker->word(),
+            'forum_description' => $this->faker->sentence()
+        ];
+        $this->configurationService->setConfigurationsFromArray($configs);
     }
 }

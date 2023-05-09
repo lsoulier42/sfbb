@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_admin.html.twig' %}
 
 {% block sub_title %}
     {{ 'category.title.index'|trans }}
@@ -8,8 +8,8 @@
     <div class="row">
         <div class="col-12">
             <h3>{{ 'category.title.index'|trans }}</h3>
-            <table class="table table-striped">
-                <thead>
+            <table class="table forum-table">
+                <thead class="text-center forum-table-title">
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">{{ 'category.label.title'|trans }}</th>
@@ -21,7 +21,7 @@
                 </thead>
                 <tbody>
                     {% for category in categories %}
-                        <tr>
+                        <tr class="forum-table-row-title text-center">
                             <th scope="row">{{ category.id }}</th>
                             <td>
                                 {{ category.title }}
@@ -30,7 +30,7 @@
                                 {{ category.orderNumber }}
                             </td>
                             <td>
-                                <a class="btn btn-primary" href="{{ path('category_edit', {'category': category.id}) }}">
+                                <a class="btn btn-primary text-decoration-none text-white" href="{{ path('admin_category_edit', {'category': category.id}) }}">
                                     {{ 'global.label.edit'|trans }}
                                 </a>
                             </td>
@@ -38,14 +38,14 @@
                                 <div class="row">
                                     <div class="col-1">
                                         {% if loop.first == false %}
-                                            <a class="btn btn-info" href="{{ path('category_change_order', {'category': category.id, 'direction': 'up'}) }}">
+                                            <a class="btn btn-info" href="{{ path('admin_category_change_order', {'category': category.id, 'direction': 'up'}) }}">
                                                 <i class="fa-solid fa-arrow-up"></i>
                                             </a>
                                         {% endif %}
                                     </div>
                                     <div class="col-1">
                                         {% if loop.last == false %}
-                                            <a class="btn btn-info" href="{{ path('category_change_order', {'category': category.id, 'direction': 'down'}) }}">
+                                            <a class="btn btn-info" href="{{ path('admin_category_change_order', {'category': category.id, 'direction': 'down'}) }}">
                                                 <i class="fa-solid fa-arrow-down"></i>
                                             </a>
                                         {% endif %}
@@ -54,7 +54,7 @@
                             </td>
                             <td>
                                 {% include 'shared/modal/delete_button.html.twig' with {
-                                    'route': path('category_delete', {'category': category.id}),
+                                    'route': path('admin_category_delete', {'category': category.id}),
                                     'title': 'category.title.delete_modal'|trans({'%title%': category.title}),
                                     'csrf_key': 'delete-category'
                                 } only %}
@@ -71,7 +71,7 @@
     </div>
     <div class="row">
         <div class="col-12">
-            <a class="btn btn-success" href="{{ path('category_new') }}">
+            <a class="btn btn-success text-decoration-none text-white" href="{{ path('admin_category_new') }}">
                 {{ 'category.label.add_category'|trans }}
             </a>
         </div>

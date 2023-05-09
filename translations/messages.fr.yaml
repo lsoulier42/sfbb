@@ -64,7 +64,7 @@ user:
 menu:
   homepage: Accueil
   login: Connexion
-  logout: Déconnexion
+  logout: 'Déconnexion [ %username% ]'
   register: Inscription
   category: Catégories
   forum: Forums
@@ -205,3 +205,18 @@ post:
     edit: Réponse au sujet %topic% éditée avec succès
   error:
     cant_edit: Vous ne pouvez pas éditer cette réponse
+admin:
+  label:
+    sidebar: "Panneau d'administration"
+    global_config: Configuration globale
+    forum_config: Configuration des forums/catégories
+    category: Gestion des catégories
+    forum: Gestion des forums
+    moderator: Gestion des modérateurs
+    user_config: Configuration des utilisateurs et accès
+    user: Gestion des utilisateurs
+    access: Gestion des accès
+    return_homepage: Retour à la page d'accueil
+  title:
+    dashboard: Administration sfbb
+

@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_admin.html.twig' %}
 
 {% block sub_title %}
     {{ 'forum.title.index'|trans }}
@@ -35,7 +35,7 @@
                             </td>
                             <td>{{ forum.orderNumber }}</td>
                             <td>
-                                <a class="btn btn-primary" href="{{ path('forum_edit', {'forum': forum.id}) }}">
+                                <a class="btn btn-primary" href="{{ path('admin_forum_edit', {'forum': forum.id}) }}">
                                     {{ 'global.label.edit'|trans }}
                                 </a>
                             </td>
@@ -43,14 +43,14 @@
                                 <div class="row">
                                     <div class="col-1">
                                         {% if loop.first == false %}
-                                            <a class="btn btn-info" href="{{ path('forum_change_order', {'forum': forum.id, 'direction': 'up'}) }}">
+                                            <a class="btn btn-info" href="{{ path('admin_forum_change_order', {'forum': forum.id, 'direction': 'up'}) }}">
                                                 <i class="fa-solid fa-arrow-up"></i>
                                             </a>
                                         {% endif %}
                                     </div>
                                     <div class="col-1">
                                         {% if loop.last == false %}
-                                            <a class="btn btn-info" href="{{ path('forum_change_order', {'forum': forum.id, 'direction': 'down'}) }}">
+                                            <a class="btn btn-info" href="{{ path('admin_forum_change_order', {'forum': forum.id, 'direction': 'down'}) }}">
                                                 <i class="fa-solid fa-arrow-down"></i>
                                             </a>
                                         {% endif %}
@@ -59,7 +59,7 @@
                             </td>
                             <td>
                                 {% include 'shared/modal/delete_button.html.twig' with {
-                                    'route': path('forum_delete', {'forum': forum.id}),
+                                    'route': path('admin_forum_delete', {'forum': forum.id}),
                                     'title': 'forum.title.delete_modal'|trans({'%title%': forum.title}),
                                     'csrf_key': 'delete-forum'
                                 } only %}
@@ -74,7 +74,7 @@
             </table>
             <div class="row mb-5">
                 <div class="col-12">
-                    <a class="btn btn-success" href="{{ path('forum_new', {'category': category.id}) }}">
+                    <a class="btn btn-success" href="{{ path('admin_forum_new', {'category': category.id}) }}">
                         {{ 'forum.label.add_forum'|trans }}
                     </a>
                 </div>

@@ -18,7 +18,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route('/admin/category'), IsGranted('ROLE_ADMIN')]
 class CategoryAdminController extends BaseController
 {
-    #[Route(path: '/', name: 'category_index', methods: ['GET'])]
+    #[Route(path: '/', name: 'admin_category_index', methods: ['GET'])]
     public function index(CategoryServiceInterface $categoryService): Response
     {
         $categories = $categoryService->listAll();
@@ -30,7 +30,7 @@ class CategoryAdminController extends BaseController
         );
     }
 
-    #[Route(path: '/new', name: 'category_new', methods: ['GET', 'POST'])]
+    #[Route(path: '/new', name: 'admin_category_new', methods: ['GET', 'POST'])]
     public function new(
         Request $request,
         CategoryServiceInterface $categoryService
@@ -46,13 +46,13 @@ class CategoryAdminController extends BaseController
                     ['%title%' => $category->getTitle()]
                 );
                 return $this->redirectToRoute(
-                    'category_edit',
+                    'admin_category_edit',
                     ['category' => $category->getId()]
                 );
             } catch (Exception $exception) {
                 $this->addErrorMessage($exception->getMessage());
             }
-            return $this->redirectToRoute('category_index');
+            return $this->redirectToRoute('admin_category_index');
         }
         return $this->render(
             'admin/category/new.html.twig',
@@ -62,7 +62,7 @@ class CategoryAdminController extends BaseController
         );
     }
 
-    #[Route(path: '/{category}/edit', name: 'category_edit', methods: ['GET', 'POST'])]
+    #[Route(path: '/{category}/edit', name: 'admin_category_edit', methods: ['GET', 'POST'])]
     public function edit(
         Request $request,
         Category $category,
@@ -74,11 +74,11 @@ class CategoryAdminController extends BaseController
             try {
                 $categoryService->editCategory($category);
                 $this->addSuccessMessage('category.success.edit', ['%title%' => $category->getTitle()]);
-                return $this->redirectToRoute('category_edit', ['category' => $category->getId()]);
+                return $this->redirectToRoute('admin_category_edit', ['category' => $category->getId()]);
             } catch (Exception $exception) {
                 $this->addErrorMessage($exception->getMessage());
             }
-            return $this->redirectToRoute('category_index');
+            return $this->redirectToRoute('admin_category_index');
         }
         return $this->render(
             'admin/category/edit.html.twig',
@@ -89,7 +89,7 @@ class CategoryAdminController extends BaseController
         );
     }
 
-    #[Route(path: '/{category}/delete', name: 'category_delete', methods: ['POST'])]
+    #[Route(path: '/{category}/delete', name: 'admin_category_delete', methods: ['POST'])]
     public function delete(
         Request $request,
         Category $category,
@@ -113,7 +113,7 @@ class CategoryAdminController extends BaseController
 
     #[Route(
         path: '/{category}/change-order/{direction}',
-        name: 'category_change_order',
+        name: 'admin_category_change_order',
         requirements: ['direction' => '^(up|down)$'],
         methods: ['GET']
     )]
@@ -136,6 +136,6 @@ class CategoryAdminController extends BaseController
         } catch (Exception $exception) {
             $this->addErrorMessage($exception->getMessage());
         }
-        return $this->redirectToRoute('category_index');
+        return $this->redirectToRoute('admin_category_index');
     }
 }
