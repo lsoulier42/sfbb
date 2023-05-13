@@ -1,0 +1,42 @@
+{{ form_start(form) }}
+<table class="table forum-table">
+    <thead class="text-center forum-table-title">
+        <tr>
+            <th scope="col" colspan="2">
+                {% if configuration is defined %}
+                    {{ 'configuration.title.edit'|trans({'%configKey%': configuration.configKey}) }}
+                {% else %}
+                    {{ 'configuration.title.new'|trans }}
+                {% endif %}
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for field in form.children %}
+        <tr class="forum-table-row-title text-center">
+            {% if field.vars.name != '_token' %}
+                {% if field.vars.name == 'submit' %}
+                    <td colspan="3">
+                        {{ form_widget(field) }}
+                    </td>
+                {% else %}
+                    <th scope="row">
+                        {{ form_label(field) }}
+                    </th>
+                    <td>
+                        {{ form_widget(field) }}
+                    </td>
+                {% endif %}
+            {% endif %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{{ form_end(form) }}
+<div class="row justify-content-end">
+    <div class="col-auto">
+        <a class="badge bg-success text-white p-1 fw-bolder" href="{{ path('admin_configuration_index') }}">
+            {{ 'global.label.return'|trans }}
+        </a>
+    </div>
+</div>

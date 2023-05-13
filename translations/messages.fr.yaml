@@ -219,4 +219,14 @@ admin:
     return_homepage: Retour à la page d'accueil
   title:
     dashboard: Administration sfbb
+configuration:
+  title:
+    index: Edition de la configuration du site
+    new: Création d'une nouvelle variable de configuration
+    edit: 'Edition de la variable `%configKey%`'
+  label:
+    title: Clé
+    value: Valeur
+    edit: Editer la variable
+    new: Nouvelle variable
 

@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Contract\Service\ConfigurationServiceInterface;
+use App\Dto\Admin\ConfigurationCollection;
 use App\Entity\Configuration;
 use App\Repository\ConfigurationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -60,5 +61,19 @@ class ConfigurationService implements ConfigurationServiceInterface
             $collection->add($configuration);
         }
         return $collection;
+    }
+
+    public function getConfigurationCollection(): ConfigurationCollection
+    {
+        return new ConfigurationCollection($this->configurationRepository->findAll());
+    }
+
+    public function computeConfigurationCollection(ConfigurationCollection $collection): void
+    {
+        $configurations = $collection->getConfigurations();
+        $nbConfigurations = $configurations->count();
+        foreach ($configurations as $index => $configuration) {
+            $this->configurationRepository->createOrUpdate($configuration, $index === $nbConfigurations - 1);
+        }
     }
 }

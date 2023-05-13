@@ -1,1 +1,12 @@
 {% extends 'base_admin.html.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-12">
+            {% include 'admin/configuration/_form.html.twig' with {
+                'form': form,
+                'configuration': configuration
+            } only %}
+        </div>
+    </div>
+{% endblock %}

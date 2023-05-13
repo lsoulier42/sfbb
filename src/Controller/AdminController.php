@@ -12,6 +12,6 @@ class AdminController extends BaseController
     #[Route(path: '/', name: 'admin_index')]
     public function index(): Response
     {
-        return $this->render('admin/index.html.twig');
+        return $this->redirectToRoute('admin_configuration_index');
     }
 }

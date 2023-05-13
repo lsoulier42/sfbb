@@ -2,6 +2,7 @@
 
 namespace App\Contract\Service;
 
+use App\Dto\Admin\ConfigurationCollection;
 use App\Entity\Configuration;
 use Doctrine\Common\Collections\Collection;
 
@@ -20,4 +21,8 @@ interface ConfigurationServiceInterface
      * @return Collection<Configuration>
      */
     public function setConfigurationsFromArray(array $array): Collection;
+
+    public function getConfigurationCollection(): ConfigurationCollection;
+
+    public function computeConfigurationCollection(ConfigurationCollection $collection): void;
 }
