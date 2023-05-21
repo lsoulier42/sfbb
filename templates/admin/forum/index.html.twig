@@ -7,10 +7,9 @@
 {% block content %}
 <div class="row">
     <div class="col-12">
-        <h3>{{ 'forum.title.index'|trans }}</h3>
         {% for category in categories %}
-            <table class="table table-striped">
-                <thead>
+            <table class="table forum-table">
+                <thead class="text-center forum-table-title">
                     <tr>
                         <th scope="col" colspan="6">
                             {{ 'category.title.forum'|trans({'%title%': category.title}) }}
@@ -18,7 +17,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                <tr>
+                <tr class="forum-table-row-title text-center bg-black bg-opacity-25">
                     <th scope="col">#</th>
                     <th scope="col">{{ 'forum.label.title'|trans }}</th>
                     <th scope="col">{{ 'forum.label.orderNumber'|trans }}</th>
@@ -27,7 +26,7 @@
                     <th scope="col">{{ 'global.label.delete'|trans }}</th>
                 </tr>
                     {% for forum in category.forums %}
-                        <tr>
+                        <tr class="forum-table-row-title text-center">
                             <th scope="row">{{ forum.id }}</th>
                             <td>
                                 {{ forum.title }}<br />
@@ -35,23 +34,21 @@
                             </td>
                             <td>{{ forum.orderNumber }}</td>
                             <td>
-                                <a class="btn btn-primary" href="{{ path('admin_forum_edit', {'forum': forum.id}) }}">
-                                    {{ 'global.label.edit'|trans }}
+                                <a href="{{ path('admin_forum_edit', {'forum': forum.id}) }}">
+                                    <img src="{{ asset('images/edit_btn.png') }}" alt="edit" />
                                 </a>
                             </td>
                             <td>
-                                <div class="row">
-                                    <div class="col-1">
+                                <div class="row justify-content-center">
+                                    <div class="col-auto">
                                         {% if loop.first == false %}
-                                            <a class="btn btn-info" href="{{ path('admin_forum_change_order', {'forum': forum.id, 'direction': 'up'}) }}">
-                                                <i class="fa-solid fa-arrow-up"></i>
+                                            <a href="{{ path('admin_forum_change_order', {'forum': forum.id, 'direction': 'up'}) }}">
+                                                <img src="{{ asset('images/up_btn.png') }}" alt="up">
                                             </a>
                                         {% endif %}
-                                    </div>
-                                    <div class="col-1">
                                         {% if loop.last == false %}
-                                            <a class="btn btn-info" href="{{ path('admin_forum_change_order', {'forum': forum.id, 'direction': 'down'}) }}">
-                                                <i class="fa-solid fa-arrow-down"></i>
+                                            <a href="{{ path('admin_forum_change_order', {'forum': forum.id, 'direction': 'down'}) }}">
+                                                <img src="{{ asset('images/down_btn.png') }}" alt="down">
                                             </a>
                                         {% endif %}
                                     </div>
@@ -72,10 +69,10 @@
                     {% endfor %}
                 </tbody>
             </table>
-            <div class="row mb-5">
-                <div class="col-12">
-                    <a class="btn btn-success" href="{{ path('admin_forum_new', {'category': category.id}) }}">
-                        {{ 'forum.label.add_forum'|trans }}
+            <div class="row justify-content-end mb-2">
+                <div class="col-auto">
+                    <a href="{{ path('admin_forum_new', {'category': category.id}) }}">
+                        <img src="{{ asset('images/new_btn.png') }}" alt="edit-config" />
                     </a>
                 </div>
             </div>

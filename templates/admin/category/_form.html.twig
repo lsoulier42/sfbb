@@ -1,9 +1,37 @@
 {{ form_start(form) }}
-    {{ form_row(form.title) }}
-    <div class="row">
-        <div class="col-12">
-            {{ form_widget(form.submit) }}
-            <a href="{{ path('admin_category_index') }}" class="btn btn-info">{{ 'global.label.return'|trans }}</a>
+    <table class="table forum-table">
+        <thead class="text-center forum-table-title">
+            <tr>
+                <th scope="col" colspan="2">
+                    {% if category is defined %}
+                        {{ 'category.title.edit'|trans({'%title%': category.title}) }}
+                    {% else %}
+                        {{ 'category.title.new'|trans }}
+                    {% endif %}
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr class="forum-table-row-title text-center">
+            <th scope="row">
+                {{ form_label(form.title) }}
+            </th>
+            <td>
+                {{ form_widget(form.title) }}
+            </td>
+        </tr>
+        <tr class="forum-table-row-title text-center">
+            <td colspan="2">
+                {{ form_widget(form.submit) }}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="row justify-content-end">
+        <div class="col-auto">
+            <a href="{{ path('admin_category_index') }}">
+                <img src="{{ asset('images/return_btn.png') }}" alt="return">
+            </a>
         </div>
     </div>
 {{ form_end(form) }}

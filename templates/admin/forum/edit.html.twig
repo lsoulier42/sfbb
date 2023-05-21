@@ -4,6 +4,5 @@
     {{ 'forum.title.edit'|trans }}
 {% endblock %}
 {% block content %}
-    <h3>{{ 'forum.title.edit'|trans({ '%title%': forum.title }) }}</h3>
-    {% include 'admin/forum/_form.html.twig' with {'form': form} only %}
+    {% include 'admin/forum/_form.html.twig' with {'form': form, 'forum': forum} only %}
 {% endblock %}

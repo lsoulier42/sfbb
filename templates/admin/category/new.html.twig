@@ -4,6 +4,5 @@
     {{ 'category.title.new'|trans }}
 {% endblock %}
 {% block content %}
-    <h3>{{ 'category.title.new'|trans }}</h3>
     {% include 'admin/category/_form.html.twig' with {'form': form} only %}
 {% endblock %}

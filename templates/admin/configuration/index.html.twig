@@ -40,7 +40,7 @@
                                         </td>
                                         <td>
                                             <a href="{{ path('admin_configuration_edit', {'configuration': ids[field.vars.name]}) }}">
-                                                <img src="{{ asset('images/lang_english/icon_edit.gif') }}" alt="edit-config" />
+                                                <img src="{{ asset('images/edit_btn.png') }}" alt="edit-config" />
                                             </a>
                                         </td>
                                     {% endif %}
@@ -52,8 +52,8 @@
             {{ form_end(form) }}
             <div class="row justify-content-end">
                 <div class="col-auto">
-                    <a class="badge bg-success text-white p-1 fw-bolder" href="{{ path('admin_configuration_new') }}">
-                        {{ 'configuration.label.new'|trans }}
+                    <a href="{{ path('admin_configuration_new') }}">
+                        <img src="{{ asset('images/new_btn.png') }}" alt="edit-config" />
                     </a>
                 </div>
             </div>
