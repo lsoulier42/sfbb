@@ -1,6 +1,7 @@
 parameters:
-    app_locale: 'fr'
-
+    locale: fr
+    app_env: '%env(APP_ENV)%'
+    app_version: '%env(APP_VERSION)%'
 services:
     _defaults:
         autowire: true

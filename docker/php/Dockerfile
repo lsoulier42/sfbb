@@ -1,18 +1,32 @@
-FROM thecodingmachine/php:8.1-v4-fpm-node18
+FROM php:8.3-fpm
 
-ENV PHP_EXTENSION_PGSQL=1
-ENV PHP_EXTENSION_PDO_PGSQL=1
-ENV PHP_EXTENSION_APCU=1
-ENV PHP_EXTENSION_INTL=1
-ENV PHP_EXTENSION_GD=1
-ENV PHP_EXTENSION_PDO_MYSQL=0
-ENV PHP_INI_MEMORY_LIMIT=256M
-ENV PHP_INI_ERROR_REPORTING=1
-ENV PHP_INI_UPLOAD_MAX_FILESIZE=30M
-ENV PHP_INI_POST_MAX_SIZE=30M
-ENV TZ="Europe/Paris"
+RUN apt-get update && apt-get install -y git zip wget curl unzip vim supervisor systemd sudo
+RUN apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN sudo apt-get update
+RUN curl -sSLf \
+        -o /usr/local/bin/install-php-extensions \
+        https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions && \
+    chmod +x /usr/local/bin/install-php-extensions && \
+    install-php-extensions xdebug pgsql pdo pdo_pgsql intl zip apcu mbstring sodium
 
-RUN sudo apt-get clean \
-    && sudo rm -rf /var/lib/apt/lists/*
+ENV USER=docker
+ENV HOME=/home/$USER
+ENV WORKDIR=/var/www/html
+RUN useradd -ms /bin/bash $USER && adduser $USER sudo
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+RUN mkdir -p $HOME && chown $USER:$USER $HOME
+WORKDIR $WORKDIR
+
+COPY ./messenger-workers.conf /etc/supervisor/conf.d/messenger-workers.conf
+COPY ./run_php.sh $HOME/run_php.sh
+RUN chown docker:docker $HOME/run_php.sh && chmod 777 $HOME/run_php.sh
+
+USER $USER
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+    php -r "if (hash_file('sha384', 'composer-setup.php') === 'e21205b207c3ff031906575712edab6f13eb0b361f2085f1f1237b7126d785e826a450292b6cfd1d64d92e6563bbde02') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" \
+    php composer-setup.php \
+    php -r "unlink('composer-setup.php');" \
+    sudo mv composer.phar /usr/local/bin/composer
+
+CMD ["/home/docker/run_php.sh"]

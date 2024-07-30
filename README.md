@@ -1,22 +1,18 @@
-
 # SFBB - Symfony Bulletin Board
 
 Reproduction du forum phpBB en symfony
 
 ## Specifications:
-- php 8.1
-- symfony 6.2
-- postgresql 15
-- nginx 1.23
+- php 8.3
+- symfony 6.4
+- postgresql 16
 
 ## Utilisation :
-- make install : build des images docker, composer install, npm install et build assets
+- make install : build des images docker, composer install et build assets
 - make start : démarrage des images php, nginx et postgresql
 - make stop : arrêt des containers du projet
-- make connect / node-connect : shell dans les containers php / nodejs
+- make connect / node-connect : shell dans les containers php
 - make clear : vidage du cache
 - make composer-update : mise à jour des vendors php
-- make node-install : installation des vendors js
-- make node-build : compilation des assets js et scss
 
-- url par défaut en mode dev : http://localhost:8180
+- url par défaut en mode dev : http://localhost:8776

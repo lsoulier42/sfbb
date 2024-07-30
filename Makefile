@@ -6,16 +6,15 @@ export HOST_UID
 export HOST_USER
 export HOST_GROUP_ID
 
-DOCKER_COMPOSE_DEV = docker-compose
+DOCKER_COMPOSE_DEV = docker compose
 
 install:
 	$(DOCKER_COMPOSE_DEV) build
 	$(MAKE) composer-install
-	$(MAKE) composer-update
-	$(MAKE) node-install
-	$(MAKE) node-build
 	$(MAKE) db-migrate
-	$(MAKE) db-fixtures-install
+	$(MAKE) db-fixtures
+	$(MAKE) assets-install
+	$(MAKE) start
 
 composer-install:
 	$(DOCKER_COMPOSE_DEV) run --rm php bash -ci 'php -d memory_limit=4G bin/composer install'
@@ -26,7 +25,7 @@ composer-update:
 db-migrate:
 	$(DOCKER_COMPOSE_DEV) run --rm php bash -ci 'php -d memory_limit=4G bin/console doctrine:migrations:migrate -n'
 
-db-fixtures-install:
+db-fixtures:
 	$(DOCKER_COMPOSE_DEV) run --rm php bash -ci 'php -d memory_limit=4G bin/console doctrine:fixtures:load --purge-with-truncate -n'
 
 db-create:
@@ -61,11 +60,8 @@ connect:
 clear:
 	php ./bin/console cache:clear
 
-node-install:
-	$(DOCKER_COMPOSE_DEV) run --rm php bash -ci 'npm install'
+assets-install:
+	$(DOCKER_COMPOSE_DEV) run --rm php bash -ci 'php -d memory_limit=4G ./bin/console importmap:install'
 
-node-build:
-	$(DOCKER_COMPOSE_DEV) run --rm php bash -ci 'npm run build'
-
-node-build-watch:
-	$(DOCKER_COMPOSE_DEV) run --rm php bash -ci 'npm run watch'
+assets-compile:
+	$(DOCKER_COMPOSE_DEV) run --rm php bash -ci 'php -d memory_limit=4G ./bin/console asset-map:compile'
