@@ -6,6 +6,7 @@ use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
@@ -63,7 +64,7 @@ class Category extends AbstractEntity
     public function getForums(): Collection
     {
         $criteria = Criteria::create()
-            ->orderBy(['orderNumber' => Criteria::ASC]);
+            ->orderBy(['orderNumber' => Order::Ascending]);
         return $this->forums->matching($criteria);
     }
 

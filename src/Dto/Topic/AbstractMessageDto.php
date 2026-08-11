@@ -26,6 +26,4 @@ abstract class AbstractMessageDto
         $this->content = $content;
         return $this;
     }
-
-
 }

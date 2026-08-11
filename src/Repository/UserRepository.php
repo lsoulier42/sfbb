@@ -7,7 +7,6 @@ use App\Dto\User\MemberFilterDto;
 use App\Entity\User;
 use App\Enum\RoleEnum;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -63,7 +62,7 @@ class UserRepository extends BaseRepository implements PasswordUpgraderInterface
         $aliasUser = self::ALIAS_USER;
         $queryBuilder = $this->createQueryBuilder($aliasUser);
         $fieldName = self::CREATED_AT_FIELD;
-        $queryBuilder->orderBy("$aliasUser.$fieldName", Criteria::DESC);
+        $queryBuilder->orderBy("$aliasUser.$fieldName", 'DESC');
         $queryBuilder->setMaxResults(1);
         return $queryBuilder->getQuery()->getOneOrNullResult();
     }

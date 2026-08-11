@@ -6,7 +6,7 @@ use App\Entity\Forum;
 use App\Service\ForumService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/forum')]
 class ForumController extends BaseController

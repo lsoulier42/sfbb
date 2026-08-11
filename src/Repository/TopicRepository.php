@@ -7,7 +7,6 @@ use App\Entity\Forum;
 use App\Entity\Post;
 use App\Entity\Topic;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -65,7 +64,7 @@ class TopicRepository extends BaseRepository
                     WHEN $aliasPost.id IS NOT NULL THEN $aliasPost.$createdAtField
                     ELSE $aliasTopic.$createdAtField
                 END",
-            Criteria::DESC
+            'DESC'
         );
     }
 

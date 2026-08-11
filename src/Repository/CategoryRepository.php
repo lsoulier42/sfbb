@@ -6,7 +6,6 @@ use App\Dto\Pager\PagerDto;
 use App\Entity\Category;
 use App\Enum\ChangeOrderEnum;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -38,7 +37,7 @@ class CategoryRepository extends BaseRepository
         $alias = self::ALIAS_CATEGORY;
         $queryBuilder = $this->createQueryBuilder($alias);
         $orderField = self::ORDER_FIELD;
-        return $queryBuilder->orderBy("$alias.$orderField", Criteria::ASC);
+        return $queryBuilder->orderBy("$alias.$orderField", 'ASC');
     }
 
     /**
