@@ -80,7 +80,7 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     private Collection $topicViews;
 
     /**
-     * @var Collection<Collection>
+     * @var Collection<Chat>
      */
     #[ORM\ManyToMany(targetEntity: Chat::class)]
     private Collection $chats;

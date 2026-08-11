@@ -99,14 +99,14 @@ class AppFixtures extends Fixture
         }
         for ($i = 0; $i < 10; $i++) {
             $dto = new UserCreateFixturesDto(
-                $this->faker->userName,
-                $this->faker->email,
+                $this->faker->userName(),
+                $this->faker->email(),
                 $password,
                 RoleEnum::ROLE_USER,
-                $this->faker->firstName,
-                $this->faker->lastName,
+                $this->faker->firstName(),
+                $this->faker->lastName(),
                 DateTimeImmutable::createFromMutable($this->faker->dateTimeBetween('-30 years', '-20 years')),
-                $this->faker->city
+                $this->faker->city()
             );
             $collection->add($this->userService->createNewUser($dto, false));
         }
@@ -158,7 +158,7 @@ class AppFixtures extends Fixture
                 $forum = new Forum();
                 $forum->setTitle($title)
                     ->setCategory($category)
-                    ->setSubTitle($this->faker->sentence);
+                    ->setSubTitle($this->faker->sentence());
                 $this->forumService->createNewForum($forum);
                 $forums->add($forum);
             }
@@ -182,8 +182,8 @@ class AppFixtures extends Fixture
             for ($i = 0; $i < $this->faker->numberBetween(2, 8); $i++) {
                 $author = self::selectRandomUser($users);
                 $dto = new TopicDto();
-                $dto->setTitle($this->faker->word)
-                    ->setContent($this->faker->sentence);
+                $dto->setTitle($this->faker->word())
+                    ->setContent($this->faker->sentence());
                 $topic = $this->messageService->createNewTopic($dto, $el, $author);
                 $topics->add($topic);
             }
@@ -207,7 +207,7 @@ class AppFixtures extends Fixture
             for ($i = 0; $i < $this->faker->numberBetween(2, 8); $i++) {
                 $author = self::selectRandomUser($users);
                 $dto = new PostDto();
-                $dto->setContent($this->faker->sentence);
+                $dto->setContent($this->faker->sentence());
                 $topic = $this->messageService->createNewPost($dto, $el, $author);
                 $topics->add($topic);
             }

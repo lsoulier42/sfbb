@@ -9,7 +9,6 @@ use App\Enum\ChangeOrderEnum;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\Query\Expr\Orx;
@@ -113,7 +112,7 @@ abstract class BaseRepository extends ServiceEntityRepository
     ): QueryBuilder {
         $orx = new Orx();
         foreach ($fieldsNames as $fieldName) {
-           self::formatOrxLike($queryBuilder, $orx, $alias, $fieldName, $fieldValue);
+            self::formatOrxLike($queryBuilder, $orx, $alias, $fieldName, $fieldValue);
         }
         return $queryBuilder->andWhere($queryBuilder->expr()->orX($orx));
     }
@@ -173,7 +172,7 @@ abstract class BaseRepository extends ServiceEntityRepository
         $queryBuilder = $this->createQueryBuilder($alias);
         $orderField = self::ORDER_FIELD;
         $condition = $direction === ChangeOrderEnum::UP ? '<' : '>';
-        $criteria = $direction === ChangeOrderEnum::UP ? Criteria::DESC : Criteria::ASC;
+        $criteria = $direction === ChangeOrderEnum::UP ? 'DESC' : 'ASC';
         if ($entity instanceof Forum) {
             self::addCategoryWhere($queryBuilder, $entity->getCategory(), $alias);
         }
