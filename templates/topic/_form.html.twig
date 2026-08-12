@@ -1,50 +1,31 @@
 {{ form_start(form) }}
-<table class="table forum-table my-1">
-    <thead class="text-center forum-table-title">
-    <tr>
-        <th scope="col" colspan="2">
+<section class="sf-card">
+    <header class="sf-card-header">
+        <h2 class="sf-card-title">
+            <i class="fa-solid fa-pen"></i>
             {{ 'topic.label.post_new_topic'|trans }}
-        </th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td class="forum-table-row-title">
-            {{ 'topic.label.author'|trans }}
-        </td>
-        <td class="forum-table-row-title">
-            {{ author.username }}
-        </td>
-    </tr>
-    <tr>
-        <td class="forum-table-row-title">
-            {{ 'topic.label.forum'|trans }}
-        </td>
-        <td class="forum-table-row-title">
-            {{ forum.title }}
-        </td>
-    </tr>
-    <tr>
-        <td class="forum-table-row-title">
-            {{ form_label(form.title) }}
-        </td>
-        <td class="forum-table-row-title">
-            {{ form_widget(form.title) }}
-        </td>
-    </tr>
-    <tr>
-        <td class="forum-table-row-title">
-            {{ form_label(form.content) }}
-        </td>
-        <td class="forum-table-row-title">
-            {{ form_widget(form.content) }}
-        </td>
-    </tr>
-    <tr>
-        <td class="forum-table-row-title text-center" colspan="2">
+        </h2>
+    </header>
+    <div class="sf-card-body">
+        <div class="sf-info-line">
+            <span class="sf-info-line-item">
+                <i class="fa-solid fa-user me-1"></i>
+                {{ 'topic.label.author'|trans }} : <strong>{{ author.username }}</strong>
+            </span>
+            <span class="sf-info-line-item">
+                <i class="fa-solid fa-folder me-1"></i>
+                {{ 'topic.label.forum'|trans }} : <strong>{{ forum.title }}</strong>
+            </span>
+        </div>
+        <div class="mb-3">
+            {{ form_row(form.title) }}
+        </div>
+        <div class="mb-3">
+            {{ form_row(form.content) }}
+        </div>
+        <div class="text-end">
             {{ form_widget(form.submit) }}
-        </td>
-    </tr>
-    </tbody>
-</table>
+        </div>
+    </div>
+</section>
 {{ form_end(form) }}

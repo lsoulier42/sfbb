@@ -643,44 +643,47 @@
   }
 
   // ---- Pagination ----
-  .pagerfanta {
+  .pagination {
     display: flex;
     flex-wrap: wrap;
     gap: 0.35rem;
     padding: 0;
-    margin: 1rem 0 0;
+    margin: 0;
     list-style: none;
 
-    a,
-    span {
+    .pagination__item {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       min-width: 2.2rem;
       height: 2.2rem;
+      margin: 0;
       padding: 0 0.55rem;
       border: 1px solid var(--admin-border);
       border-radius: 0.6rem;
       background: var(--admin-surface);
       color: var(--admin-text-muted);
       font-size: 0.8rem;
-    }
-
-    a:hover {
-      color: var(--admin-primary);
-      border-color: var(--admin-primary);
       text-decoration: none;
-    }
 
-    .current {
-      color: var(--admin-text);
-      border-color: var(--admin-primary);
-      background: var(--admin-primary-soft);
-      font-weight: 700;
-    }
+      &:hover {
+        color: var(--admin-primary);
+        border-color: var(--admin-primary);
+        text-decoration: none;
+      }
 
-    .disabled span {
-      opacity: 0.4;
+      &.pagination__item--current-page {
+        color: var(--admin-text);
+        border-color: var(--admin-primary);
+        background: var(--admin-primary-soft);
+        font-weight: 700;
+      }
+
+      &.pagination__item--disabled {
+        border-color: var(--admin-border);
+        color: var(--admin-text-faint);
+        opacity: 0.4;
+      }
     }
   }
 

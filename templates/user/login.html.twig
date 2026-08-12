@@ -5,48 +5,32 @@
 {% endblock %}
 
 {% block content %}
-    {{ form_start(form) }}
-    <table class="table forum-table">
-        <thead class="text-center forum-table-title">
-            <tr>
-                <th scope="col">{{ 'user.label.table.login'|trans }}</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td class="forum-table-row-title">
-                    <div class="row justify-content-center py-1">
-                        <div class="col-1">
-                            {{ form_label(form.username) }}:
-                        </div>
-                        <div class="col-2">
-                            {{ form_widget(form.username) }}
-                        </div>
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            {{ form_start(form) }}
+            <section class="sf-card">
+                <header class="sf-card-header">
+                    <h2 class="sf-card-title">
+                        <i class="fa-solid fa-right-to-bracket"></i>
+                        {{ 'user.login.title'|trans }}
+                    </h2>
+                </header>
+                <div class="sf-card-body">
+                    <div class="mb-3">
+                        {{ form_row(form.username) }}
                     </div>
-                    <div class="row justify-content-center py-1">
-                        <div class="col-1">
-                            {{ form_label(form.password) }}:
-                        </div>
-                        <div class="col-2">
-                            {{ form_widget(form.password) }}
-                        </div>
+                    <div class="mb-3">
+                        {{ form_row(form.password) }}
                     </div>
-                    <div class="row justify-content-center py-1">
-                        <div class="col-1">
-                            {{ form_label(form.rememberMe) }}
-                        </div>
-                        <div class="col-2">
-                            {{ form_widget(form.rememberMe) }}
-                        </div>
+                    <div class="mb-4">
+                        {{ form_row(form.rememberMe) }}
                     </div>
-                    <div class="row justify-content-center py-1">
-                        <div class="col-2 text-center pe-5">
-                            {{ form_widget(form.submit) }}
-                        </div>
+                    <div class="text-end">
+                        {{ form_widget(form.submit) }}
                     </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    {{ form_end(form) }}
+                </div>
+            </section>
+            {{ form_end(form) }}
+        </div>
+    </div>
 {% endblock %}

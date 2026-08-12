@@ -1,56 +1,26 @@
-<table class="table forum-table">
-    <thead>
-    <tr>
-        <th scope="col" class="homepage-category">
-            <span class="homepage-category-title">{{ 'homepage.table.title.login'|trans }}</span>
-        </th>
-    </tr>
-    </thead>
-    <tbody class="forum-table-online">
-        <tr>
-            <td>
-                {{ form_start(form) }}
-                <div class="row justify-content-center">
-                    <div class="col-2">
-                        <div class="row justify-content-center">
-                            <div class="col-5 p-0 d-flex flex-column justify-content-center align-items-end">
-                                {{ form_label(form.username) }}
-                            </div>
-                            <div class="col-7">
-                                {{ form_widget(form.username) }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-2">
-                        <div class="row">
-                            <div class="col-4 p-0 d-flex flex-column justify-content-center align-items-end">
-                                {{ form_label(form.password) }}
-                            </div>
-                            <div class="col-8">
-                                {{ form_widget(form.password) }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-1">
-                        <div class="row">
-                            <div class="col-8 p-0 d-flex flex-column justify-content-center align-items-end">
-                                {{ form_label(form.rememberMe) }}
-                            </div>
-                            <div class="col-4 pt-1">
-                                {{ form_widget(form.rememberMe) }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-1">
-                        <div class="row">
-                            <div class="col-12">
-                                {{ form_widget(form.submit) }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {{ form_end(form) }}
-            </td>
-        </tr>
-    </tbody>
-</table>
+{{ form_start(form) }}
+<section class="sf-card">
+    <header class="sf-card-header">
+        <h2 class="sf-card-title">
+            <i class="fa-solid fa-right-to-bracket"></i>
+            {{ 'homepage.table.title.login'|trans }}
+        </h2>
+    </header>
+    <div class="sf-card-body">
+        <div class="row g-3 align-items-end">
+            <div class="col-12 col-md-3">
+                {{ form_row(form.username) }}
+            </div>
+            <div class="col-12 col-md-3">
+                {{ form_row(form.password) }}
+            </div>
+            <div class="col-12 col-md-3">
+                {{ form_row(form.rememberMe) }}
+            </div>
+            <div class="col-12 col-md-3 text-md-end">
+                {{ form_widget(form.submit) }}
+            </div>
+        </div>
+    </div>
+</section>
+{{ form_end(form) }}

@@ -1,5 +1,7 @@
 {% block submit_widget %}
-    <button type="submit" class="border-0">
-        <img src="{{ asset('images/confirm_btn.png') }}" alt="confirm" />
+    {% set submit_label = label is defined and label is not same as(false) ? label|trans({}, translation_domain is defined ? translation_domain : null) : ('global.label.submit'|trans) %}
+    <button type="submit" class="btn btn-primary btn-icon">
+        <i class="fa-solid fa-paper-plane"></i>
+        {{ submit_label }}
     </button>
 {% endblock %}

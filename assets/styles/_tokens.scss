@@ -1,0 +1,31 @@
+// ============================================================
+// SFBB - Thème public "glassmorphism dark"
+// Design tokens — toutes les règles sont scopées sous
+// `.public-body` afin de ne pas impacter le style admin
+// (base_admin.html.twig).
+// ============================================================
+
+.public-body {
+  --sf-bg: #0b0f1e;
+  --sf-surface: rgba(255, 255, 255, 0.055);
+  --sf-surface-strong: rgba(255, 255, 255, 0.09);
+  --sf-surface-hover: rgba(255, 255, 255, 0.13);
+  --sf-border: rgba(255, 255, 255, 0.13);
+  --sf-border-strong: rgba(255, 255, 255, 0.26);
+  --sf-text: #e9edf8;
+  --sf-text-muted: #9aa4bf;
+  --sf-text-faint: #6d7794;
+  --sf-primary: #818cf8;
+  --sf-primary-soft: rgba(129, 140, 248, 0.16);
+  --sf-accent: #c084fc;
+  --sf-success: #34d399;
+  --sf-warning: #fbbf24;
+  --sf-danger: #f87171;
+  --sf-radius: 18px;
+  --sf-radius-sm: 12px;
+  --sf-blur: 24px;
+  --sf-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  --sf-shadow-sm: 0 8px 28px rgba(0, 0, 0, 0.3);
+  --sf-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+}

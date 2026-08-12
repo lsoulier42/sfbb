@@ -1,16 +1,18 @@
-<div class="row justify-content-between">
-    <div class="col-auto">
-        <a href="{{ path('topic_new', {'forum': forum.id}) }}">
-            <img src="{{ asset('images/post.gif') }}" alt="new topic btn" />
+<div class="sf-toolbar">
+    <div class="d-flex flex-wrap gap-2">
+        <a href="{{ path('topic_new', {'forum': forum.id}) }}" class="btn btn-primary btn-icon">
+            <i class="fa-solid fa-pen"></i>
+            {{ 'global.label.new_topic'|trans }}
         </a>
         {% if topic is defined %}
-            <a href="{{ path('post_new', {'topic': topic.id}) }}">
-                <img src="{{ asset('images/lang_english/msg_newpost.gif') }}" alt="new topic btn" />
+            <a href="{{ path('post_new', {'topic': topic.id}) }}" class="btn btn-primary btn-icon">
+                <i class="fa-solid fa-reply"></i>
+                {{ 'global.label.reply'|trans }}
             </a>
         {% endif %}
     </div>
     {% if pager is defined %}
-        <div class="col-auto">
+        <div class="sf-toolbar-pager">
             {{ pagerfanta(pager) }}
         </div>
     {% endif %}

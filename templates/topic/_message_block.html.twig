@@ -1,21 +1,28 @@
 {% set message_id_prefix = message.title is defined ? 'topic_' : 'post_' %}
-<tr id="{{ message_id_prefix ~ message.id }}">
-    <td rowspan="2" class="forum-table-row-title">
-        {% include 'topic/_user_block.html.twig' with {'author': message.author} only %}
-    </td>
-    <td class="forum-table-row-title">
-        {% include 'topic/_message_info.html.twig' with
-            {
-                'message': message,
-                'edit_link': edit_link,
-                'title': title
-            }
-            only
-        %}
-    </td>
-</tr>
-<tr>
-    <td class="forum-table-row-title" height="200px">
-        {{ message.content|raw }}
-    </td>
-</tr>
+<section class="sf-card sf-message-card" id="{{ message_id_prefix ~ message.id }}">
+    <header class="sf-card-header">
+        <h2 class="sf-card-title sf-message-title">
+            <i class="fa-solid fa-message"></i>
+            {{ 'topic.label.subject'|trans({'%title%': title}) }}
+        </h2>
+        <div class="d-flex align-items-center gap-2">
+            <span class="sf-message-date">
+                <i class="fa-regular fa-clock me-1"></i>
+                {{ message.createdAt|format_datetime('full', locale='fr') }}
+            </span>
+            {% if can_edit_post(app.user, message) %}
+                <a class="sf-icon-link" href="{{ edit_link }}" title="{{ 'global.label.edit'|trans }}" aria-label="{{ 'global.label.edit'|trans }}">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </a>
+            {% endif %}
+        </div>
+    </header>
+    <div class="sf-message-body">
+        <aside class="sf-message-user">
+            {% include 'topic/_user_block.html.twig' with {'author': message.author} only %}
+        </aside>
+        <div class="sf-message-content">
+            {{ message.content|raw }}
+        </div>
+    </div>
+</section>

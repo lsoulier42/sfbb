@@ -5,110 +5,83 @@
 {% endblock %}
 
 {% block content %}
-    <table class="table forum-table my-1">
-        <thead>
-        <tr class="forum-table-title">
-            <th scope="col">
-                Rechercher un membre
-            </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td class="forum-table-row-title text-center">
-                {{ form_start(form) }}
-                <div class="row justify-content-around">
-                    <div class="col-auto">
-                        {{ form_row(form.username, {'attr': {'class': 'mx-2'}}) }}
-                    </div>
-                    <div class="col-auto">
-                        {{ form_row(form.name, {'attr': {'class': 'mx-2'}}) }}
-                    </div>
-                    <div class="col-auto">
-                        {{ form_row(form.city, {'attr': {'class': 'mx-2'}}) }}
-                    </div>
-                    <div class="col-auto">
-                        {{ form_row(form.role, {'attr': {'class': 'mx-2'}}) }}
-                    </div>
-                    <div class="col-auto">
-                        {{ form_row(form.submit) }}
-                    </div>
+    <section class="sf-card">
+        <header class="sf-card-header">
+            <h2 class="sf-card-title">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                {{ 'user.member_list.search'|trans }}
+            </h2>
+        </header>
+        <div class="sf-card-body">
+            {{ form_start(form) }}
+            <div class="row g-3 align-items-end">
+                <div class="col-12 col-md-3">
+                    {{ form_row(form.username) }}
                 </div>
-                {{ form_end(form) }}
-            </td>
-        </tr>
-        </tbody>
-    </table>
+                <div class="col-12 col-md-3">
+                    {{ form_row(form.name) }}
+                </div>
+                <div class="col-12 col-md-3">
+                    {{ form_row(form.city) }}
+                </div>
+                <div class="col-12 col-md-3">
+                    {{ form_row(form.role) }}
+                </div>
+            </div>
+            <div class="text-end mt-3">
+                {{ form_widget(form.submit) }}
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </section>
 
-    <div class="row justify-content-end">
-        <div class="col-auto">
+    <div class="sf-toolbar justify-content-end">
+        <div>
             {{ pagerfanta(members) }}
         </div>
     </div>
-    <table class="table forum-table my-1">
-        <thead>
-            <tr class="text-center forum-table-title">
-                <th scope="col">
-                    {{ 'user.label.id'|trans }}
-                </th>
-                <th scope="col">
-                    {{ 'user.label.username'|trans }}
-                </th>
-                <th scope="col">
-                    {{ 'user.label.last_name'|trans }}
-                </th>
-                <th scope="col">
-                    {{ 'user.label.city'|trans }}
-                </th>
-                <th scope="col">
-                    {{ 'user.label.registration_date'|trans }}
-                </th>
-                <th scope="col">
-                    {{ 'user.label.last_visit'|trans }}
-                </th>
-                <th scope="col">
-                    {{ 'user.label.nb_messages'|trans }}
-                </th>
-                <th scope="col">
-                    {{ 'user.label.private_message'|trans }}
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for member in members %}
-            <tr class="forum-table-row-title text-center">
-                <td>
-                    {{ member.id }}
-                </td>
-                <td>
-                    {% include 'shared/component/_user_link.html.twig' with {
-                        'user': member
-                    } only %}
-                </td>
-                <td>
-                    {{ member.fullName }}
-                </td>
-                <td>
-                    {{ member.city }}
-                </td>
-                <td>
-                    {{ member.createdAt|format_datetime('full', locale='fr') }}
-                </td>
-                <td>
-                    {{ member.lastConnexion|format_datetime('full', locale='fr') }}
-                </td>
-                <td>
-                    {{ member.getTotalPosts }}
-                </td>
-                <td>
-                    <img src="{{ asset('images/lang_english/icon_pm.gif') }}" alt="icon pm">
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <div class="row justify-content-end">
-        <div class="col-auto">
+
+    <section class="sf-card">
+        <div class="sf-card-body p-0">
+            <table class="sf-table">
+                <thead>
+                <tr>
+                    <th scope="col">{{ 'user.label.id'|trans }}</th>
+                    <th scope="col">{{ 'user.label.username'|trans }}</th>
+                    <th scope="col">{{ 'user.label.last_name'|trans }}</th>
+                    <th scope="col">{{ 'user.label.city'|trans }}</th>
+                    <th scope="col">{{ 'user.label.registration_date'|trans }}</th>
+                    <th scope="col">{{ 'user.label.last_visit'|trans }}</th>
+                    <th scope="col">{{ 'user.label.nb_messages'|trans }}</th>
+                    <th scope="col">{{ 'user.label.private_message'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for member in members %}
+                    <tr>
+                        <td>{{ member.id }}</td>
+                        <td>
+                            {% include 'shared/component/_user_link.html.twig' with {
+                                'user': member
+                            } only %}
+                        </td>
+                        <td>{{ member.fullName }}</td>
+                        <td>{{ member.city }}</td>
+                        <td>{{ member.createdAt|format_datetime('full', locale='fr') }}</td>
+                        <td>{{ member.lastConnexion|format_datetime('full', locale='fr') }}</td>
+                        <td>{{ member.getTotalPosts }}</td>
+                        <td>
+                            <i class="fa-regular fa-envelope text-muted" title="{{ 'user.label.private_message'|trans }}"></i>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <div class="sf-toolbar justify-content-end">
+        <div>
             {{ pagerfanta(members) }}
         </div>
     </div>

@@ -1,60 +1,50 @@
-<table class="table forum-table">
-    <thead class="text-center forum-table-title">
-    <tr>
-        <th scope="col" width="80%" colspan="2">{{ 'homepage.table.title.forum'|trans }}</th>
-        <th scope="col">{{ 'homepage.table.title.topics'|trans }}</th>
-        <th scope="col">{{ 'homepage.table.title.posts'|trans }}</th>
-        <th scope="col">{{ 'homepage.table.title.last_post'|trans }}</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for category in categories %}
-        <tr>
-            <td class="homepage-category" colspan="2">
-                <span class="homepage-category-title">{{ category.title }}</span>
-            </td>
-            <td colspan="3" class="homepage-category"></td>
-        </tr>
-        {% for forum in category.forumViewModels %}
-            <tr>
-                <td width="2%" class="forum-table-row-title text-center align-middle">
-                    <img src="{{ asset('images/folder_big.gif') }}" alt="no new post icon" />
-                </td>
-                <td class="forum-table-row-title">
-                    <span class="homepage-forum-title">
-                        <a href="{{ path('forum_show', {'forum': forum.id}) }}">
+{% for category in categories %}
+    <section class="sf-card">
+        <header class="sf-card-header">
+            <h2 class="sf-card-title">
+                <i class="fa-solid fa-folder-tree"></i>
+                {{ category.title }}
+            </h2>
+        </header>
+        <div class="sf-card-body p-0">
+            {% for forum in category.forumViewModels %}
+                <div class="sf-row">
+                    <div class="sf-row-icon">
+                        <i class="fa-solid fa-folder"></i>
+                    </div>
+                    <div class="sf-row-main">
+                        <a class="sf-row-title" href="{{ path('forum_show', {'forum': forum.id}) }}">
                             {{ forum.title }}
                         </a>
-                    </span><br />
-                    <span class="small">{{ forum.subTitle }}</span>
-                </td>
-                <td class="forum-table-row-messages">
-                    {{ forum.nbTopics }}
-                </td>
-                <td class="forum-table-row-messages">
-                    {{ forum.nbMessages }}
-                </td>
-                <td class="forum-table-row-messages">
-                    {% if forum.lastMessage is not null %}
-                        {% include 'shared/component/_last_message.html.twig' with
-                            {
+                        {% if forum.subTitle is not empty %}
+                            <div class="sf-row-subtitle">{{ forum.subTitle }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="sf-row-stat">
+                        <span class="sf-row-stat-value">{{ forum.nbTopics }}</span>
+                        <span class="sf-row-stat-label">{{ 'homepage.table.title.topics'|trans }}</span>
+                    </div>
+                    <div class="sf-row-stat">
+                        <span class="sf-row-stat-value">{{ forum.nbMessages }}</span>
+                        <span class="sf-row-stat-label">{{ 'homepage.table.title.posts'|trans }}</span>
+                    </div>
+                    <div class="sf-row-last">
+                        {% if forum.lastMessage is not null %}
+                            {% include 'shared/component/_last_message.html.twig' with {
                                 'message': forum.lastMessage
-                            } only
-                        %}
-                    {% else %}
-                        {{ 'forum.label.no_message'|trans }}
-                    {% endif %}
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">{{ 'forum.none_found'|trans }}</td>
-            </tr>
-        {% endfor %}
-    {% else %}
-        <tr>
-            <td colspan="5">{{ 'category.none_found'|trans }}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+                            } only %}
+                        {% else %}
+                            {{ 'forum.label.no_message'|trans }}
+                        {% endif %}
+                    </div>
+                </div>
+            {% else %}
+                <p class="sf-empty">{{ 'forum.none_found'|trans }}</p>
+            {% endfor %}
+        </div>
+    </section>
+{% else %}
+    <section class="sf-card">
+        <p class="sf-empty">{{ 'category.none_found'|trans }}</p>
+    </section>
+{% endfor %}

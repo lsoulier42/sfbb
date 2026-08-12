@@ -5,67 +5,63 @@
 {% endblock %}
 
 {% block content %}
-    <div class="forum-show-header mb-1">
-        <a class="forum-show-title" href="{{ path('forum_show', {'forum': forum.id}) }}">
-            {{ forum.title }}
-        </a><br />
-        <span class="forum-show-info">
-            {{ 'forum.label.moderators'|trans }} : {{ 'global.label.none'|trans }}<br />
+    <div class="sf-page-heading">
+        <h1 class="sf-page-title">{{ forum.title }}</h1>
+        <div class="sf-page-info">
+            <i class="fa-solid fa-user-shield me-1"></i>
+            {{ 'forum.label.moderators'|trans }} : {{ 'global.label.none'|trans }}
+            <span class="mx-2">•</span>
+            <i class="fa-solid fa-eye me-1"></i>
             {{ 'forum.label.users_browsing'|trans }} : {{ 'global.label.none'|trans }}
-        </span>
+        </div>
     </div>
     {% include 'forum/_new_topic.html.twig' with {'forum': forum, 'pager': topics} only %}
-    <table class="table forum-table my-1">
-        <thead class="text-center forum-table-title">
-        <tr>
-            <th scope="col" width="70%" colspan="2">{{ 'forum.label.topics'|trans }}</th>
-            <th scope="col">{{ 'forum.label.replies'|trans }}</th>
-            <th scope="col">{{ 'forum.label.author'|trans }}</th>
-            <th scope="col">{{ 'forum.label.views'|trans }}</th>
-            <th scope="col">{{ 'forum.label.last_post'|trans }}</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for topic in topics %}
-            <tr>
-                <td width="1%" class="forum-table-row-title text-center align-middle">
-                    <img src="{{ asset('images/folder.gif') }}" alt="no new post small icon" />
-                </td>
-                <td class="forum-table-row-title">
-                    <a class="forum-topic-title" href="{{ path('topic_show', {'topic': topic.id}) }}">
-                        {{ topic.title }}
-                    </a>
-                    <br />
-                </td>
-                <td class="forum-table-row-messages">
-                    {{ topic.posts.count }}
-                </td>
-                <td class="forum-table-row-messages">
-                    {% include 'shared/component/_user_link.html.twig' with
-                        {
-                            'user': topic.author
-                        } only
-                    %}
-                </td>
-                <td class="forum-table-row-messages">
-                    0
-                </td>
-                <td class="forum-table-row-messages">
-                    {% if topic.lastPost is not null %}
-                        {% include 'shared/component/_last_message.html.twig' with {
-                            'message': topic.lastPost
-                        } only %}
-                    {% else %}
-                        {{ 'topic.label.no_post'|trans }}
-                    {% endif %}
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6" class="forum-table-row-messages text-center border-0">{{ 'forum.topics.none'|trans }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <section class="sf-card">
+        <header class="sf-card-header">
+            <h2 class="sf-card-title">
+                <i class="fa-solid fa-comments"></i>
+                {{ 'forum.label.topics'|trans }}
+            </h2>
+            <span class="sf-card-badge">{{ topics.nbResults }}</span>
+        </header>
+        <div class="sf-card-body p-0">
+            {% for topic in topics %}
+                <div class="sf-row">
+                    <div class="sf-row-icon">
+                        <i class="fa-solid fa-folder"></i>
+                    </div>
+                    <div class="sf-row-main">
+                        <a class="sf-row-title" href="{{ path('topic_show', {'topic': topic.id}) }}">
+                            {{ topic.title }}
+                        </a>
+                        <div class="sf-row-subtitle">
+                            {% include 'shared/component/_user_link.html.twig' with {
+                                'user': topic.author
+                            } only %}
+                        </div>
+                    </div>
+                    <div class="sf-row-stat">
+                        <span class="sf-row-stat-value">{{ topic.posts.count }}</span>
+                        <span class="sf-row-stat-label">{{ 'forum.label.replies'|trans }}</span>
+                    </div>
+                    <div class="sf-row-stat">
+                        <span class="sf-row-stat-value">0</span>
+                        <span class="sf-row-stat-label">{{ 'forum.label.views'|trans }}</span>
+                    </div>
+                    <div class="sf-row-last">
+                        {% if topic.lastPost is not null %}
+                            {% include 'shared/component/_last_message.html.twig' with {
+                                'message': topic.lastPost
+                            } only %}
+                        {% else %}
+                            {{ 'topic.label.no_post'|trans }}
+                        {% endif %}
+                    </div>
+                </div>
+            {% else %}
+                <p class="sf-empty">{{ 'forum.topics.none'|trans }}</p>
+            {% endfor %}
+        </div>
+    </section>
     {% include 'forum/_new_topic.html.twig' with {'forum': forum, 'pager': topics} only %}
 {% endblock %}

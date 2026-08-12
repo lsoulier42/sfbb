@@ -1,0 +1,142 @@
+// ============================================================
+// SFBB - Layout : coque en verre, entête/menu, bandeau de
+// contenu, pied de page
+// ============================================================
+
+.public-body {
+  .sf-shell {
+    background: rgba(15, 20, 40, 0.55);
+    backdrop-filter: blur(var(--sf-blur)) saturate(150%);
+    -webkit-backdrop-filter: blur(var(--sf-blur)) saturate(150%);
+    border: 1px solid var(--sf-border);
+    border-radius: var(--sf-radius);
+    box-shadow: var(--sf-shadow);
+    overflow: hidden;
+
+    @supports not (backdrop-filter: blur(1px)) {
+      background: rgba(15, 20, 40, 0.96);
+    }
+  }
+
+  .sf-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 0.9rem 1.25rem;
+    border-bottom: 1px solid var(--sf-border);
+    background: linear-gradient(
+      135deg,
+      rgba(129, 140, 248, 0.1),
+      rgba(192, 132, 252, 0.05)
+    );
+  }
+
+  .sf-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    color: var(--sf-text);
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+
+    img {
+      width: 42px;
+      height: 42px;
+      border-radius: 0.6rem;
+      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
+    }
+
+    &:hover {
+      color: var(--sf-text);
+    }
+  }
+
+  .sf-nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .sf-nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.45rem 0.8rem;
+    border: 1px solid transparent;
+    border-radius: 2rem;
+    color: var(--sf-text-muted);
+    font-size: 0.88rem;
+    transition: background-color 0.15s ease, color 0.15s ease,
+      border-color 0.15s ease;
+
+    i {
+      font-size: 0.85rem;
+    }
+
+    &:hover {
+      color: var(--sf-text);
+      background: var(--sf-surface);
+      border-color: var(--sf-border);
+    }
+  }
+
+  .sf-header-desc {
+    color: var(--sf-text-muted);
+    font-size: 0.85rem;
+  }
+
+  .sf-content-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.4rem 1rem;
+    padding: 0.55rem 1.25rem;
+    border-bottom: 1px solid var(--sf-border);
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--sf-text-muted);
+    font-size: 0.82rem;
+  }
+
+  .sf-breadcrumb {
+    a {
+      color: var(--sf-text-muted);
+      font-weight: 600;
+
+      &:hover {
+        color: var(--sf-accent);
+      }
+    }
+
+    .sf-breadcrumb-sep {
+      margin: 0 0.35rem;
+      color: var(--sf-text-faint);
+    }
+  }
+
+  .sf-page-heading {
+    padding: 0.4rem 0 0.9rem;
+
+    h1.sf-page-title {
+      margin: 0 0 0.3rem;
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: var(--sf-text);
+    }
+
+    .sf-page-info {
+      color: var(--sf-text-muted);
+      font-size: 0.85rem;
+    }
+  }
+
+  .sf-footer {
+    padding: 0.9rem 1.25rem;
+    border-top: 1px solid var(--sf-border);
+    color: var(--sf-text-faint);
+    font-size: 0.8rem;
+    text-align: center;
+  }
+}
