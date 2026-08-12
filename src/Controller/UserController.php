@@ -17,14 +17,19 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 #[Route('/user')]
 class UserController extends BaseController
 {
     #[Route(path: '/login', name: 'user_login')]
-    public function login(): Response
+    public function login(AuthenticationUtils $authenticationUtils): Response
     {
         $dto = new UserLoginDto();
+        $lastUsername = $authenticationUtils->getLastUsername();
+        if ($lastUsername) {
+            $dto->setUsername($lastUsername);
+        }
         $form = $this->createForm(
             UserLoginType::class,
             $dto
@@ -32,7 +37,8 @@ class UserController extends BaseController
         return $this->render(
             'user/login.html.twig',
             [
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'error' => $authenticationUtils->getLastAuthenticationError()
             ]
         );
     }
