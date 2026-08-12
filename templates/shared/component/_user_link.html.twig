@@ -1,1 +1,1 @@
-<a class="fw-bold {{ get_role_color_class(user) }}" href="{{ path('user_profile', {'user': user.id}) }}">{{ user.username }}</a>
+<a href="{{ path('user_profile', {'user': user.id}) }}" class="fw-bold">{{ user.username }}</a>

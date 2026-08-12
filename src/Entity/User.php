@@ -330,6 +330,12 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
         return $role->getTransKey();
     }
 
+    public function getFullName(): ?string
+    {
+        $fullName = trim((string)$this->firstName . ' ' . (string)$this->lastName);
+        return $fullName === '' ? null : $fullName;
+    }
+
     public function getTotalTopics(): int
     {
         return $this->getTopics()->count();

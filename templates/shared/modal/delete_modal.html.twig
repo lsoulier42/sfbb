@@ -1,21 +1,24 @@
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" data-controller="delete-modal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">{{ title }}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title" id="deleteModalLabel">
+                    <i class="fa-solid fa-triangle-exclamation text-danger me-2"></i>
+                    {{ title }}
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'global.label.close'|trans }}"></button>
             </div>
             <div class="modal-body">
-                <p>{{ "global.modal.delete.body"|trans }}</p>
+                <p class="mb-0">{{ "global.modal.delete.body"|trans }}</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ "global.label.close"|trans }}</button>
-                <button id="modalConfirm" class="btn btn-primary"
-                        data-target="" data-csrf="{{ csrf_token(csrf_key) }}">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">{{ "global.label.close"|trans }}</button>
+                <button type="button" class="btn btn-danger btn-icon" data-delete-modal-target="confirm"
+                        data-action="delete-modal#confirm">
+                    <i class="fa-solid fa-trash"></i>
                     {{ 'global.label.confirm'|trans }}
                 </button>
             </div>
         </div>
     </div>
 </div>
-<script type="application/javascript" src="{{ asset('javascript/delete_modal_send_form.js') }}"></script>

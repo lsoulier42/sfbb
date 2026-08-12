@@ -19,23 +19,53 @@
         {% block importmap %}{{ importmap('app') }}{% endblock %}
     {% endblock %}
 </head>
-<body class="bg-black bg-opacity-25">
+<body class="admin-body">
     {% block body %}
-        <div class="container-fluid">
-            <div class="row flex-nowrap">
-                <div class="sidebar col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
-                    {% block sidebar %}
-                        {% include 'shared/layout/_sidebar.html.twig' %}
+        <div class="admin-shell">
+            <aside class="admin-sidebar">
+                {% block sidebar %}
+                    {% include 'shared/layout/_sidebar.html.twig' %}
+                {% endblock %}
+            </aside>
+            <div class="admin-main d-flex flex-column">
+                <header class="admin-topbar">
+                    <div class="admin-topbar-left">
+                        <nav class="admin-breadcrumb" aria-label="breadcrumb">
+                            {% block admin_breadcrumb %}
+                                <a href="{{ path('admin_index') }}">
+                                    <i class="fa-solid fa-gauge"></i> {{ 'admin.label.dashboard'|trans }}
+                                </a>
+                            {% endblock %}
+                        </nav>
+                        <h1 class="admin-page-title">{{ block('sub_title') }}</h1>
+                    </div>
+                    <div class="admin-topbar-actions d-flex align-items-center gap-2">
+                        <a href="{{ path('homepage') }}" class="btn btn-outline-secondary btn-sm btn-icon">
+                            <i class="fa-solid fa-arrow-left"></i>
+                            <span class="d-none d-sm-inline">{{ 'admin.label.return_homepage'|trans }}</span>
+                        </a>
+                        {% if app.user %}
+                            <div class="admin-user">
+                                <span class="admin-user-avatar">{{ app.user.username|first|upper }}</span>
+                                <span class="admin-user-name d-none d-md-inline">{{ app.user.username }}</span>
+                            </div>
+                        {% endif %}
+                    </div>
+                </header>
+                <main class="admin-content">
+                    {% block alerts %}
+                        {% include 'shared/layout/_alert.html.twig' %}
                     {% endblock %}
-                </div>
-                <div class="content col py-3">
                     {% block content %}
                     {% endblock %}
-                </div>
+                </main>
             </div>
         </div>
     {% endblock %}
-{% block additionnal_javascripts_bottom %}
-{% endblock %}
+    {% block modals %}
+        {% include 'shared/modal/delete_modal.html.twig' with {'title': 'global.modal.delete.title'|trans} only %}
+    {% endblock %}
+    {% block additionnal_javascripts_bottom %}
+    {% endblock %}
 </body>
 </html>

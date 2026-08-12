@@ -1,62 +1,62 @@
 {% extends 'base_admin.html.twig' %}
 
+{% block admin_breadcrumb %}
+    {{ parent() }}
+    <i class="fa-solid fa-chevron-right"></i>
+    <span>{{ 'configuration.title.index'|trans }}</span>
+{% endblock %}
+
+{% block sub_title %}
+    {{ 'configuration.title.index'|trans }}
+{% endblock %}
+
 {% block content %}
-    <div class="row">
-        <div class="col-12">
-            {{ form_start(form) }}
-                <table class="table forum-table">
-                    <thead class="text-center forum-table-title">
+    {% form_theme form 'admin/shared/form/_btn_submit.html.twig' %}
+    {{ form_start(form) }}
+    {% embed 'admin/shared/_card.html.twig' with {
+        'title': 'configuration.title.index'|trans,
+        'icon': 'fa-sliders'
+    } %}
+        {% block card_actions %}
+            <a href="{{ path('admin_configuration_new') }}" class="btn btn-primary btn-sm btn-icon">
+                <i class="fa-solid fa-plus"></i>
+                <span class="d-none d-sm-inline">{{ 'configuration.label.new'|trans }}</span>
+            </a>
+        {% endblock %}
+        {% block card_body %}
+            <div class="table-responsive">
+                <table class="admin-table">
+                    <thead>
                         <tr>
-                            <th scope="col" colspan="3">
-                                {{ 'configuration.title.index'|trans }}
-                            </th>
+                            <th scope="col">{{ 'configuration.label.title'|trans }}</th>
+                            <th scope="col">{{ 'configuration.label.value'|trans }}</th>
+                            <th scope="col" class="text-end">{{ 'configuration.label.edit'|trans }}</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="forum-table-row-title text-center bg-black bg-opacity-25">
-                            <th scope="col" class="col-2">
-                                {{ 'configuration.label.title'|trans() }}
-                            </th>
-                            <th scope="col" class="col-8">
-                                {{ 'configuration.label.value'|trans() }}
-                            </th>
-                            <th scope="col" class="col-8">
-                                {{ 'configuration.label.edit'|trans() }}
-                            </th>
-                        </tr>
-                        {% for field in form.children %}
-                            <tr class="forum-table-row-title text-center">
-                                {% if field.vars.name != '_token' %}
-                                    {% if field.vars.name == 'submit' %}
-                                        <td colspan="3">
-                                            {{ form_widget(field) }}
-                                        </td>
-                                    {% else %}
-                                        <th scope="row">
-                                            {{ form_label(field) }}
-                                        </th>
-                                        <td>
-                                            {{ form_widget(field) }}
-                                        </td>
-                                        <td>
-                                            <a href="{{ path('admin_configuration_edit', {'configuration': ids[field.vars.name]}) }}">
-                                                <img src="{{ asset('images/edit_btn.png') }}" alt="edit-config" />
-                                            </a>
-                                        </td>
-                                    {% endif %}
-                                {% endif %}
+                    {% for field in form.children %}
+                        {% if field.vars.name != '_token' and field.vars.name != 'submit' %}
+                            <tr>
+                                <th scope="row">{{ form_label(field) }}</th>
+                                <td>{{ form_widget(field) }}</td>
+                                <td class="text-end">
+                                    <a href="{{ path('admin_configuration_edit', {'configuration': ids[field.vars.name]}) }}"
+                                       class="admin-action admin-action-primary"
+                                       title="{{ 'configuration.label.edit'|trans }}"
+                                       aria-label="{{ 'configuration.label.edit'|trans }}">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </a>
+                                </td>
                             </tr>
-                        {% endfor %}
+                        {% endif %}
+                    {% endfor %}
                     </tbody>
                 </table>
-            {{ form_end(form) }}
-            <div class="row justify-content-end">
-                <div class="col-auto">
-                    <a href="{{ path('admin_configuration_new') }}">
-                        <img src="{{ asset('images/new_btn.png') }}" alt="edit-config" />
-                    </a>
-                </div>
             </div>
-        </div>
-    </div>
+            <div class="d-flex gap-2 mt-3 justify-content-end">
+                {{ form_widget(form.submit, {'label': 'global.label.update'|trans}) }}
+            </div>
+        {% endblock %}
+    {% endembed %}
+    {{ form_end(form) }}
 {% endblock %}

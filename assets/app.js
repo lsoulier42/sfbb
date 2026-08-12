@@ -9,4 +9,5 @@ import './bootstrap.js';
 import 'bootstrap'
 import './styles/app.scss'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import './styles/fontawesome/css/font-awesome.min.css'
+import '@fortawesome/fontawesome-free/css/all.min.css'
+import './styles/admin.scss'

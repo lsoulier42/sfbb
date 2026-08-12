@@ -20,6 +20,9 @@ user:
     city: Ville
     agree_terms: J'ai lu et j'accepte les règles du site
     online: 'Membres en ligne : '
+    status: Statut
+    enabled: Activé
+    disabled: Désactivé
     table:
       login: Se connecter
       user_info: Informations de connexion
@@ -123,6 +126,7 @@ category:
     orderNumber: Ordre
     change_order: Monter/Descendre
     add_category: Ajouter une catégorie
+    nb_forums: '%count% forum(s)'
   success:
     delete: La catégorie `%title%` a été supprimée avec succès
     new: La catégorie `%title%` a été créée avec succès
@@ -217,8 +221,30 @@ admin:
     user: Gestion des utilisateurs
     access: Gestion des accès
     return_homepage: Retour à la page d'accueil
+    dashboard: Tableau de bord
+    general: Général
   title:
     dashboard: Administration sfbb
+  dashboard:
+    stats:
+      users: Utilisateurs
+      categories: Catégories
+      forums: Forums
+      topics: Sujets
+      posts: Messages
+    last_user:
+      title: Dernier utilisateur inscrit
+      enabled: Actif
+      member_since: 'Membre depuis le %date%'
+      none: Aucun utilisateur enregistré
+    shortcuts:
+      title: Actions rapides
+  user:
+    none_found: Aucun utilisateur enregistré
+  moderator:
+    coming_soon: La gestion des modérateurs arrive bientôt.
+  access:
+    coming_soon: La gestion des accès arrive bientôt.
 configuration:
   title:
     index: Edition de la configuration du site
