@@ -49,7 +49,7 @@ db-reset:
 	$(MAKE) db-fixtures-install
 
 start:
-	$(DOCKER_COMPOSE_DEV) up
+	$(DOCKER_COMPOSE_DEV) up -d
 
 stop:
 	$(DOCKER_COMPOSE_DEV) down

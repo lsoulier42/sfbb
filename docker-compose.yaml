@@ -42,4 +42,4 @@ services:
     image: schickling/mailcatcher
     ports:
     - "1167:1025"
-    - "1180:1080"
+    - "1168:1080"
