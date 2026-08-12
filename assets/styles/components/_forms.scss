@@ -1,0 +1,60 @@
+// ============================================================
+// SFBB - Surcharges Bootstrap (formulaires) scopées public
+// ============================================================
+
+.public-body {
+  .form-label {
+    color: var(--sf-text);
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .form-control,
+  .form-select {
+    border-color: var(--sf-border-strong);
+    border-radius: 0.65rem;
+    background-color: rgba(255, 255, 255, 0.06);
+    color: var(--sf-text);
+    font-size: 0.9rem;
+
+    &::placeholder {
+      color: var(--sf-text-faint);
+    }
+
+    &:focus {
+      border-color: var(--sf-primary);
+      background-color: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 0 0.2rem var(--sf-primary-soft);
+      color: var(--sf-text);
+    }
+
+    &:disabled {
+      background-color: var(--sf-surface);
+      color: var(--sf-text-faint);
+    }
+  }
+
+  .form-check-input {
+    border-color: var(--sf-border-strong);
+    background-color: rgba(255, 255, 255, 0.06);
+
+    &:checked {
+      border-color: var(--sf-primary);
+      background-color: var(--sf-primary);
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 0.2rem var(--sf-primary-soft);
+    }
+  }
+
+  .form-check-label {
+    color: var(--sf-text-muted);
+    font-size: 0.88rem;
+  }
+
+  .form-text {
+    color: var(--sf-text-muted);
+    font-size: 0.8rem;
+  }
+}

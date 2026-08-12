@@ -20,32 +20,34 @@
             {% block importmap %}{{ importmap('app') }}{% endblock %}
         {% endblock %}
     </head>
-    <body class="bg-black bg-opacity-25 py-3">
-        <div class="row justify-content-center">
-            <div class="col-10 border border-dark border-opacity-75 bg-white">
-                {% block body %}
-                    <div class="header my-3">
-                        {% block header %}
-                            {{ render(controller('App\\Controller\\MenuController::renderMenu')) }}
-                        {% endblock %}
-                    </div>
-                    <div class="body-alert">
-                        {% block alert %}
-                            {% include 'shared/layout/_alert.html.twig' %}
-                        {% endblock %}
-                    </div>
-                    <div class="content">
-                        {% block breadcrumb %}
-                            {% include 'shared/layout/_content_header.html.twig' %}
-                        {% endblock %}
-                        {% block content %}
-                        {% endblock %}
-                    </div>
-                    <div class="footer my-3">
-                        {% block footer %}
-                        {% endblock %}
-                    </div>
-                {% endblock %}
+    <body class="public-body py-3 py-lg-4">
+        <div class="container-fluid px-2 px-lg-3">
+            <div class="row justify-content-center g-0">
+                <div class="col-12 col-xl-11 col-xxl-10 sf-shell px-3 py-3 px-md-4 py-md-4">
+                    {% block body %}
+                        <div class="header mb-3">
+                            {% block header %}
+                                {{ render(controller('App\\Controller\\MenuController::renderMenu')) }}
+                            {% endblock %}
+                        </div>
+                        <div class="body-alert">
+                            {% block alert %}
+                                {% include 'shared/layout/_alert.html.twig' %}
+                            {% endblock %}
+                        </div>
+                        <div class="content">
+                            {% block breadcrumb %}
+                                {% include 'shared/layout/_content_header.html.twig' %}
+                            {% endblock %}
+                            {% block content %}
+                            {% endblock %}
+                        </div>
+                        <div class="footer my-3">
+                            {% block footer %}
+                            {% endblock %}
+                        </div>
+                    {% endblock %}
+                </div>
             </div>
         </div>
         {% block additionnal_javascripts_bottom %}

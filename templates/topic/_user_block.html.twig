@@ -1,18 +1,15 @@
-<div class="row mb-5 message-user-block">
-    <div class="col-12 message-user-username">
-        {% include 'shared/component/_user_link.html.twig' with {
-            'user': author
-        } only %}
-        <br />
-        {{ author.getRoleTitle|trans }}
-    </div>
+<div class="sf-avatar">{{ author.username|first|upper }}</div>
+<div class="sf-user-username mb-1">
+    {% include 'shared/component/_user_link.html.twig' with {
+        'user': author
+    } only %}
 </div>
-<div class="row">
-    <div class="col-12 message-user-data">
-        {% set nbMessages = author.topics|length %}
-        {{ 'topic.label.message'|trans({}, null, null, nbMessages) }} :
-        {{ nbMessages }}<br />
-        {{ 'topic.label.register_date'|trans }}:
-        {{ author.createdAt|date('d/m/Y') }}
-    </div>
+<span class="sf-badge sf-user-role">{{ author.getRoleTitle|trans }}</span>
+<hr class="my-3" />
+<div class="sf-user-stats">
+    {% set nbMessages = author.topics|length %}
+    {{ 'topic.label.message'|trans({}, null, null, nbMessages) }} :
+    <strong>{{ nbMessages }}</strong><br />
+    {{ 'topic.label.register_date'|trans }}:
+    {{ author.createdAt|date('d/m/Y') }}
 </div>

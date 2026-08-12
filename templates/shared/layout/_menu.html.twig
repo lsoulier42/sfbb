@@ -1,33 +1,46 @@
-<div class="row justify-content-between">
-    <div class="col-auto">
-        <a href="{{ path('homepage') }}"><img src="{{ asset('images/discuter.png') }}" alt="logo site" width="80px" /></a>
-    </div>
-    <div class="col-4">
-        <div class="row justify-content-center">
-            <div class="col-8">
-                <h3>{{ forum_name }}</h3>
-                <p>{{ forum_description }}</p>
-                <img src="{{ asset('images/mini/icon_mini_house.gif') }}" alt="icon admin" />
-                <a href="{{ path('homepage') }}" class="pe-1">{{ 'menu.homepage'|trans }}</a>
-                {% if user is not null %}
-                    {% if is_admin(user) %}
-                        <img src="{{ asset('images/mini/icon_mini_gallery.gif') }}" alt="icon admin" />
-                        <a href="{{ path('admin_index') }}" class="pe-1">{{ 'menu.admin'|trans }}</a>
-                    {% endif %}
-                    <img src="{{ asset('images/mini/icon_mini_profile.gif') }}" alt="icon profile" />
-                    <a href="{{ path('user_edit_profile') }}" class="pe-1">{{ 'menu.profile'|trans }}</a>
-                    <br />
-                    <img src="{{ asset('images/mini/icon_mini_members.gif') }}" alt="icon members-list" />
-                    <a href="{{ path('user_members_list') }}" class="pe-1">{{ 'menu.members_list'|trans }}</a>
-                    <img src="{{ asset('images/mini/icon_mini_login.gif') }}" alt="icon logout" />
-                    <a href="{{ path('user_logout') }}" class="pe-1">{{ 'menu.logout'|trans({'%username%': user.username}) }}</a>
-                {% else %}
-                    <img src="{{ asset('images/mini/icon_mini_login.gif') }}" alt="icon logout" />
-                    <a href="{{ path('user_login') }}" class="pe-1">{{ 'menu.login'|trans }}</a>
-                    <img src="{{ asset('images/mini/icon_mini_register.gif') }}" alt="icon register" />
-                    <a href="{{ path('user_register') }}" class="pe-1">{{ 'menu.register'|trans }}</a>
+<header class="sf-header">
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+        <a href="{{ path('homepage') }}" class="sf-brand">
+            <img src="{{ asset('images/discuter.png') }}" alt="logo site" />
+            <span>{{ forum_name }}</span>
+        </a>
+        <nav class="sf-nav" aria-label="{{ 'menu.homepage'|trans }}">
+            <a href="{{ path('homepage') }}" class="sf-nav-link">
+                <i class="fa-solid fa-house"></i>
+                <span class="d-none d-md-inline">{{ 'menu.homepage'|trans }}</span>
+            </a>
+            {% if user is not null %}
+                {% if is_admin(user) %}
+                    <a href="{{ path('admin_index') }}" class="sf-nav-link">
+                        <i class="fa-solid fa-gauge"></i>
+                        <span class="d-none d-md-inline">{{ 'menu.admin'|trans }}</span>
+                    </a>
                 {% endif %}
-            </div>
-        </div>
+                <a href="{{ path('user_edit_profile') }}" class="sf-nav-link">
+                    <i class="fa-solid fa-user"></i>
+                    <span class="d-none d-md-inline">{{ 'menu.profile'|trans }}</span>
+                </a>
+                <a href="{{ path('user_members_list') }}" class="sf-nav-link">
+                    <i class="fa-solid fa-users"></i>
+                    <span class="d-none d-md-inline">{{ 'menu.members_list'|trans }}</span>
+                </a>
+                <a href="{{ path('user_logout') }}" class="sf-nav-link">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span class="d-none d-md-inline">{{ 'menu.logout'|trans({'%username%': user.username}) }}</span>
+                </a>
+            {% else %}
+                <a href="{{ path('user_login') }}" class="sf-nav-link">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    <span class="d-none d-md-inline">{{ 'menu.login'|trans }}</span>
+                </a>
+                <a href="{{ path('user_register') }}" class="sf-nav-link">
+                    <i class="fa-solid fa-user-plus"></i>
+                    <span class="d-none d-md-inline">{{ 'menu.register'|trans }}</span>
+                </a>
+            {% endif %}
+        </nav>
     </div>
-</div>
+    {% if forum_description is not empty %}
+        <p class="sf-header-desc mb-0">{{ forum_description }}</p>
+    {% endif %}
+</header>

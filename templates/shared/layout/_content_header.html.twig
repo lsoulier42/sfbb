@@ -1,2 +1,9 @@
-{{ 'homepage.label.current_date'|trans }} {{ 'now'|format_datetime('full', locale='fr') }}<br />
-{{ render(controller('App\\Controller\\HomepageController::breadcrumb', {'request': app.request})) }}
+<div class="sf-content-header">
+    <span class="sf-content-header-date">
+        <i class="fa-solid fa-calendar-days me-1"></i>
+        {{ 'homepage.label.current_date'|trans }} {{ 'now'|format_datetime('full', locale='fr') }}
+    </span>
+    <nav class="sf-breadcrumb" aria-label="breadcrumb">
+        {{ render(controller('App\\Controller\\HomepageController::breadcrumb', {'request': app.request})) }}
+    </nav>
+</div>

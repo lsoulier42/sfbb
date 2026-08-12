@@ -38,6 +38,7 @@ user:
     success: Inscription réalisée avec succès
   member_list:
     title: Liste des membres enregistrés
+    search: Rechercher un membre
   profile:
     title: Profil de l'utilisateur %user%
     label:
@@ -110,6 +111,10 @@ global:
     return: Retour
     none: Aucun
     filter: Filtrer
+    submit: Envoyer
+    reply: Répondre
+    new_topic: Nouveau sujet
+    last_message: Dernier message
   error:
     csrf:
       invalid: Jeton CSRF invalide
