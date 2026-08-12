@@ -1,0 +1,15 @@
+{% set _icon = icon is defined ? icon : null %}
+<div class="admin-card">
+    {% if title is defined and title is not empty %}
+        <div class="admin-card-header">
+            <h2 class="admin-card-title">
+                {% if _icon %}<i class="fa-solid {{ _icon }}"></i>{% endif %}
+                {{ title }}
+            </h2>
+            {% block card_actions %}{% endblock %}
+        </div>
+    {% endif %}
+    <div class="admin-card-body">
+        {% block card_body %}{% endblock %}
+    </div>
+</div>

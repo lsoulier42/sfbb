@@ -1,84 +1,112 @@
 {% extends 'base_admin.html.twig' %}
 
+{% block admin_breadcrumb %}
+    {{ parent() }}
+    <i class="fa-solid fa-chevron-right"></i>
+    <span>{{ 'forum.title.index'|trans }}</span>
+{% endblock %}
+
 {% block sub_title %}
     {{ 'forum.title.index'|trans }}
 {% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-12">
-        {% for category in categories %}
-            <table class="table forum-table">
-                <thead class="text-center forum-table-title">
-                    <tr>
-                        <th scope="col" colspan="6">
-                            {{ 'category.title.forum'|trans({'%title%': category.title}) }}
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                <tr class="forum-table-row-title text-center bg-black bg-opacity-25">
-                    <th scope="col">#</th>
-                    <th scope="col">{{ 'forum.label.title'|trans }}</th>
-                    <th scope="col">{{ 'forum.label.orderNumber'|trans }}</th>
-                    <th scope="col">{{ 'global.label.edit'|trans }}</th>
-                    <th scope="col">{{ 'forum.label.change_order'|trans }}</th>
-                    <th scope="col">{{ 'global.label.delete'|trans }}</th>
-                </tr>
-                    {% for forum in category.forums %}
-                        <tr class="forum-table-row-title text-center">
-                            <th scope="row">{{ forum.id }}</th>
-                            <td>
-                                {{ forum.title }}<br />
-                                <span class="small">{{ forum.subTitle }}</span>
-                            </td>
-                            <td>{{ forum.orderNumber }}</td>
-                            <td>
-                                <a href="{{ path('admin_forum_edit', {'forum': forum.id}) }}">
-                                    <img src="{{ asset('images/edit_btn.png') }}" alt="edit" />
-                                </a>
-                            </td>
-                            <td>
-                                <div class="row justify-content-center">
-                                    <div class="col-auto">
+    {% for category in categories %}
+        {% embed 'admin/shared/_card.html.twig' with {
+            'title': 'category.title.forum'|trans({'%title%': category.title}),
+            'icon': 'fa-list'
+        } %}
+            {% block card_actions %}
+                <a href="{{ path('admin_forum_new', {'category': category.id}) }}" class="btn btn-primary btn-sm btn-icon">
+                    <i class="fa-solid fa-plus"></i>
+                    <span class="d-none d-sm-inline">{{ 'forum.label.add_forum'|trans }}</span>
+                </a>
+            {% endblock %}
+            {% block card_body %}
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">{{ 'forum.label.title'|trans }}</th>
+                                <th scope="col">{{ 'forum.label.orderNumber'|trans }}</th>
+                                <th scope="col" class="text-end">{{ 'global.label.edit'|trans }}</th>
+                                <th scope="col" class="text-end">{{ 'forum.label.change_order'|trans }}</th>
+                                <th scope="col" class="text-end">{{ 'global.label.delete'|trans }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for forum in category.forums %}
+                            <tr>
+                                <th scope="row">{{ forum.id }}</th>
+                                <td>
+                                    <div class="fw-semibold">{{ forum.title }}</div>
+                                    {% if forum.subTitle %}
+                                        <div class="small text-muted">{{ forum.subTitle }}</div>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <span class="admin-badge admin-badge-muted">{{ forum.orderNumber }}</span>
+                                </td>
+                                <td class="text-end">
+                                    <a href="{{ path('admin_forum_edit', {'forum': forum.id}) }}"
+                                       class="admin-action admin-action-primary"
+                                       title="{{ 'global.label.edit'|trans }}"
+                                       aria-label="{{ 'global.label.edit'|trans }}">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </a>
+                                </td>
+                                <td class="text-end">
+                                    <div class="d-inline-flex gap-1">
                                         {% if loop.first == false %}
-                                            <a href="{{ path('admin_forum_change_order', {'forum': forum.id, 'direction': 'up'}) }}">
-                                                <img src="{{ asset('images/up_btn.png') }}" alt="up">
+                                            <a href="{{ path('admin_forum_change_order', {'forum': forum.id, 'direction': 'up'}) }}"
+                                               class="admin-action"
+                                               title="{{ 'forum.label.change_order'|trans }}"
+                                               aria-label="{{ 'forum.label.change_order'|trans }}">
+                                                <i class="fa-solid fa-chevron-up"></i>
                                             </a>
                                         {% endif %}
                                         {% if loop.last == false %}
-                                            <a href="{{ path('admin_forum_change_order', {'forum': forum.id, 'direction': 'down'}) }}">
-                                                <img src="{{ asset('images/down_btn.png') }}" alt="down">
+                                            <a href="{{ path('admin_forum_change_order', {'forum': forum.id, 'direction': 'down'}) }}"
+                                               class="admin-action"
+                                               title="{{ 'forum.label.change_order'|trans }}"
+                                               aria-label="{{ 'forum.label.change_order'|trans }}">
+                                                <i class="fa-solid fa-chevron-down"></i>
                                             </a>
                                         {% endif %}
                                     </div>
-                                </div>
-                            </td>
-                            <td>
-                                {% include 'shared/modal/delete_button.html.twig' with {
-                                    'route': path('admin_forum_delete', {'forum': forum.id}),
-                                    'title': 'forum.title.delete_modal'|trans({'%title%': forum.title}),
-                                    'csrf_key': 'delete-forum'
-                                } only %}
-                            </td>
-                        </tr>
-                    {% else %}
-                        <tr>
-                            <td colspan="6">{{ "forum.none_found"|trans }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            <div class="row justify-content-end mb-2">
-                <div class="col-auto">
-                    <a href="{{ path('admin_forum_new', {'category': category.id}) }}">
-                        <img src="{{ asset('images/new_btn.png') }}" alt="edit-config" />
-                    </a>
+                                </td>
+                                <td class="text-end">
+                                    {% include 'shared/modal/delete_button.html.twig' with {
+                                        'route': path('admin_forum_delete', {'forum': forum.id}),
+                                        'title': 'forum.title.delete_modal'|trans({'%title%': forum.title}),
+                                        'csrf_key': 'delete-forum'
+                                    } only %}
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="6" class="text-center">
+                                    <div class="admin-empty py-4">
+                                        <i class="fa-solid fa-list"></i>
+                                        <p>{{ 'forum.none_found'|trans }}</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endblock %}
+        {% endembed %}
+    {% else %}
+        <div class="admin-card">
+            <div class="admin-card-body">
+                <div class="admin-empty">
+                    <i class="fa-solid fa-folder-tree"></i>
+                    <p>{{ 'category.none_found'|trans }}</p>
                 </div>
             </div>
-        {% else %}
-            {{ 'category.none_found'|trans }}
-        {% endfor %}
-    </div>
-</div>
+        </div>
+    {% endfor %}
 {% endblock %}

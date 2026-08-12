@@ -1,10 +1,11 @@
 {% set title = title is defined ? title : 'global.modal.delete.title'|trans %}
 {% set csrf_key = csrf_key is defined ? csrf_key : 'delete-item' %}
-<span data-bs-toggle="modal" data-bs-target="#deleteModal"
-        data-bs-route="{{ route }}">
-    <img src="{{ asset('images/delete_btn.png') }}" alt="delete" />
-</span>
-{% include 'shared/modal/delete_modal.html.twig' with {
-    'title': title,
-    'csrf_key': csrf_key
-} only %}
+<button type="button" class="admin-action admin-action-danger"
+        data-bs-toggle="modal"
+        data-bs-target="#deleteModal"
+        data-bs-route="{{ route }}"
+        data-csrf="{{ csrf_token(csrf_key) }}"
+        title="{{ title }}"
+        aria-label="{{ 'global.label.delete'|trans }}">
+    <i class="fa-solid fa-trash"></i>
+</button>

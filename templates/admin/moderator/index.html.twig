@@ -1,4 +1,22 @@
 {% extends 'base_admin.html.twig' %}
 
+{% block admin_breadcrumb %}
+    {{ parent() }}
+    <i class="fa-solid fa-chevron-right"></i>
+    <span>{{ 'admin.label.moderator'|trans }}</span>
+{% endblock %}
+
+{% block sub_title %}
+    {{ 'admin.label.moderator'|trans }}
+{% endblock %}
+
 {% block content %}
+    <div class="admin-card">
+        <div class="admin-card-body">
+            <div class="admin-empty">
+                <i class="fa-solid fa-shield-halved"></i>
+                <p>{{ 'admin.moderator.coming_soon'|trans }}</p>
+            </div>
+        </div>
+    </div>
 {% endblock %}

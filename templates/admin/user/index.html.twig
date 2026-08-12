@@ -1,4 +1,87 @@
 {% extends 'base_admin.html.twig' %}
 
+{% block admin_breadcrumb %}
+    {{ parent() }}
+    <i class="fa-solid fa-chevron-right"></i>
+    <span>{{ 'admin.label.user'|trans }}</span>
+{% endblock %}
+
+{% block sub_title %}
+    {{ 'admin.label.user'|trans }}
+{% endblock %}
+
 {% block content %}
+    {% embed 'admin/shared/_card.html.twig' with {
+        'title': 'admin.label.user'|trans,
+        'icon': 'fa-users'
+    } %}
+        {% block card_actions %}
+            <span class="admin-badge admin-badge-muted">
+                <i class="fa-solid fa-user"></i> {{ users.nbResults }}
+            </span>
+        {% endblock %}
+        {% block card_body %}
+            <div class="table-responsive">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">{{ 'user.label.username'|trans }}</th>
+                            <th scope="col">{{ 'user.label.email'|trans }}</th>
+                            <th scope="col">{{ 'user.label.role'|trans }}</th>
+                            <th scope="col">{{ 'user.label.registration_date'|trans }}</th>
+                            <th scope="col">{{ 'user.label.last_visit'|trans }}</th>
+                            <th scope="col">{{ 'user.label.status'|trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <th scope="row">{{ user.id }}</th>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="admin-user-avatar admin-user-avatar-sm">{{ user.username|first|upper }}</span>
+                                    <span class="fw-semibold">{{ user.username }}</span>
+                                </div>
+                            </td>
+                            <td class="text-muted">{{ user.email }}</td>
+                            <td>
+                                <span class="admin-badge admin-badge-primary">
+                                    <i class="fa-solid fa-shield-halved"></i> {{ user.getRoleTitle|trans }}
+                                </span>
+                            </td>
+                            <td>{{ user.createdAt|date('d/m/Y') }}</td>
+                            <td>{{ user.lastConnexion ? user.lastConnexion|date('d/m/Y H:i') : '—' }}</td>
+                            <td>
+                                {% if user.isEnabled %}
+                                    <span class="admin-badge admin-badge-success">
+                                        <i class="fa-solid fa-circle"></i> {{ 'user.label.enabled'|trans }}
+                                    </span>
+                                {% else %}
+                                    <span class="admin-badge admin-badge-danger">
+                                        <i class="fa-solid fa-circle"></i> {{ 'user.label.disabled'|trans }}
+                                    </span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="7" class="text-center">
+                                <div class="admin-empty py-4">
+                                    <i class="fa-solid fa-users"></i>
+                                    <p>{{ 'admin.user.none_found'|trans }}</p>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% if users.nbPages > 1 %}
+                <div class="d-flex justify-content-end">
+                    {{ pagerfanta(users) }}
+                </div>
+            {% endif %}
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

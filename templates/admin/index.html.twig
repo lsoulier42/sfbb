@@ -1,0 +1,113 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block sub_title %}
+    {{ 'admin.label.dashboard'|trans }}
+{% endblock %}
+
+{% block content %}
+    <div class="row g-3 mb-3">
+        <div class="col-6 col-md-4 col-xl">
+            <a href="{{ path('admin_user_index') }}" class="text-decoration-none d-block">
+                <div class="admin-stat">
+                    <span class="admin-stat-icon admin-stat-primary"><i class="fa-solid fa-users"></i></span>
+                    <div>
+                        <div class="admin-stat-value">{{ nbUsers }}</div>
+                        <div class="admin-stat-label">{{ 'admin.dashboard.stats.users'|trans }}</div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-md-4 col-xl">
+            <a href="{{ path('admin_category_index') }}" class="text-decoration-none d-block">
+                <div class="admin-stat">
+                    <span class="admin-stat-icon admin-stat-accent"><i class="fa-solid fa-folder-tree"></i></span>
+                    <div>
+                        <div class="admin-stat-value">{{ nbCategories }}</div>
+                        <div class="admin-stat-label">{{ 'admin.dashboard.stats.categories'|trans }}</div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-md-4 col-xl">
+            <a href="{{ path('admin_forum_index') }}" class="text-decoration-none d-block">
+                <div class="admin-stat">
+                    <span class="admin-stat-icon admin-stat-success"><i class="fa-solid fa-list"></i></span>
+                    <div>
+                        <div class="admin-stat-value">{{ nbForums }}</div>
+                        <div class="admin-stat-label">{{ 'admin.dashboard.stats.forums'|trans }}</div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-md-4 col-xl">
+            <div class="admin-stat">
+                <span class="admin-stat-icon admin-stat-warning"><i class="fa-solid fa-comments"></i></span>
+                <div>
+                    <div class="admin-stat-value">{{ nbTopics }}</div>
+                    <div class="admin-stat-label">{{ 'admin.dashboard.stats.topics'|trans }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col-xl">
+            <div class="admin-stat">
+                <span class="admin-stat-icon admin-stat-primary"><i class="fa-solid fa-reply"></i></span>
+                <div>
+                    <div class="admin-stat-value">{{ nbPosts }}</div>
+                    <div class="admin-stat-label">{{ 'admin.dashboard.stats.posts'|trans }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3">
+        <div class="col-12 col-lg-6">
+            {% embed 'admin/shared/_card.html.twig' with {
+                'title': 'admin.dashboard.last_user.title'|trans,
+                'icon': 'fa-user-plus'
+            } %}
+                {% block card_actions %}
+                    <span class="admin-badge admin-badge-success">
+                        <i class="fa-solid fa-circle"></i> {{ 'admin.dashboard.last_user.enabled'|trans }}
+                    </span>
+                {% endblock %}
+                {% block card_body %}
+                    {% if lastRegisteredUser %}
+                        <div class="d-flex align-items-center gap-3">
+                            <span class="admin-user-avatar">{{ lastRegisteredUser.username|first|upper }}</span>
+                            <div>
+                                <div class="fw-semibold fs-6">{{ lastRegisteredUser.username }}</div>
+                                <div class="small text-muted">
+                                    {{ 'admin.dashboard.last_user.member_since'|trans({
+                                        '%date%': lastRegisteredUser.createdAt|date('d/m/Y')
+                                    }) }}
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="admin-empty py-3">
+                            <i class="fa-solid fa-user"></i>
+                            <p>{{ 'admin.dashboard.last_user.none'|trans }}</p>
+                        </div>
+                    {% endif %}
+                {% endblock %}
+            {% endembed %}
+        </div>
+        <div class="col-12 col-lg-6">
+            {% embed 'admin/shared/_card.html.twig' with {
+                'title': 'admin.dashboard.shortcuts.title'|trans,
+                'icon': 'fa-bolt'
+            } %}
+                {% block card_body %}
+                    <div class="d-flex flex-column gap-2">
+                        <a href="{{ path('admin_category_new') }}" class="btn btn-outline-secondary btn-icon justify-content-start">
+                            <i class="fa-solid fa-folder-tree"></i> {{ 'category.title.new'|trans }}
+                        </a>
+                        <a href="{{ path('admin_configuration_new') }}" class="btn btn-outline-secondary btn-icon justify-content-start">
+                            <i class="fa-solid fa-sliders"></i> {{ 'configuration.title.new'|trans }}
+                        </a>
+                    </div>
+                {% endblock %}
+            {% endembed %}
+        </div>
+    </div>
+{% endblock %}

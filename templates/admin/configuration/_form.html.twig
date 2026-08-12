@@ -1,42 +1,30 @@
+{% form_theme form 'admin/shared/form/_btn_submit.html.twig' %}
 {{ form_start(form) }}
-<table class="table forum-table">
-    <thead class="text-center forum-table-title">
-        <tr>
-            <th scope="col" colspan="2">
-                {% if configuration is defined %}
-                    {{ 'configuration.title.edit'|trans({'%configKey%': configuration.configKey}) }}
-                {% else %}
-                    {{ 'configuration.title.new'|trans }}
-                {% endif %}
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for field in form.children %}
-        <tr class="forum-table-row-title text-center">
-            {% if field.vars.name != '_token' %}
-                {% if field.vars.name == 'submit' %}
-                    <td colspan="3">
-                        {{ form_widget(field) }}
-                    </td>
-                {% else %}
-                    <th scope="row">
-                        {{ form_label(field) }}
-                    </th>
-                    <td>
-                        {{ form_widget(field) }}
-                    </td>
-                {% endif %}
-            {% endif %}
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
-{{ form_end(form) }}
-<div class="row justify-content-end">
-    <div class="col-auto">
-        <a href="{{ path('admin_configuration_index') }}">
-            <img src="{{ asset('images/return_btn.png') }}" alt="return">
+{% embed 'admin/shared/_card.html.twig' with {
+    'title': configuration is defined ? 'configuration.title.edit'|trans({'%configKey%': configuration.configKey}) : 'configuration.title.new'|trans,
+    'icon': 'fa-sliders'
+} %}
+    {% block card_actions %}
+        <a href="{{ path('admin_configuration_index') }}" class="btn btn-outline-secondary btn-sm btn-icon">
+            <i class="fa-solid fa-arrow-left"></i> {{ 'global.label.return'|trans }}
         </a>
-    </div>
-</div>
+    {% endblock %}
+    {% block card_body %}
+        <div class="row g-3">
+            {% for field in form.children %}
+                {% if field.vars.name != '_token' and field.vars.name != 'submit' %}
+                    <div class="col-12 col-md-6">
+                        {{ form_row(field) }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+            <div class="col-12 d-flex gap-2 mt-4">
+                {{ form_widget(form.submit, {'label': configuration is defined ? 'global.label.update'|trans : 'global.label.create'|trans}) }}
+                <a href="{{ path('admin_configuration_index') }}" class="btn btn-outline-secondary btn-icon">
+                    <i class="fa-solid fa-xmark"></i> {{ 'global.label.close'|trans }}
+                </a>
+            </div>
+        </div>
+    {% endblock %}
+{% endembed %}
+{{ form_end(form) }}

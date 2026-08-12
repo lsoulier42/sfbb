@@ -1,58 +1,83 @@
 {% extends 'base_admin.html.twig' %}
 
+{% block admin_breadcrumb %}
+    {{ parent() }}
+    <i class="fa-solid fa-chevron-right"></i>
+    <span>{{ 'category.title.index'|trans }}</span>
+{% endblock %}
+
 {% block sub_title %}
     {{ 'category.title.index'|trans }}
 {% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-12">
-            <table class="table forum-table">
-                <thead class="text-center forum-table-title">
-                    <tr>
-                        <th scope="col" colspan="6">{{ 'category.title.index'|trans }}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="forum-table-row-title text-center bg-black bg-opacity-25">
-                        <th scope="col">#</th>
-                        <th scope="col">{{ 'category.label.title'|trans }}</th>
-                        <th scope="col">{{ 'category.label.orderNumber'|trans }}</th>
-                        <th scope="col">{{ 'global.label.edit'|trans }}</th>
-                        <th scope="col">{{ 'category.label.change_order'|trans }}</th>
-                        <th scope="col">{{ 'global.label.delete'|trans }}</th>
-                    </tr>
+    {% embed 'admin/shared/_card.html.twig' with {
+        'title': 'category.title.index'|trans,
+        'icon': 'fa-folder-tree'
+    } %}
+        {% block card_actions %}
+            <a href="{{ path('admin_category_new') }}" class="btn btn-primary btn-sm btn-icon">
+                <i class="fa-solid fa-plus"></i>
+                <span class="d-none d-sm-inline">{{ 'category.label.add_category'|trans }}</span>
+            </a>
+        {% endblock %}
+        {% block card_body %}
+            <div class="table-responsive">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">{{ 'category.label.title'|trans }}</th>
+                            <th scope="col">{{ 'category.label.orderNumber'|trans }}</th>
+                            <th scope="col" class="text-end">{{ 'global.label.edit'|trans }}</th>
+                            <th scope="col" class="text-end">{{ 'category.label.change_order'|trans }}</th>
+                            <th scope="col" class="text-end">{{ 'global.label.delete'|trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                     {% for category in categories %}
-                        <tr class="forum-table-row-title text-center">
+                        <tr>
                             <th scope="row">{{ category.id }}</th>
                             <td>
-                                {{ category.title }}
+                                <div class="fw-semibold">{{ category.title }}</div>
+                                {% if category.forums is not empty %}
+                                    <div class="small text-muted">
+                                        {{ 'category.label.nb_forums'|trans({'%count%': category.forums|length}) }}
+                                    </div>
+                                {% endif %}
                             </td>
                             <td>
-                                {{ category.orderNumber }}
+                                <span class="admin-badge admin-badge-muted">{{ category.orderNumber }}</span>
                             </td>
-                            <td>
-                                <a href="{{ path('admin_category_edit', {'category': category.id}) }}">
-                                    <img src="{{ asset('images/edit_btn.png') }}" alt="edit" />
+                            <td class="text-end">
+                                <a href="{{ path('admin_category_edit', {'category': category.id}) }}"
+                                   class="admin-action admin-action-primary"
+                                   title="{{ 'global.label.edit'|trans }}"
+                                   aria-label="{{ 'global.label.edit'|trans }}">
+                                    <i class="fa-solid fa-pen"></i>
                                 </a>
                             </td>
-                            <td>
-                                <div class="row justify-content-center">
-                                    <div class="col-auto">
-                                        {% if loop.first == false %}
-                                            <a href="{{ path('admin_category_change_order', {'category': category.id, 'direction': 'up'}) }}">
-                                                <img src="{{ asset('images/up_btn.png') }}" alt="up">
-                                            </a>
-                                        {% endif %}
-                                        {% if loop.last == false %}
-                                            <a href="{{ path('admin_category_change_order', {'category': category.id, 'direction': 'down'}) }}">
-                                                <img src="{{ asset('images/down_btn.png') }}" alt="down">
-                                            </a>
-                                        {% endif %}
-                                    </div>
+                            <td class="text-end">
+                                <div class="d-inline-flex gap-1">
+                                    {% if loop.first == false %}
+                                        <a href="{{ path('admin_category_change_order', {'category': category.id, 'direction': 'up'}) }}"
+                                           class="admin-action"
+                                           title="{{ 'category.label.change_order'|trans }}"
+                                           aria-label="{{ 'category.label.change_order'|trans }}">
+                                            <i class="fa-solid fa-chevron-up"></i>
+                                        </a>
+                                    {% endif %}
+                                    {% if loop.last == false %}
+                                        <a href="{{ path('admin_category_change_order', {'category': category.id, 'direction': 'down'}) }}"
+                                           class="admin-action"
+                                           title="{{ 'category.label.change_order'|trans }}"
+                                           aria-label="{{ 'category.label.change_order'|trans }}">
+                                            <i class="fa-solid fa-chevron-down"></i>
+                                        </a>
+                                    {% endif %}
                                 </div>
                             </td>
-                            <td>
+                            <td class="text-end">
                                 {% include 'shared/modal/delete_button.html.twig' with {
                                     'route': path('admin_category_delete', {'category': category.id}),
                                     'title': 'category.title.delete_modal'|trans({'%title%': category.title}),
@@ -62,18 +87,17 @@
                         </tr>
                     {% else %}
                         <tr>
-                            <td colspan="6" class="text-center">{{ 'category.none_found'|trans }}</td>
+                            <td colspan="6" class="text-center">
+                                <div class="admin-empty py-4">
+                                    <i class="fa-solid fa-folder-tree"></i>
+                                    <p>{{ 'category.none_found'|trans }}</p>
+                                </div>
+                            </td>
                         </tr>
                     {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="row justify-content-end">
-        <div class="col-auto">
-            <a href="{{ path('admin_category_new') }}">
-                <img src="{{ asset('images/new_btn.png') }}" alt="edit-config" />
-            </a>
-        </div>
-    </div>
+                    </tbody>
+                </table>
+            </div>
+        {% endblock %}
+    {% endembed %}
 {% endblock %}
