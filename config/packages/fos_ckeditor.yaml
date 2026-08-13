@@ -2,6 +2,7 @@ fos_ck_editor:
     default_config: my_config
     configs:
         my_config:
+            versionCheck: false
             toolbar: [["EmojiPanel", "-", 'Image', "-", "Bold", "Italic", "Underline", '-', 'TextColor', 'BGColor', "-", 'Link', 'Unlink', "-", 'Cut', 'Copy', 'Paste', "-", 'NumberedList', 'BulletedList', "-", "Blockquote", '-', 'JustifyLeft', 'JustifyRight', 'JustifyCenter', 'JustifyBlock', '-', 'Undo', 'Redo', ]]
             extraPlugins: ['ajax', 'textwatcher', 'xml', 'button', 'panel', 'autocomplete', 'floatpanel', 'panelbutton', 'textmatch', 'emoji']
     plugins:
