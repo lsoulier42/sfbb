@@ -169,8 +169,9 @@ Pour personnaliser sans versionner vos modifications, créez un fichier
   make db-migrate
   ```
 
-- Les fixtures (`src/DataFixtures/AppFixtures.php`) créent un jeu de données
-  réaliste : utilisateurs, catégories, forums, sujets, messages, chans, etc.
+- Les fixtures (une classe par entité dans `src/DataFixtures/`) créent un jeu de
+  données réaliste : utilisateurs, catégories, forums, sujets, messages, chans,
+  etc.
 
 ### Tests
 
