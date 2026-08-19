@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <body>
+        <p>
+            {{ 'message.email.body'|trans({'%sender%': sender, '%preview%': preview})|raw }}
+        </p>
+        <p>
+            <a href="{{ link }}">{{ 'message.email.link'|trans }}</a>
+        </p>
+    </body>
+</html>

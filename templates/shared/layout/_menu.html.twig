@@ -24,6 +24,13 @@
                     <i class="fa-solid fa-users"></i>
                     <span class="d-none d-md-inline">{{ 'menu.members_list'|trans }}</span>
                 </a>
+                <a href="{{ path('message_inbox') }}" class="sf-nav-link">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span class="d-none d-md-inline">{{ 'menu.messages'|trans }}</span>
+                    {% if unread_messages > 0 %}
+                        <span class="badge bg-danger rounded-pill ms-1">{{ unread_messages }}</span>
+                    {% endif %}
+                </a>
                 <a href="{{ path('user_logout') }}" class="sf-nav-link">
                     <i class="fa-solid fa-right-from-bracket"></i>
                     <span class="d-none d-md-inline">{{ 'menu.logout'|trans({'%username%': user.username}) }}</span>

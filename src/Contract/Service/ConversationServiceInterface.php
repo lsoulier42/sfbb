@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Contract\Service;
+
+use App\Entity\Chat;
+use App\Entity\DirectMessage;
+use App\Entity\User;
+
+interface ConversationServiceInterface
+{
+    public function getOrCreatePrivateChat(User $userA, User $userB): Chat;
+
+    /**
+     * @return Chat[]
+     */
+    public function findInboxForUser(User $user): array;
+
+    public function sendMessage(Chat $chat, User $author, string $content): DirectMessage;
+
+    public function countUnreadInChat(Chat $chat, User $user): int;
+
+    public function getUnreadCountForUser(User $user): int;
+
+    public function markAsRead(Chat $chat, User $user): void;
+}

@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block sub_title %}
+    {{ 'message.title.inbox'|trans }}
+{% endblock %}
+
+{% block content %}
+    <section class="sf-card">
+        <header class="sf-card-header d-flex justify-content-between align-items-center">
+            <h2 class="sf-card-title">
+                <i class="fa-solid fa-envelope"></i>
+                {{ 'message.title.inbox'|trans }}
+            </h2>
+            <a href="{{ path('message_compose') }}" class="btn btn-primary btn-sm">
+                <i class="fa-solid fa-pen me-1"></i>
+                {{ 'message.label.compose'|trans }}
+            </a>
+        </header>
+        <div class="sf-card-body">
+            {% if conversations is empty %}
+                <p class="text-muted mb-0">{{ 'message.none'|trans }}</p>
+            {% else %}
+                <ul class="list-group">
+                    {% for item in conversations %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center gap-2">
+                            <a href="{{ path('message_thread', {'chat': item.chat.id}) }}" class="fw-bold text-truncate">
+                                {% if item.other is not null %}
+                                    {{ item.other.username }}
+                                {% else %}
+                                    {{ 'message.label.unknown'|trans }}
+                                {% endif %}
+                            </a>
+                            <span class="d-flex align-items-center gap-2 flex-shrink-0">
+                                {% if item.unread > 0 %}
+                                    <span class="badge bg-danger rounded-pill">{{ item.unread }}</span>
+                                {% endif %}
+                                {% if item.lastMessage is not null %}
+                                    <small class="text-muted">{{ item.lastMessage.createdAt|format_datetime('short', locale='fr') }}</small>
+                                {% endif %}
+                            </span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}

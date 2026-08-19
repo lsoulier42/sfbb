@@ -87,6 +87,7 @@ menu:
   admin: Administration
   profile: Profil
   members_list: Membres
+  messages: Messagerie
   user:
     login_as: Connecté en tant que `%username%`
 homepage:
@@ -273,4 +274,32 @@ configuration:
     value: Valeur
     edit: Editer la variable
     new: Nouvelle variable
+message:
+  title:
+    inbox: Messagerie
+    compose: Nouveau message
+    thread: Conversation avec %user%
+  label:
+    inbox: Messagerie
+    compose: Nouveau message privé
+    thread: Conversation
+    recipient: Destinataire
+    to: 'Destinataire : %user%'
+    content: Message
+    send: Envoyer
+    back: Retour à la messagerie
+    unknown: Inconnu
+  none: Vous n'avez aucune conversation
+  thread:
+    none: Aucun message dans cette conversation
+  success:
+    sent: Message envoyé avec succès
+  error:
+    not_participant: Vous n'avez pas accès à cette conversation
+    no_recipient: Vous devez choisir un destinataire
+    self: Vous ne pouvez pas vous envoyer un message à vous-même
+  email:
+    subject: 'Nouveau message privé de %sender%'
+    body: '<strong>%sender%</strong> vous a envoyé un message privé : %preview%'
+    link: Voir le message
 

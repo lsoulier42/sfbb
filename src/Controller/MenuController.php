@@ -3,19 +3,26 @@
 namespace App\Controller;
 
 use App\Contract\Service\ConfigurationServiceInterface;
+use App\Contract\Service\ConversationServiceInterface;
+use App\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
 
 class MenuController extends BaseController
 {
     public function renderMenu(
-        ConfigurationServiceInterface $configurationService
+        ConfigurationServiceInterface $configurationService,
+        ConversationServiceInterface $conversationService
     ): Response {
+        $user = $this->getUser();
+        $unread = $user instanceof User ? $conversationService->getUnreadCountForUser($user) : 0;
+
         return $this->render(
             'shared/layout/_menu.html.twig',
             [
                 'forum_name' => $configurationService->getConfigValue('forum_name'),
                 'forum_description' => $configurationService->getConfigValue('forum_description'),
-                'user' => $this->getUser()
+                'user' => $user,
+                'unread_messages' => $unread
             ]
         );
     }

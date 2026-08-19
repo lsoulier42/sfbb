@@ -1,0 +1,20 @@
+<section class="sf-card sf-message-card" id="dm_{{ message.id }}">
+    <header class="sf-card-header {{ is_reply is defined and is_reply ? 'sf-card-header-secondary' : '' }}">
+        <h2 class="sf-card-title sf-message-title">
+            <i class="fa-solid fa-user"></i>
+            {% include 'shared/component/_user_link.html.twig' with {'user': message.author} only %}
+        </h2>
+        <span class="sf-message-date">
+            <i class="fa-regular fa-clock me-1"></i>
+            {{ message.createdAt|format_datetime('full', locale='fr') }}
+        </span>
+    </header>
+    <div class="sf-message-body">
+        <aside class="sf-message-user">
+            {% include 'topic/_user_block.html.twig' with {'author': message.author} only %}
+        </aside>
+        <div class="sf-message-content">
+            {{ message.content|raw }}
+        </div>
+    </div>
+</section>

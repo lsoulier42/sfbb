@@ -90,6 +90,13 @@
                     <span class="sf-profile-field-value">{{ user.email }}</span>
                 </span>
             </div>
+
+            {% if app.user is not null and app.user.id != user.id %}
+                <a href="{{ path('message_compose', {'recipient': user.id}) }}" class="btn btn-primary mt-2">
+                    <i class="fa-solid fa-paper-plane me-1"></i>
+                    {{ 'user.profile.private_message'|trans }}
+                </a>
+            {% endif %}
         </div>
     </section>
 {% endblock %}

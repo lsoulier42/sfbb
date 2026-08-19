@@ -71,7 +71,13 @@
                         <td>{{ member.lastConnexion|format_datetime('full', locale='fr') }}</td>
                         <td>{{ member.getTotalPosts }}</td>
                         <td>
-                            <i class="fa-regular fa-envelope sf-contact-icon" title="{{ 'user.label.private_message'|trans }}"></i>
+                            {% if app.user is not null and app.user.id != member.id %}
+                                <a href="{{ path('message_compose', {'recipient': member.id}) }}" class="sf-contact-icon" title="{{ 'user.label.private_message'|trans }}" aria-label="{{ 'user.label.private_message'|trans }}">
+                                    <i class="fa-regular fa-envelope"></i>
+                                </a>
+                            {% else %}
+                                <i class="fa-regular fa-envelope sf-contact-icon" title="{{ 'user.label.private_message'|trans }}"></i>
+                            {% endif %}
                         </td>
                     </tr>
                 {% endfor %}
