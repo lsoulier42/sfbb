@@ -32,6 +32,11 @@
       background-color: var(--sf-surface);
       color: var(--sf-text-faint);
     }
+
+    option {
+      background-color: #151b36;
+      color: var(--sf-text);
+    }
   }
 
   .form-check-input {
