@@ -220,6 +220,7 @@ post:
     new_post: Poster une nouvelle réponse
     author: Auteur.e
     topic: Sujet
+    reply: 'Re: %title%'
   success:
     create: Réponse au sujet %topic% créée avec succès
     edit: Réponse au sujet %topic% éditée avec succès

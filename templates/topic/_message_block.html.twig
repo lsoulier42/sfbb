@@ -1,9 +1,15 @@
+{% set is_reply = is_reply is defined and is_reply %}
 {% set message_id_prefix = message.title is defined ? 'topic_' : 'post_' %}
 <section class="sf-card sf-message-card" id="{{ message_id_prefix ~ message.id }}">
-    <header class="sf-card-header">
+    <header class="sf-card-header {{ is_reply ? 'sf-card-header-secondary' : '' }}">
         <h2 class="sf-card-title sf-message-title">
-            <i class="fa-solid fa-message"></i>
-            {{ 'topic.label.subject'|trans({'%title%': title}) }}
+            {% if is_reply %}
+                <i class="fa-solid fa-reply"></i>
+                {{ 'post.label.reply'|trans({'%title%': title}) }}
+            {% else %}
+                <i class="fa-solid fa-message"></i>
+                {{ 'topic.label.subject'|trans({'%title%': title}) }}
+            {% endif %}
         </h2>
         <div class="d-flex align-items-center gap-2">
             <span class="sf-message-date">

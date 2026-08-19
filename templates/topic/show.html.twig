@@ -15,6 +15,7 @@
         {% include 'topic/_message_block.html.twig' with {
             'title': post.topic.title,
             'message': post,
+            'is_reply': true,
             'edit_link': path('post_edit', {'post': post.id})
         } only %}
     {% endfor %}
