@@ -5,69 +5,90 @@
 {% endblock %}
 
 {% block content %}
-    <section class="sf-card">
+    <section class="sf-card sf-profile">
         <header class="sf-card-header">
             <h2 class="sf-card-title">
                 <i class="fa-solid fa-id-card"></i>
                 {{ 'user.profile.label.table.title'|trans({'%user%': user.username}) }}
             </h2>
         </header>
-        <div class="sf-message-body">
-            <aside class="sf-message-user">
-                {% if user.avatarUrl is not empty %}
-                    <img src="{{ user.avatarUrl }}" alt="avatar user" class="sf-avatar-image" />
-                {% else %}
-                    <div class="sf-avatar">{{ user.username|first|upper }}</div>
-                {% endif %}
-                <div class="sf-user-username mb-1">{{ user.username }}</div>
-                <span class="sf-badge sf-user-role">{{ user.getRoleTitle()|trans }}</span>
-            </aside>
-            <div class="sf-message-content">
-                <h3 class="sf-message-section-title">
-                    <i class="fa-solid fa-circle-info"></i>
-                    {{ 'user.profile.label.all_about'|trans({'%user%': user.username}) }}
-                </h3>
-                <div class="row g-3">
-                    <div class="col-12 col-md-6">
-                        <div class="sf-field">
-                            <span class="sf-field-label">{{ 'user.profile.label.firstName'|trans }}</span>
-                            <span class="sf-field-value">{{ user.firstName }}</span>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <div class="sf-field">
-                            <span class="sf-field-label">{{ 'user.profile.label.lastName'|trans }}</span>
-                            <span class="sf-field-value">{{ user.lastName }}</span>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <div class="sf-field">
-                            <span class="sf-field-label">{{ 'user.profile.label.register_date'|trans }}</span>
-                            <span class="sf-field-value">{{ user.createdAt|format_datetime('short', locale='fr') }}</span>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <div class="sf-field">
-                            <span class="sf-field-label">{{ 'user.profile.label.total_messages'|trans }}</span>
-                            <span class="sf-field-value">{{ user.getTotalMessages() }}</span>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <div class="sf-field">
-                            <span class="sf-field-label">{{ 'user.profile.label.city'|trans }}</span>
-                            <span class="sf-field-value">{{ user.city }}</span>
-                        </div>
-                    </div>
+
+        <div class="sf-profile-header">
+            <div class="sf-profile-identity">
+                <div class="sf-profile-avatar">
+                    {% if user.avatarUrl is not empty %}
+                        <img src="{{ user.avatarUrl }}" alt="avatar user" class="sf-avatar-image" />
+                    {% else %}
+                        <div class="sf-avatar">{{ user.username|first|upper }}</div>
+                    {% endif %}
                 </div>
-                <hr class="my-3" />
-                <h3 class="sf-message-section-title">
-                    <i class="fa-solid fa-envelope"></i>
-                    {{ 'user.profile.label.contact'|trans }}
-                </h3>
-                <div class="sf-field">
-                    <span class="sf-field-label">{{ 'user.profile.label.email'|trans }}</span>
-                    <span class="sf-field-value">{{ user.email }}</span>
+                <div class="sf-profile-name">{{ user.username }}</div>
+                <span class="sf-badge sf-profile-badge">{{ user.getRoleTitle()|trans }}</span>
+            </div>
+        </div>
+
+        <div class="sf-card-body">
+            <div class="sf-profile-stats">
+                <div class="sf-profile-stat">
+                    <div class="sf-profile-stat-value">{{ user.getTotalMessages() }}</div>
+                    <div class="sf-profile-stat-label">{{ 'user.profile.label.stats.messages'|trans }}</div>
                 </div>
+                <div class="sf-profile-stat">
+                    <div class="sf-profile-stat-value">{{ user.getTotalTopics() }}</div>
+                    <div class="sf-profile-stat-label">{{ 'user.profile.label.stats.topics'|trans }}</div>
+                </div>
+                <div class="sf-profile-stat">
+                    <div class="sf-profile-stat-value">{{ user.createdAt|format_datetime('short', locale='fr') }}</div>
+                    <div class="sf-profile-stat-label">{{ 'user.profile.label.stats.register_date'|trans }}</div>
+                </div>
+            </div>
+
+            <h3 class="sf-message-section-title">
+                <i class="fa-solid fa-circle-info"></i>
+                {{ 'user.profile.label.all_about'|trans({'%user%': user.username}) }}
+            </h3>
+            <div class="sf-profile-grid">
+                <div class="sf-profile-field">
+                    <span class="sf-profile-field-icon"><i class="fa-solid fa-user"></i></span>
+                    <span class="sf-profile-field-main">
+                        <span class="sf-profile-field-label">{{ 'user.profile.label.firstName'|trans }}</span>
+                        <span class="sf-profile-field-value">{{ user.firstName ?: '—' }}</span>
+                    </span>
+                </div>
+                <div class="sf-profile-field">
+                    <span class="sf-profile-field-icon"><i class="fa-solid fa-user-tag"></i></span>
+                    <span class="sf-profile-field-main">
+                        <span class="sf-profile-field-label">{{ 'user.profile.label.lastName'|trans }}</span>
+                        <span class="sf-profile-field-value">{{ user.lastName ?: '—' }}</span>
+                    </span>
+                </div>
+                <div class="sf-profile-field">
+                    <span class="sf-profile-field-icon"><i class="fa-solid fa-location-dot"></i></span>
+                    <span class="sf-profile-field-main">
+                        <span class="sf-profile-field-label">{{ 'user.profile.label.city'|trans }}</span>
+                        <span class="sf-profile-field-value">{{ user.city ?: '—' }}</span>
+                    </span>
+                </div>
+                <div class="sf-profile-field">
+                    <span class="sf-profile-field-icon"><i class="fa-solid fa-calendar-check"></i></span>
+                    <span class="sf-profile-field-main">
+                        <span class="sf-profile-field-label">{{ 'user.profile.label.last_connexion'|trans }}</span>
+                        <span class="sf-profile-field-value">{{ user.lastConnexion ? user.lastConnexion|format_datetime('short', locale='fr') : '—' }}</span>
+                    </span>
+                </div>
+            </div>
+
+            <hr class="my-3" />
+            <h3 class="sf-message-section-title">
+                <i class="fa-solid fa-envelope"></i>
+                {{ 'user.profile.label.contact'|trans }}
+            </h3>
+            <div class="sf-profile-field">
+                <span class="sf-profile-field-icon"><i class="fa-solid fa-envelope-open-text"></i></span>
+                <span class="sf-profile-field-main">
+                    <span class="sf-profile-field-label">{{ 'user.profile.label.email'|trans }}</span>
+                    <span class="sf-profile-field-value">{{ user.email }}</span>
+                </span>
             </div>
         </div>
     </section>

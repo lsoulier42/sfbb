@@ -59,6 +59,11 @@ user:
       total_messages: Nombre total de messages
       city: Ville
       email: Adresse e-mail
+      last_connexion: Dernière connexion
+      stats:
+        messages: Messages
+        topics: Sujets
+        register_date: Membre depuis
   edit_profile:
     title: Editer son profil
     error:

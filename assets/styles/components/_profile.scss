@@ -1,0 +1,158 @@
+// ============================================================
+// SFBB - Page profil utilisateur
+// ============================================================
+
+.public-body {
+  .sf-profile {
+    .sf-profile-header {
+      position: relative;
+      padding: 2.2rem 1.5rem 1.5rem;
+      overflow: hidden;
+      border-bottom: 1px solid var(--sf-border);
+      background: linear-gradient(
+        150deg,
+        rgba(129, 140, 248, 0.14),
+        rgba(192, 132, 252, 0.05)
+      );
+
+      &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(
+          rgba(255, 255, 255, 0.07) 1px,
+          transparent 1px
+        );
+        background-size: 18px 18px;
+        pointer-events: none;
+      }
+    }
+
+    .sf-profile-identity {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .sf-profile-avatar {
+      margin-bottom: 0.85rem;
+
+      .sf-avatar,
+      .sf-avatar-image {
+        width: 6rem;
+        height: 6rem;
+        margin-bottom: 0;
+        border-width: 2px;
+        font-size: 2rem;
+        box-shadow: 0 10px 26px rgba(0, 0, 0, 0.35);
+      }
+    }
+
+    .sf-profile-name {
+      margin-bottom: 0.55rem;
+      color: var(--sf-text);
+      font-size: 1.45rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      overflow-wrap: break-word;
+    }
+
+    .sf-profile-badge {
+      padding: 0.3rem 0.9rem;
+      font-size: 0.78rem;
+    }
+
+    .sf-profile-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+      border: 1px solid var(--sf-border);
+      border-radius: var(--sf-radius-sm);
+      background: rgba(255, 255, 255, 0.03);
+
+      .sf-profile-stat {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.2rem;
+        padding: 1.05rem 0.5rem;
+
+        & + .sf-profile-stat {
+          border-left: 1px solid var(--sf-border);
+        }
+      }
+
+      .sf-profile-stat-value {
+        color: var(--sf-primary);
+        font-size: 1.35rem;
+        font-weight: 700;
+        line-height: 1.1;
+      }
+
+      .sf-profile-stat-label {
+        color: var(--sf-text-faint);
+        font-size: 0.7rem;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+      }
+    }
+
+    .sf-profile-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.85rem;
+    }
+
+    .sf-profile-field {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.8rem;
+      padding: 0.85rem 1rem;
+      border: 1px solid var(--sf-border);
+      border-radius: var(--sf-radius-sm);
+      background: rgba(255, 255, 255, 0.03);
+
+      .sf-profile-field-icon {
+        display: inline-flex;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        width: 2.3rem;
+        height: 2.3rem;
+        border-radius: 0.7rem;
+        background: var(--sf-primary-soft);
+        color: var(--sf-primary);
+        font-size: 0.95rem;
+      }
+
+      .sf-profile-field-main {
+        min-width: 0;
+      }
+
+      .sf-profile-field-label {
+        display: block;
+        margin-bottom: 0.15rem;
+        color: var(--sf-text-faint);
+        font-size: 0.7rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .sf-profile-field-value {
+        color: var(--sf-text);
+        font-size: 0.95rem;
+        overflow-wrap: break-word;
+      }
+    }
+
+    @media (max-width: 767.98px) {
+      .sf-profile-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+}
