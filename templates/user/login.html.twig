@@ -5,14 +5,13 @@
 {% endblock %}
 
 {% block content %}
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-8 col-lg-6">
+    <div class="row justify-content-center sf-auth">
+        <div class="col-12 col-sm-9 col-md-6 col-lg-4">
             {{ form_start(form) }}
             <section class="sf-card">
-                <header class="sf-card-header">
+                <header class="sf-card-header justify-content-center">
                     <h2 class="sf-card-title">
-                        <i class="fa-solid fa-right-to-bracket"></i>
-                        {{ 'user.login.title'|trans }}
+                        {{ 'user.login.connect'|trans }}
                     </h2>
                 </header>
                 <div class="sf-card-body">
@@ -26,16 +25,22 @@
                         </div>
                     {% endif %}
                     <div class="mb-3">
-                        {{ form_row(form.username) }}
+                        {{ form_widget(form.username) }}
                     </div>
                     <div class="mb-3">
-                        {{ form_row(form.password) }}
+                        {{ form_widget(form.password) }}
                     </div>
-                    <div class="mb-4">
-                        {{ form_row(form.rememberMe) }}
-                    </div>
-                    <div class="text-end">
+                    <div class="d-grid gap-2 mb-3">
                         {{ form_widget(form.submit) }}
+                        <a class="btn btn-outline-secondary" href="{{ path('user_register') }}">
+                            <i class="fa-solid fa-user-plus"></i>
+                            {{ 'user.label.create_account'|trans }}
+                        </a>
+                    </div>
+                    <div class="text-center">
+                        <a href="{{ path('user_forgot_password') }}" class="sf-forgot-password">
+                            {{ 'user.label.forgot_password'|trans }}
+                        </a>
                     </div>
                 </div>
             </section>

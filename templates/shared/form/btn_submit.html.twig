@@ -1,7 +1,8 @@
 {% block submit_widget %}
     {% set submit_label = label is defined and label is not same as(false) ? label|trans({}, translation_domain is defined ? translation_domain : null) : ('global.label.submit'|trans) %}
-    <button type="submit" class="btn btn-primary btn-icon">
-        <i class="fa-solid fa-paper-plane"></i>
+    {% set submit_icon = attr['data-icon'] is defined and attr['data-icon'] ? attr['data-icon'] : 'fa-solid fa-paper-plane' %}
+    <button type="submit" class="btn btn-primary btn-icon {{ attr.class|default('') }}" {% for attrname, attrvalue in attr %}{% if attrname != 'class' and attrname != 'data-icon' %}{{ attrname }}="{{ attrvalue }}"{% endif %}{% endfor %}>
+        <i class="{{ submit_icon }}"></i>
         {{ submit_label }}
     </button>
 {% endblock %}

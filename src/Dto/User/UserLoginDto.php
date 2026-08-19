@@ -8,8 +8,6 @@ class UserLoginDto
 
     private string $password;
 
-    private bool $rememberMe = false;
-
     public function getUsername(): string
     {
         return $this->username;
@@ -29,17 +27,6 @@ class UserLoginDto
     public function setPassword(string $password): UserLoginDto
     {
         $this->password = $password;
-        return $this;
-    }
-
-    public function isRememberMe(): bool
-    {
-        return $this->rememberMe;
-    }
-
-    public function setRememberMe(bool $rememberMe): UserLoginDto
-    {
-        $this->rememberMe = $rememberMe;
         return $this;
     }
 }

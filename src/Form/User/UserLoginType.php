@@ -4,7 +4,6 @@ namespace App\Form\User;
 
 use App\Dto\User\UserLoginDto;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -21,7 +20,11 @@ class UserLoginType extends AbstractType
                 TextType::class,
                 [
                     'required' => true,
-                    'label' => 'user.label.username'
+                    'label' => false,
+                    'attr' => [
+                        'placeholder' => 'Nom d\'utilisateur',
+                        'autocomplete' => 'username'
+                    ]
                 ]
             )
             ->add(
@@ -29,15 +32,11 @@ class UserLoginType extends AbstractType
                 PasswordType::class,
                 [
                     'required' => true,
-                    'label' => 'user.label.password',
-                ]
-            )
-            ->add(
-                'rememberMe',
-                CheckboxType::class,
-                [
-                    'required' => false,
-                    'label' => 'user.label.remember_me'
+                    'label' => false,
+                    'attr' => [
+                        'placeholder' => 'Mot de passe',
+                        'autocomplete' => 'current-password'
+                    ]
                 ]
             )
             ->add(
@@ -45,6 +44,10 @@ class UserLoginType extends AbstractType
                 SubmitType::class,
                 [
                     'label' => 'user.label.login',
+                    'attr' => [
+                        'class' => 'btn-primary w-100',
+                        'data-icon' => 'fa-solid fa-lock'
+                    ]
                 ]
             );
     }

@@ -48,6 +48,14 @@ class UserController extends BaseController
     {
     }
 
+    #[Route(path: '/forgot-password', name: 'user_forgot_password')]
+    public function forgotPassword(): Response
+    {
+        return $this->render(
+            'user/forgot-password.html.twig'
+        );
+    }
+
     #[Route(path: '/register', name: 'user_register')]
     public function register(
         Request $request,

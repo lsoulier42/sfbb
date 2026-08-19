@@ -3,7 +3,11 @@ project:
 user:
   login:
     title: Connexion
+    connect: Se connecter au forum
     not_enabled: Utilisateur non activé
+  forgot_password:
+    title: Mot de passe oublié
+    coming_soon: La réinitialisation du mot de passe n'est pas encore disponible.
   label:
     username: Nom d'utilisateur
     password: Mot de passe
@@ -11,6 +15,8 @@ user:
     remember_me: Se souvenir de moi
     login: Connexion
     register: S'inscrire
+    create_account: Créer un compte
+    forgot_password: Mot de passe oublié ?
     email: Adresse e-mail
     first_name: Prénom
     last_name: Nom
