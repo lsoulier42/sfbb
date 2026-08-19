@@ -31,7 +31,10 @@ class MemberFilterType extends AbstractType
                 TextType::class,
                 [
                     'required' => false,
-                    'label' => 'user.label.username'
+                    'label' => 'user.label.username',
+                    'attr' => [
+                        'placeholder' => 'Nom d\'utilisateur'
+                    ]
                 ]
             )
             ->add(
@@ -39,7 +42,10 @@ class MemberFilterType extends AbstractType
                 TextType::class,
                 [
                     'required' => false,
-                    'label' => 'user.label.last_name'
+                    'label' => 'user.label.last_name',
+                    'attr' => [
+                        'placeholder' => 'Nom'
+                    ]
                 ]
             )
             ->add(
@@ -47,7 +53,10 @@ class MemberFilterType extends AbstractType
                 TextType::class,
                 [
                     'required' => false,
-                    'label' => 'user.label.city'
+                    'label' => 'user.label.city',
+                    'attr' => [
+                        'placeholder' => 'Ville'
+                    ]
                 ]
             )
             ->add(
@@ -56,7 +65,9 @@ class MemberFilterType extends AbstractType
                 [
                     'required' => false,
                     'label' => 'user.label.role',
-                    'class' => RoleEnum::class
+                    'class' => RoleEnum::class,
+                    'placeholder' => 'user.member_list.all_roles',
+                    'choice_label' => static fn (RoleEnum $role): string => $role->getTransKey()
                 ]
             )
             ->add(

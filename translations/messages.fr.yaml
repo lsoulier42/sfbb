@@ -45,6 +45,7 @@ user:
   member_list:
     title: Liste des membres enregistrés
     search: Rechercher un membre
+    all_roles: Tous les roles
   profile:
     title: Profil de l'utilisateur %user%
     label:
