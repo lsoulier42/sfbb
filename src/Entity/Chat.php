@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping\OneToMany;
 #[HasLifecycleCallbacks]
 class Chat extends AbstractEntity
 {
-    #[Column(type: Types::STRING)]
+    #[Column(type: Types::STRING, nullable: true)]
     private ?string $title = null;
 
     /**
@@ -75,8 +75,8 @@ class Chat extends AbstractEntity
     {
         if (!$this->participants->contains($participant)) {
             $this->participants->add($participant);
+            $participant->addChat($this);
         }
-        $participant->addChat($this);
         return $this;
     }
 
@@ -84,8 +84,8 @@ class Chat extends AbstractEntity
     {
         if ($this->participants->contains($participant)) {
             $this->participants->removeElement($participant);
+            $participant->removeChat($this);
         }
-        $participant->removeChat($this);
         return $this;
     }
 

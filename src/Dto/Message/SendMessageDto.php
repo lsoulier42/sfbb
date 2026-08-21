@@ -12,14 +12,16 @@ class SendMessageDto
 
     private ?User $recipient = null;
 
+    private ?string $title = null;
+
     public function getContent(): string
     {
         return $this->content;
     }
 
-    public function setContent(string $content): SendMessageDto
+    public function setContent(?string $content): SendMessageDto
     {
-        $this->content = $content;
+        $this->content = $content ?? '';
         return $this;
     }
 
@@ -31,6 +33,17 @@ class SendMessageDto
     public function setRecipient(?User $recipient): SendMessageDto
     {
         $this->recipient = $recipient;
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(?string $title): SendMessageDto
+    {
+        $this->title = $title;
         return $this;
     }
 }

@@ -19,6 +19,9 @@
                 </p>
             {% endif %}
             {{ form_start(form) }}
+                {% if form.title is defined %}
+                    {{ form_row(form.title) }}
+                {% endif %}
                 {% if form.recipient is defined %}
                     {{ form_row(form.recipient) }}
                 {% endif %}

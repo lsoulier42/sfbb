@@ -75,7 +75,7 @@ class MessageController extends BaseController
                 return $this->redirectToRoute('message_compose');
             }
 
-            $chat = $conversationService->getOrCreatePrivateChat($user, $target);
+            $chat = $conversationService->createPrivateChat($user, $target, $dto->getTitle());
             $conversationService->sendMessage($chat, $user, $dto->getContent());
             $bus->dispatch(
                 new NewPrivateMessageNotification(

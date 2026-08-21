@@ -37,6 +37,9 @@ class ChatRepository extends BaseRepository
     /**
      * @return Chat[]
      */
+    /**
+     * @return Chat[]
+     */
     public function findInboxForUser(User $user): array
     {
         return $this->createQueryBuilder('c')

@@ -444,8 +444,8 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     {
         if (!$this->chats->contains($chat)) {
             $this->chats->add($chat);
+            $chat->addParticipant($this);
         }
-        $chat->addParticipant($this);
         return $this;
     }
 
@@ -453,8 +453,8 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     {
         if ($this->chats->contains($chat)) {
             $this->chats->removeElement($chat);
+            $chat->removeParticipant($this);
         }
-        $chat->removeParticipant($this);
         return $this;
     }
 

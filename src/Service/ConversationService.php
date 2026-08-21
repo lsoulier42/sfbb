@@ -21,18 +21,10 @@ class ConversationService implements ConversationServiceInterface
     ) {
     }
 
-    public function getOrCreatePrivateChat(User $userA, User $userB): Chat
+    public function createPrivateChat(User $userA, User $userB, ?string $title = null): Chat
     {
-        foreach ($this->chatRepository->findByParticipant($userA) as $chat) {
-            if (
-                $chat->getParticipants()->count() === 2
-                && $chat->getParticipants()->contains($userB)
-            ) {
-                return $chat;
-            }
-        }
-
         $chat = new Chat();
+        $chat->setTitle($title !== null && $title !== '' ? $title : self::DEFAULT_TITLE);
         $chat->addParticipant($userA);
         $chat->addParticipant($userB);
         $this->chatRepository->createOrUpdate($chat);
