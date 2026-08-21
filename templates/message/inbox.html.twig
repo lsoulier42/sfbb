@@ -20,15 +20,41 @@
             {% if conversations is empty %}
                 <p class="text-muted mb-0">{{ 'message.none'|trans }}</p>
             {% else %}
-                <ul class="list-group">
-                    {% for item in conversations %}
-                        <li class="list-group-item d-flex justify-content-between align-items-center gap-2">
-                            <a href="{{ path('message_thread', {'chat': item.chat.id}) }}" class="fw-bold text-truncate">
-                                {% if item.other is not null %}
-                                    {{ item.other.username }}
-                                {% else %}
-                                    {{ 'message.label.unknown'|trans }}
-                                {% endif %}
+                <div class="sf-conversation-list">
+                    {% for item in items %}
+                        <div class="sf-conversation">
+                            <a href="{{ path('message_thread', {'chat': item.chat.id}) }}" class="sf-conversation-link">
+                                <div class="sf-row-icon">
+                                    <i class="fa-solid fa-user"></i>
+                                </div>
+                                <div class="sf-row-main">
+                                    <span class="sf-row-title">
+                                        {% if item.chat.title is not empty %}
+                                            {{ item.chat.title }}
+                                        {% elseif item.other is not null %}
+                                            {{ item.other.username }}
+                                        {% else %}
+                                            {{ 'message.label.unknown'|trans }}
+                                        {% endif %}
+                                    </span>
+                                    <div class="sf-row-subtitle">
+                                        {% if item.other is not null %}
+                                            {{ item.other.username }}
+                                        {% else %}
+                                            {{ 'message.label.unknown'|trans }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="sf-conversation-meta">
+                                    {% if item.unread > 0 %}
+                                        <span class="sf-unread-badge">{{ item.unread }}</span>
+                                    {% endif %}
+                                    {% if item.lastMessage is not null %}
+                                        <small class="sf-conversation-date">
+                                            {{ item.lastMessage.createdAt|format_datetime('short', locale='fr') }}
+                                        </small>
+                                    {% endif %}
+                                </div>
                             </a>
                             <span class="d-flex align-items-center gap-2 flex-shrink-0">
                                 {% if item.unread > 0 %}

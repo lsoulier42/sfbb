@@ -28,10 +28,10 @@ class Chat extends AbstractEntity
     /**
      * @var Collection<DirectMessage>
      */
-    #[OneToMany(mappedBy: 'chat', targetEntity: DirectMessage::class)]
+    #[OneToMany(mappedBy: 'chat', targetEntity: DirectMessage::class, cascade: ['remove'])]
     private Collection $directMessages;
 
-    #[OneToMany(mappedBy: 'chat', targetEntity: UserChatView::class)]
+    #[OneToMany(mappedBy: 'chat', targetEntity: UserChatView::class, cascade: ['remove'])]
     private Collection $userViews;
 
     public function __construct()
