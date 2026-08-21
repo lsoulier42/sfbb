@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Contract\Service\ConversationServiceInterface;
+use App\Contract\Service\NotificationServiceInterface;
 use App\Dto\Message\SendMessageDto;
 use App\Entity\Chat;
 use App\Entity\User;
@@ -217,6 +218,7 @@ class MessageController extends BaseController
             [
                 'chat' => $chat,
                 'other' => $this->getOtherParticipant($chat, $user),
+                'unread' => $conversationService->countUnreadInChat($chat, $user),
                 'messages' => $directMessageRepository->findThread($chat, self::hydratePagerDto($request)),
                 'form' => $form->createView(),
             ]

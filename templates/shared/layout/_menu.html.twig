@@ -31,6 +31,40 @@
                         <span class="badge bg-danger rounded-pill ms-1">{{ unread_messages }}</span>
                     {% endif %}
                 </a>
+                <div class="dropdown">
+                    <a href="#" class="sf-nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" id="notificationsDropdown">
+                        <i class="fa-solid fa-bell"></i>
+                        <span class="d-none d-md-inline">{{ 'menu.notifications'|trans }}</span>
+                        {% if unread_notifications > 0 %}
+                            <span class="badge bg-danger rounded-pill ms-1">{{ unread_notifications }}</span>
+                        {% endif %}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end sf-notification-menu" aria-labelledby="notificationsDropdown">
+                        {% if notifications is empty %}
+                            <li>
+                                <span class="dropdown-item text-muted">{{ 'notification.empty'|trans }}</span>
+                            </li>
+                        {% else %}
+                            {% for notif in notifications %}
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('message_thread', {'chat': notif.chat.id}) }}">
+                                        <i class="fa-solid fa-envelope me-2"></i>
+                                        <strong>{{ notif.actor is not null ? notif.actor.username : '—' }}</strong>
+                                        <span class="d-block text-truncate">{{ notif.message|striptags|slice(0, 80) }}{% if notif.message|striptags|length > 80 %}…{% endif %}</span>
+                                        <small class="d-block text-muted">{{ notif.createdAt|format_datetime('short', locale='fr') }}</small>
+                                    </a>
+                                </li>
+                            {% endfor %}
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form method="post" action="{{ path('notification_mark_all_read') }}">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('notification-mark-all-read') }}">
+                                    <button type="submit" class="dropdown-item">{{ 'notification.mark_all_read'|trans }}</button>
+                                </form>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
                 <a href="{{ path('user_logout') }}" class="sf-nav-link">
                     <i class="fa-solid fa-right-from-bracket"></i>
                     <span class="d-none d-md-inline">{{ 'menu.logout'|trans({'%username%': user.username}) }}</span>

@@ -97,6 +97,9 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserChatView::class)]
     private Collection $chatViews;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Notification::class)]
+    private Collection $notifications;
+
     public function __construct()
     {
         parent::__construct();
@@ -107,6 +110,7 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
         $this->chats = new ArrayCollection();
         $this->directMessages = new ArrayCollection();
         $this->chatViews = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
     }
 
     public function getUsername(): ?string

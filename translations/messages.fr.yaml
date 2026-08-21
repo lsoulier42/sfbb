@@ -88,6 +88,7 @@ menu:
   profile: Profil
   members_list: Membres
   messages: Messagerie
+  notifications: Notifications
   user:
     login_as: Connecté en tant que `%username%`
 homepage:
