@@ -21,12 +21,20 @@ class MessageController extends BaseController
 {
     #[Route('', name: 'message_inbox')]
     public function inbox(
+        Request $request,
         #[CurrentUser] User $user,
         ConversationServiceInterface $conversationService
     ): Response {
-        $conversations = [];
-        foreach ($conversationService->findInboxForUser($user) as $chat) {
-            $conversations[] = [
+        $search = $request->query->get('search');
+        $conversations = $conversationService->findInboxForUserPaginated(
+            $user,
+            self::hydratePagerDto($request),
+            $search
+        );
+
+        $items = [];
+        foreach ($conversations->getCurrentPageResults() as $chat) {
+            $items[] = [
                 'chat' => $chat,
                 'other' => $this->getOtherParticipant($chat, $user),
                 'unread' => $conversationService->countUnreadInChat($chat, $user),
@@ -38,6 +46,8 @@ class MessageController extends BaseController
             'message/inbox.html.twig',
             [
                 'conversations' => $conversations,
+                'items' => $items,
+                'search' => $search,
             ]
         );
     }

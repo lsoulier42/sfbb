@@ -56,6 +56,34 @@ class ChatRepository extends BaseRepository
             ->getResult();
     }
 
+    public function findInboxForUserPaginated(User $user, PagerDto $pager, ?string $search = null): Pagerfanta
+    {
+        $queryBuilder = $this->createQueryBuilder('c')
+            ->select('c', 'MAX(dm.createdAt) AS HIDDEN lastActivity')
+            ->leftJoin('c.directMessages', 'dm')
+            ->innerJoin('c.participants', 'p')
+            ->leftJoin('c.participants', 'other')
+            ->where('p = :user')
+            ->setParameter('user', $user);
+
+        if ($search !== null && $search !== '') {
+            $queryBuilder
+                ->andWhere(
+                    $queryBuilder->expr()->orX(
+                        'c.title LIKE :search',
+                        'other.username LIKE :search'
+                    )
+                )
+                ->setParameter('search', '%' . $search . '%');
+        }
+
+        $queryBuilder
+            ->groupBy('c.id')
+            ->orderBy('lastActivity', 'DESC');
+
+        return self::createPaginator($queryBuilder, $pager);
+    }
+
     public function countUnreadInChat(Chat $chat, User $user): int
     {
         return (int)$this->getEntityManager()->createQueryBuilder()
