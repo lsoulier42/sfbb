@@ -28,7 +28,7 @@
             {% include 'topic/_user_block.html.twig' with {'author': message.author} only %}
         </aside>
         <div class="sf-message-content">
-            {{ message.content|raw }}
+            {{ message.content|sanitize_html('default') }}
         </div>
     </div>
 </section>

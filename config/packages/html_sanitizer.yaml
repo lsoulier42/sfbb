@@ -1,0 +1,8 @@
+framework:
+    html_sanitizer:
+        sanitizers:
+            default:
+                allow_safe_elements: true
+                allowed_link_schemes: ['http', 'https', 'mailto']
+                allowed_media_schemes: ['http', 'https']
+                force_https_urls: true
