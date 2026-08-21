@@ -99,12 +99,77 @@ class MessageController extends BaseController
         );
     }
 
+    #[Route('/{chat}/delete', name: 'message_thread_delete', methods: ['POST'])]
+    public function deleteThread(
+        Request $request,
+        Chat $chat,
+        #[CurrentUser] User $user,
+        ConversationServiceInterface $conversationService
+    ): Response {
+        if (!$chat->getParticipants()->contains($user)) {
+            $this->addErrorMessage('message.error.not_participant');
+            return $this->redirectToRoute('message_inbox');
+        }
+
+        if ($this->isCsrfTokenValid('delete-chat-' . $chat->getId(), $request->request->getString('_token'))) {
+            $conversationService->deleteChat($chat);
+            $this->addSuccessMessage('message.success.deleted');
+        } else {
+            $this->addErrorMessage('message.error.invalid_token');
+        }
+
+        return $this->redirectToRoute('message_inbox');
+    }
+
+    #[Route('/{chat}/toggle-read', name: 'message_conversation_toggle', methods: ['POST'])]
+    public function toggleRead(
+        Request $request,
+        Chat $chat,
+        #[CurrentUser] User $user,
+        ConversationServiceInterface $conversationService
+    ): Response {
+        if (!$chat->getParticipants()->contains($user)) {
+            $this->addErrorMessage('message.error.not_participant');
+            return $this->redirectToRoute('message_inbox');
+        }
+
+        if ($this->isCsrfTokenValid('toggle-read-' . $chat->getId(), $request->request->getString('_token'))) {
+            $conversationService->toggleRead($chat, $user);
+        } else {
+            $this->addErrorMessage('message.error.invalid_token');
+        }
+
+        $referer = $request->headers->get('referer');
+        if ($referer !== null) {
+            return $this->redirect($referer);
+        }
+
+        return $this->redirectToRoute('message_inbox');
+    }
+
+    #[Route('/mark-all-read', name: 'message_inbox_mark_all_read', methods: ['POST'])]
+    public function markAllRead(
+        Request $request,
+        #[CurrentUser] User $user,
+        ConversationServiceInterface $conversationService
+    ): Response {
+        if ($this->isCsrfTokenValid('mark-all-read', $request->request->getString('_token'))) {
+            $conversationService->markAllAsRead($user);
+            $this->addSuccessMessage('message.success.all_read');
+        } else {
+            $this->addErrorMessage('message.error.invalid_token');
+        }
+
+        return $this->redirectToRoute('message_inbox');
+    }
+
     #[Route('/{chat}/thread', name: 'message_thread')]
     public function thread(
         Request $request,
         Chat $chat,
         #[CurrentUser] User $user,
         ConversationServiceInterface $conversationService,
+        NotificationServiceInterface $notificationService,
         DirectMessageRepository $directMessageRepository,
         MessageBusInterface $bus
     ): Response|RedirectResponse {

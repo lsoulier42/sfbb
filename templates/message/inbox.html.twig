@@ -11,14 +11,36 @@
                 <i class="fa-solid fa-envelope"></i>
                 {{ 'message.title.inbox'|trans }}
             </h2>
-            <a href="{{ path('message_compose') }}" class="btn btn-primary btn-sm">
-                <i class="fa-solid fa-pen me-1"></i>
-                {{ 'message.label.compose'|trans }}
-            </a>
+            <div class="d-flex align-items-center gap-2">
+                <form method="post" action="{{ path('message_inbox_mark_all_read') }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('mark-all-read') }}">
+                    <button type="submit" class="btn btn-link btn-sm px-0">
+                        <i class="fa-solid fa-check-double me-1"></i>
+                        {{ 'message.label.mark_all_read'|trans }}
+                    </button>
+                </form>
+                <a href="{{ path('message_compose') }}" class="btn btn-primary btn-sm">
+                    <i class="fa-solid fa-pen me-1"></i>
+                    {{ 'message.label.compose'|trans }}
+                </a>
+            </div>
         </header>
-        <div class="sf-card-body">
-            {% if conversations is empty %}
-                <p class="text-muted mb-0">{{ 'message.none'|trans }}</p>
+        <div class="sf-card-body p-0">
+            <div class="d-flex gap-2 px-3 py-2 border-bottom">
+                <form method="get" action="{{ path('message_inbox') }}" class="d-flex gap-2 w-100">
+                    <input type="search" name="search" value="{{ search }}" class="form-control form-control-sm" placeholder="{{ 'message.label.search'|trans }}">
+                    <button type="submit" class="btn btn-primary btn-sm">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                    {% if search is not empty %}
+                        <a href="{{ path('message_inbox') }}" class="btn btn-link btn-sm px-0">
+                            {{ 'message.label.clear'|trans }}
+                        </a>
+                    {% endif %}
+                </form>
+            </div>
+            {% if items is empty %}
+                <p class="sf-empty mb-0">{{ 'message.none'|trans }}</p>
             {% else %}
                 <div class="sf-conversation-list">
                     {% for item in items %}
@@ -56,17 +78,26 @@
                                     {% endif %}
                                 </div>
                             </a>
-                            <span class="d-flex align-items-center gap-2 flex-shrink-0">
-                                {% if item.unread > 0 %}
-                                    <span class="badge bg-danger rounded-pill">{{ item.unread }}</span>
-                                {% endif %}
-                                {% if item.lastMessage is not null %}
-                                    <small class="text-muted">{{ item.lastMessage.createdAt|format_datetime('short', locale='fr') }}</small>
-                                {% endif %}
-                            </span>
-                        </li>
+                            <form method="post" action="{{ path('message_conversation_toggle', {'chat': item.chat.id}) }}" class="sf-conversation-actions">
+                                <input type="hidden" name="_token" value="{{ csrf_token('toggle-read-' ~ item.chat.id) }}">
+                                <button type="submit" class="sf-icon-link" title="{{ item.unread > 0 ? 'message.label.mark_read'|trans : 'message.label.mark_unread'|trans }}">
+                                    <i class="fa-solid {{ item.unread > 0 ? 'fa-envelope-open' : 'fa-envelope' }}"></i>
+                                </button>
+                            </form>
+                            <form method="post" action="{{ path('message_thread_delete', {'chat': item.chat.id}) }}" class="sf-conversation-actions" onsubmit="return confirm('{{ 'message.confirm.delete'|trans }}')">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete-chat-' ~ item.chat.id) }}">
+                                <button type="submit" class="sf-icon-link text-danger" title="{{ 'message.label.delete'|trans }}">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </form>
+                        </div>
                     {% endfor %}
-                </ul>
+                </div>
+                {% if conversations.haveToPaginate %}
+                    <div class="p-3">
+                        {{ pagerfanta(conversations) }}
+                    </div>
+                {% endif %}
             {% endif %}
         </div>
     </section>

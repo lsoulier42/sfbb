@@ -78,4 +78,34 @@ class ConversationService implements ConversationServiceInterface
         $view->setLastSeen(new DateTimeImmutable());
         $this->userChatViewRepository->createOrUpdate($view);
     }
+
+    public function markAsUnread(Chat $chat, User $user): void
+    {
+        $view = $this->userChatViewRepository->findOneBy(
+            [
+                'chat' => $chat,
+                'user' => $user,
+            ]
+        );
+
+        if ($view !== null) {
+            $this->userChatViewRepository->remove($view);
+        }
+    }
+
+    public function toggleRead(Chat $chat, User $user): void
+    {
+        if ($this->countUnreadInChat($chat, $user) > 0) {
+            $this->markAsRead($chat, $user);
+        } else {
+            $this->markAsUnread($chat, $user);
+        }
+    }
+
+    public function markAllAsRead(User $user): void
+    {
+        foreach ($this->findInboxForUser($user) as $chat) {
+            $this->markAsRead($chat, $user);
+        }
+    }
 }

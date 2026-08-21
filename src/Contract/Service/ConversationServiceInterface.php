@@ -22,4 +22,10 @@ interface ConversationServiceInterface
     public function getUnreadCountForUser(User $user): int;
 
     public function markAsRead(Chat $chat, User $user): void;
+
+    public function markAsUnread(Chat $chat, User $user): void;
+
+    public function toggleRead(Chat $chat, User $user): void;
+
+    public function markAllAsRead(User $user): void;
 }

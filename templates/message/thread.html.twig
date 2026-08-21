@@ -7,14 +7,41 @@
 {% block content %}
     <section class="sf-card">
         <header class="sf-card-header d-flex justify-content-between align-items-center">
-            <h2 class="sf-card-title">
-                <i class="fa-solid fa-comments"></i>
-                {{ 'message.title.thread'|trans({'%user%': other is not null ? other.username : ''}) }}
-            </h2>
-            <a href="{{ path('message_inbox') }}" class="btn btn-link btn-sm px-0">
-                <i class="fa-solid fa-arrow-left me-1"></i>
-                {{ 'message.label.back'|trans }}
-            </a>
+            <div class="d-flex flex-column gap-1">
+                <h2 class="sf-card-title mb-0">
+                    <i class="fa-solid fa-comments"></i>
+                    {% if chat.title is not empty %}
+                        {{ chat.title }}
+                    {% else %}
+                        {{ 'message.title.thread'|trans({'%user%': other is not null ? other.username : ''}) }}
+                    {% endif %}
+                </h2>
+                {% if other is not null %}
+                    <small class="sf-card-subtitle">
+                        {{ 'message.label.with'|trans({'%user%': other.username}) }}
+                    </small>
+                {% endif %}
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <a href="{{ path('message_inbox') }}" class="btn btn-link btn-sm px-0">
+                    <i class="fa-solid fa-arrow-left me-1"></i>
+                    {{ 'message.label.back'|trans }}
+                </a>
+                <form method="post" action="{{ path('message_conversation_toggle', {'chat': chat.id}) }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token('toggle-read-' ~ chat.id) }}">
+                    <button type="submit" class="btn btn-link btn-sm px-0">
+                        <i class="fa-solid {{ unread > 0 ? 'fa-envelope-open' : 'fa-envelope' }} me-1"></i>
+                        {{ unread > 0 ? 'message.label.mark_read'|trans : 'message.label.mark_unread'|trans }}
+                    </button>
+                </form>
+                <form method="post" action="{{ path('message_thread_delete', {'chat': chat.id}) }}" onsubmit="return confirm('{{ 'message.confirm.delete'|trans }}')">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete-chat-' ~ chat.id) }}">
+                    <button type="submit" class="btn btn-link btn-sm px-0 text-danger">
+                        <i class="fa-solid fa-trash me-1"></i>
+                        {{ 'message.label.delete'|trans }}
+                    </button>
+                </form>
+            </div>
         </header>
         <div class="sf-card-body">
             {% if messages.nbResults == 0 %}
