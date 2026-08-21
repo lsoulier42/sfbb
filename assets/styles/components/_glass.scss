@@ -400,6 +400,26 @@
     color: var(--sf-primary);
     font-size: 1.15rem;
     font-weight: 700;
+
+    &.is-online {
+      border-color: var(--sf-success);
+      box-shadow: 0 0 0 2px rgba(52, 211, 153, 0.35);
+    }
+  }
+
+  .sf-online-dot {
+    display: inline-block;
+    width: 0.55rem;
+    height: 0.55rem;
+    margin-left: 0.35rem;
+    border-radius: 50%;
+    background: var(--sf-text-faint);
+    vertical-align: middle;
+
+    &.is-online {
+      background: var(--sf-success);
+      box-shadow: 0 0 0 2px rgba(52, 211, 153, 0.3);
+    }
   }
 
   .sf-avatar-image {

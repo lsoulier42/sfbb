@@ -1,8 +1,9 @@
-<div class="sf-avatar">{{ author.username|first|upper }}</div>
+<div class="sf-avatar {{ author.isOnline() ? 'is-online' : '' }}">{{ author.username|first|upper }}</div>
 <div class="sf-user-username mb-1">
     {% include 'shared/component/_user_link.html.twig' with {
         'user': author
     } only %}
+    <span class="sf-online-dot {{ author.isOnline() ? 'is-online' : '' }}" title="{{ author.isOnline() ? 'user.status.online'|trans : 'user.status.offline'|trans }}"></span>
 </div>
 <span class="sf-badge sf-user-role">{{ author.getRoleTitle|trans }}</span>
 <hr class="my-3" />
@@ -13,3 +14,9 @@
     {{ 'topic.label.register_date'|trans }}:
     {{ author.createdAt|date('d/m/Y') }}
 </div>
+{% if app.user and author.id != app.user.id %}
+    <a href="{{ path('message_compose', {'recipient': author.id}) }}" class="btn btn-primary btn-sm mt-3 w-100">
+        <i class="fa-solid fa-envelope me-1"></i>
+        {{ 'message.label.contact'|trans }}
+    </a>
+{% endif %}

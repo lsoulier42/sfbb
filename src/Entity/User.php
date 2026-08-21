@@ -531,4 +531,27 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
         }
         return $this;
     }
+
+    public function getNotifications(): Collection
+    {
+        return $this->notifications;
+    }
+
+    public function setNotifications(Collection $notifications): User
+    {
+        $this->notifications = $notifications;
+        return $this;
+    }
+
+    public function isOnline(int $thresholdMinutes = 5): bool
+    {
+        $lastActivity = $this->getLastActivity();
+        if ($lastActivity === null) {
+            return false;
+        }
+
+        $limit = new DateTimeImmutable(sprintf('-%d minutes', $thresholdMinutes));
+
+        return $lastActivity >= $limit;
+    }
 }

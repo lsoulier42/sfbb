@@ -261,6 +261,9 @@ admin:
       title: Actions rapides
   user:
     none_found: Aucun utilisateur enregistré
+    status:
+      online: En ligne
+      offline: Hors ligne
   moderator:
     coming_soon: La gestion des modérateurs arrive bientôt.
   access:
@@ -286,19 +289,36 @@ message:
     thread: Conversation
     recipient: Destinataire
     to: 'Destinataire : %user%'
+    subject: Sujet
+    with: 'Conversation avec %user%'
     content: Message
     send: Envoyer
     back: Retour à la messagerie
+    delete: Supprimer
     unknown: Inconnu
+    contact: Contacter
+    mark_read: Marquer comme lu
+    mark_unread: Marquer comme non lu
+    mark_all_read: Tout marquer comme lu
+    search: Rechercher une conversation
+    clear: Effacer
+    confirm:
+      delete: Êtes-vous sûr de vouloir supprimer cette conversation ?
   none: Vous n'avez aucune conversation
   thread:
     none: Aucun message dans cette conversation
   success:
     sent: Message envoyé avec succès
+    deleted: Conversation supprimée avec succès
+    all_read: Toutes les conversations ont été marquées comme lues
+  notification:
+    empty: Aucune notification
+    mark_all_read: Tout marquer comme lu
   error:
     not_participant: Vous n'avez pas accès à cette conversation
     no_recipient: Vous devez choisir un destinataire
     self: Vous ne pouvez pas vous envoyer un message à vous-même
+    invalid_token: Action non autorisée
   email:
     subject: 'Nouveau message privé de %sender%'
     body: '<strong>%sender%</strong> vous a envoyé un message privé : %preview%'

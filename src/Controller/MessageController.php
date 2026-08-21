@@ -190,9 +190,10 @@ class MessageController extends BaseController
         }
 
         $conversationService->markAsRead($chat, $user);
+        $notificationService->markChatAsRead($user, $chat);
 
         $dto = new SendMessageDto();
-        $form = $this->createForm(PrivateMessageType::class, $dto, ['with_recipient' => false]);
+        $form = $this->createForm(PrivateMessageType::class, $dto, ['with_recipient' => false, 'with_title' => false]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
