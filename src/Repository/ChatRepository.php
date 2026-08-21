@@ -2,11 +2,13 @@
 
 namespace App\Repository;
 
+use App\Dto\Pager\PagerDto;
 use App\Entity\Chat;
 use App\Entity\DirectMessage;
 use App\Entity\User;
 use App\Entity\UserChatView;
 use Doctrine\Persistence\ManagerRegistry;
+use Pagerfanta\Pagerfanta;
 
 /**
  * @method Chat|null find($id, $lockMode = null, $lockVersion = null)

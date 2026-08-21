@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Contract\Service\ConversationServiceInterface;
+use App\Dto\Pager\PagerDto;
 use App\Entity\Chat;
 use App\Entity\DirectMessage;
 use App\Entity\User;
@@ -11,9 +12,12 @@ use App\Repository\ChatRepository;
 use App\Repository\DirectMessageRepository;
 use App\Repository\UserChatViewRepository;
 use DateTimeImmutable;
+use Pagerfanta\Pagerfanta;
 
 class ConversationService implements ConversationServiceInterface
 {
+    private const DEFAULT_TITLE = '(sans objet)';
+
     public function __construct(
         private readonly ChatRepository $chatRepository,
         private readonly DirectMessageRepository $directMessageRepository,
@@ -32,9 +36,19 @@ class ConversationService implements ConversationServiceInterface
         return $chat;
     }
 
+    public function deleteChat(Chat $chat): void
+    {
+        $this->chatRepository->remove($chat);
+    }
+
     public function findInboxForUser(User $user): array
     {
         return $this->chatRepository->findInboxForUser($user);
+    }
+
+    public function findInboxForUserPaginated(User $user, PagerDto $pager, ?string $search = null): Pagerfanta
+    {
+        return $this->chatRepository->findInboxForUserPaginated($user, $pager, $search);
     }
 
     public function sendMessage(Chat $chat, User $author, string $content): DirectMessage
